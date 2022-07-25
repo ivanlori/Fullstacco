@@ -1,0 +1,3 @@
+export const TOAST_DISPLAYED = "TOAST_DISPLAYED"
+
+export const TOAST_HIDDEN = "TOAST_DISPLAYED"

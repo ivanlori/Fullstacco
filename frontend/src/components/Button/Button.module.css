@@ -1,0 +1,41 @@
+.Btn {
+	@apply p-3;
+	@apply rounded-3xl;
+	@apply flex;
+	@apply items-center;
+	@apply justify-center;
+	@apply m-1;
+	@apply w-36;
+}
+
+.BtnPrimary {
+	@apply bg-blue_primary;
+	@apply text-white;
+}
+
+.BtnPrimary:hover {
+	@apply bg-blue_dark;
+}
+
+.BtnPrimaryOutline {
+	@apply border-2;
+	@apply border-blue_primary;
+	@apply text-blue_primary;
+	@apply bg-white;
+}
+
+.BtnDangerOutline {
+	@apply border-2;
+	@apply text-ochre_dark;
+}
+
+.BtnDangerOutline:hover {
+	@apply border-2;
+	@apply bg-ochre_dark;
+	@apply text-white;
+}
+
+.BtnDanger {
+	@apply bg-ochre_dark;
+	@apply text-white;
+}

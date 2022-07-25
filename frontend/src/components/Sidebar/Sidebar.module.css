@@ -1,0 +1,14 @@
+.Aside {
+	@apply fixed;
+	@apply bg-gray_800;
+	@apply px-6;
+	@apply py-4;
+	@apply bottom-0;
+	@apply w-full;
+	@apply top-auto;
+	@apply lg:top-16;
+	@apply lg:h-screen;
+	@apply lg:w-24;
+	@apply z-30;
+	@apply text-white;
+}

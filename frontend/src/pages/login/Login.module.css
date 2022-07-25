@@ -1,0 +1,7 @@
+.Container {
+	@apply text-white;
+	@apply flex;
+	@apply justify-center;
+	@apply h-screen;
+	@apply items-center;
+}

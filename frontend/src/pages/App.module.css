@@ -1,0 +1,40 @@
+body {
+	background: #306dc1;
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	@apply font-sans;
+	@apply font-medium;
+}
+
+p {
+	@apply text-xl;
+}
+
+h1, h2, h3 {
+	@apply font-bold;
+}
+
+h4 {
+	@apply font-semibold; 
+}
+
+label {
+	@apply font-bold;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@apply font-poppins
+}
+
+h2 {
+	@apply mb-10;
+	@apply text-3xl;
+	@apply leading-tight;
+}
+
+

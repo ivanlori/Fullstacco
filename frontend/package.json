@@ -1,0 +1,103 @@
+{
+	"name": "fullstacco-frontend",
+	"version": "0.1.0",
+	"author": "Ivan Lori",
+	"license": "MIT",
+	"maintainers": [
+		"Ivan Lori <ivan.lori@protonmail.com>"
+	],
+	"private": true,
+	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^6.1.1",
+		"@fortawesome/free-solid-svg-icons": "^6.1.1",
+		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@reduxjs/toolkit": "^1.8.1",
+		"@types/node": "^16.7.13",
+		"@types/react": "^17.0.20",
+		"@types/react-dom": "^17.0.9",
+		"@types/react-redux": "^7.1.23",
+		"axios": "^0.26.0",
+		"classnames": "^2.3.1",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-hook-form": "^7.33.0",
+		"react-intl": "^6.0.5",
+		"react-redux": "^7.2.8",
+		"react-router-dom": "^6.2.2",
+		"react-scripts": "5.0.0",
+		"react-select": "^5.3.2",
+		"redux": "^4.1.2",
+		"tailwindcss": "^3.1.4",
+		"web-vitals": "^2.1.0"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --watchAll=false",
+		"test:watch": "react-scripts test",
+		"coverage": "yarn test -- --coverage --coverageDirectory='coverage'",
+		"lint": "eslint --cache src/**/*.{ts,tsx}",
+		"lint:fix": "eslint --cache --fix src/**/*.{ts,tsx}"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"resolutions": {
+		"@types/react": "^16 || ^17"
+	},
+	"devDependencies": {
+		"@babel/preset-typescript": "^7.16.7",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^12.1.2",
+		"@testing-library/user-event": "^14.2.1",
+		"@types/jest": "^28.1.3",
+		"@typescript-eslint/eslint-plugin": "^5.10.2",
+		"@typescript-eslint/parser": "^5.10.2",
+		"autoprefixer": "^10.4.2",
+		"eslint": "^8.8.0",
+		"eslint-plugin-import": "^2.25.4",
+		"eslint-plugin-jsx-a11y": "^6.5.1",
+		"eslint-plugin-react": "^7.28.0",
+		"eslint-plugin-react-hooks": "^4.3.0",
+		"lint-staged": "^12.3.3",
+		"postcss": "^8.4.6",
+		"typescript": "^4.7.4"
+	},
+	"setupFiles": [
+		"<rootDir>/src/setupTests.ts"
+	],
+	"jest": {
+		"collectCoverageFrom": [
+			"src/**/",
+			"!**/node_modules/**"
+		],
+		"coverageReporters": [
+			"html",
+			"json"
+		],
+		"coverageThreshold": {
+			"global": {
+				"branches": 80,
+				"functions": 80,
+				"lines": 80,
+				"statements": -10
+			}
+		},
+		"coveragePathIgnorePatterns": []
+	}
+}

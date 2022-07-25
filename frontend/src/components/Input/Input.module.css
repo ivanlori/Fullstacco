@@ -1,0 +1,22 @@
+.Input {
+	@apply block;
+	@apply w-full;
+	@apply h-9;
+	@apply px-3;
+	@apply border;
+	@apply border-gray_300;
+	@apply rounded;
+	@apply text-gray_800;
+}
+
+.Input.WithError {
+	@apply border-ochre_dark;
+}
+
+.Error {
+	@apply absolute;
+	@apply right-1;
+	@apply top-5;
+	@apply text-xs;
+	@apply text-ochre_dark;
+}

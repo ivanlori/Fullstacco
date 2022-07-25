@@ -1,0 +1,48 @@
+.Wrapper {
+  @apply fixed;
+  @apply top-0;
+  @apply right-0;
+  @apply m-5;
+  @apply flex;
+  @apply items-center;
+  @apply shadow;
+  @apply text-white;
+  min-width: 18rem;
+  z-index: 999;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+  
+.Animated {
+  animation-duration: .2s;
+  animation-fill-mode: both;
+}
+
+.SlideInRight {
+  animation-name: slideInRight;
+}
+
+.SlideOutRight {
+  animation-name: slideOutRight;
+}

@@ -1,0 +1,87 @@
+.Container {
+  @apply bg-white;
+  @apply text-gray_900;
+  @apply rounded-xl;
+  @apply p-5;
+  @apply m-10;
+}
+
+.HeaderWrapper {
+  @apply flex;
+  @apply items-center;
+  @apply justify-between;
+  @apply mb-5;
+}
+
+.Sidebar {
+  @apply lg:shadow-2xl;
+  @apply bg-white;
+  @apply text-gray_900;
+  @apply lg:w-1/4;
+  @apply h-fit;
+  @apply rounded-2xl;
+  @apply p-5;
+  @apply lg:relative;
+  @apply lg:bottom-20;
+}
+
+.SocialBadge {
+  @apply cursor-pointer;
+  @apply bg-gray_200;
+  @apply p-1;
+  @apply rounded-lg;
+  @apply flex;
+  @apply items-center;
+  @apply mx-1;
+}
+
+.AddDataBadge {
+  @apply bg-gray_200;
+  @apply rounded;
+  @apply m-1;
+  @apply px-3;
+  @apply py-1;
+  @apply flex;
+  @apply items-center;
+  @apply text-sm;
+}
+
+.DataBadge {
+  @apply bg-gray_200;
+  @apply rounded;
+  @apply m-1;
+  @apply px-3;
+  @apply py-1;
+}
+
+.CellBody {
+  @apply text-sm;
+  @apply text-gray_900;
+  @apply font-light;
+  @apply px-6;
+  @apply py-4;
+  @apply whitespace-nowrap;
+}
+
+.Edit {
+	@apply items-center;
+	@apply cursor-pointer;
+	@apply flex;
+	@apply justify-center;
+}
+
+.Status span {
+	@apply w-5;
+	@apply h-5;
+	@apply rounded-full;
+	@apply block;
+}
+
+.CellHead {
+  @apply text-sm;
+  @apply font-medium;
+  @apply text-gray_900;
+  @apply px-6;
+  @apply py-4;
+  @apply text-left;
+}

@@ -1,0 +1,7 @@
+.CurrentUser span {
+	@apply border-green_primary;
+	@apply border;
+	@apply rounded-md;
+	@apply p-1;
+	@apply text-green_primary;
+}

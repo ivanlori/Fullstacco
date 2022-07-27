@@ -2,16 +2,16 @@
  	Fullstacco /fullstakkɒ/ - the MERN boilerplate for your next project
 </h1>
 
-<h3 align="center">
- 	This project started by practising with backend tools like express and node.js and I wanted to create something useful also for other people. I searched for MERN boilerplate outside but the resources are not updated or incomplete and in the worst case not maintained anymore. I will try to make constant updates when needed and I hope it can improve your developing project with MERN stack.
-</h3>
-
 <p align="center">
 <a href="https://github.com/ivanlori/Fullstacco/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/ivanlori/Fullstacco"></a>
 <a href="https://github.com/ivanlori/Fullstacco/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/ivanlori/Fullstacco"></a>
 <a href="https://github.com/ivanlori/Fullstacco/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/ivanlori/Fullstacco"></a>
 <a href="https://github.com/ivanlori/Fullstacco/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/ivanlori/Fullstacco"></a>
 </p>
+
+## Why another MERN stuff?
+
+This project started by practising with backend tools like express and node.js; I desired to create something useful also for other people. I searched for MERN boilerplates but the resources are not updated or incomplete and, in the worst case, not maintained anymore. I will try to make constant updates when needed. I hope it can improve your developing project with the MERN stack.
 
 ## Features
 
@@ -21,6 +21,13 @@
 - List of users
 - Delete, update and creation of user
 - Roles per user (Admin|Account)
+
+## Tech Stack used
+
+- Express.js
+- React.js
+- Redux.js
+- React testing library
 
 ## Requirements
 

@@ -7,9 +7,9 @@ import helmet from 'helmet'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 
-import { handleErrorStatus } from "./src/controllers/utils"
-import authRouter from './src/routes/auth'
-import usersRouter from './src/routes/users'
+import { handleErrorStatus } from "./controllers/utils"
+import authRouter from './routes/auth'
+import usersRouter from './routes/users'
 
 const app = express()
 

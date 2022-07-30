@@ -86,6 +86,7 @@
 		]
 	},
 	"ignorePatterns": [
-		"node_modules"
+		"node_modules",
+		"wizard_be.js"
 	]
 }

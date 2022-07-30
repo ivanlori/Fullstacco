@@ -114,6 +114,7 @@
 		"node_modules",
 		"build",
 		"dist",
-		"public"
+		"public",
+		"wizard_fe.js"
 	]
 }

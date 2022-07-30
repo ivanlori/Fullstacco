@@ -24,8 +24,10 @@ This project started by practising with backend tools like express and node.js; 
 
 ## Tech Stack used
 
-- Express.js
+- Express.js/Node.js
+- MongoDB
 - React.js
+- Typescript
 - Redux.js
 - React testing library
 
@@ -40,7 +42,11 @@ This project started by practising with backend tools like express and node.js; 
 # clone repository
 git clone https://github.com/ivanlori/Fullstacco.git
 
-# Rename the two .env.example to .env and fill data inside
+# setup the environment files for backend
+cd backend && yarn setup-env
+
+# setup the environment files for frontend
+cd frontend && yarn setup-env
 
 # install dependencies for the frontend part
 cd frontend && yarn

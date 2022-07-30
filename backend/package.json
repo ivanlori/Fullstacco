@@ -1,6 +1,6 @@
 {
 	"name": "fullstacco-backend",
-	"version": "0.5.1",
+	"version": "0.6.0",
 	"author": "Ivan Lori",
 	"license": "MIT",
 	"maintainers": [
@@ -12,7 +12,8 @@
 		"start": "nodemon ./src/index.ts",
 		"build": "rm -rf ./build && tsc --project .",
 		"lint": "eslint --cache src/**/*.ts",
-		"lint:fix": "eslint --cache --fix src/**/*.ts"
+		"lint:fix": "eslint --cache --fix src/**/*.ts",
+		"setup-env": "node wizard_be.js"
 	},
 	"dependencies": {
 		"@types/bcrypt": "^5.0.0",

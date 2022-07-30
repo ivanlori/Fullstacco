@@ -1,6 +1,6 @@
 {
 	"name": "fullstacco-frontend",
-	"version": "0.5.1",
+	"version": "0.6.0",
 	"author": "Ivan Lori",
 	"license": "MIT",
 	"maintainers": [
@@ -37,7 +37,8 @@
 		"test:watch": "react-scripts test",
 		"coverage": "yarn test -- --coverage --coverageDirectory='coverage'",
 		"lint": "eslint --cache src/**/*.{ts,tsx}",
-		"lint:fix": "eslint --cache --fix src/**/*.{ts,tsx}"
+		"lint:fix": "eslint --cache --fix src/**/*.{ts,tsx}",
+		"setup-env": "node wizard_fe.js"
 	},
 	"eslintConfig": {
 		"extends": [

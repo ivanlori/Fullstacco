@@ -2,9 +2,9 @@ module.exports = {
 	content: ['./src/**/*.tsx'],
 	theme: {
 		colors: {
-			blue_light: '#22d3f8',
-			blue_primary: '#014ef9',
-			blue_dark: '#0031a1',
+			blue_light: '#6891C7',
+			blue_primary: '#536CBD',
+			blue_dark: '#4749A7',
 			magenta_light: '#fb33d3',
 			magenta_primary: '#bf03b1',
 			magenta_dark: '#5d0156',

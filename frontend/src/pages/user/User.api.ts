@@ -1,68 +1,142 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
 import { getToken, handleError } from 'utils/utils'
 
 import { IUserState } from './store/User.models'
 
-export const createUser = async (data: IUserState) => {
+export const createUser = async (
+	payload: IUserState
+): Promise<AxiosResponse> => {
 	try {
-		return await axios.post(`${BASE_API}/users/create`, data, {
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.post(`${BASE_API}/users/create`, payload, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
 		})
+
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
 	} catch (err) {
 		return handleError(err)
 	}
 }
 
-export const getUsers = async () => {
+export const getUsers = async (): Promise<AxiosResponse> => {
 	try {
-		const { data } = await axios.get(`${BASE_API}/users/`, {
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.get(`${BASE_API}/users/`, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
 		})
 
-		return data
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
 	} catch (err) {
 		return handleError(err)
 	}
 }
 
-export const updateUser = async (id: string | undefined, data: IUserState) => {
+export const updateUser = async (
+	payload: IUserState
+): Promise<AxiosResponse> => {
+	const url = `${BASE_API}/users/${(payload.id)}`
 	try {
-		return await axios.patch(`${BASE_API}/users/${id}`, data, {
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.patch(url, payload, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
 		})
+
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
 	} catch (err) {
 		return handleError(err)
 	}
 }
 
-export const getUser = async (id: string | null) => {
+export const getUser = async (id: string | null): Promise<AxiosResponse> => {
 	try {
-		const { data } = await axios.get(`${BASE_API}/users/${id}`, {
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.get(`${BASE_API}/users/${id}`, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
 		})
-		return data
+
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
 	} catch (err) {
 		return handleError(err)
 	}
 }
 
-export const deleteUser = async (id: string | undefined) => {
+export const deleteUser = async (
+	id: string | undefined
+): Promise<AxiosResponse> => {
 	try {
-		return await axios.delete(`${BASE_API}/users/${id}`, {
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.delete(`${BASE_API}/users/${id}`, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
 		})
+
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
 	} catch (err) {
 		return handleError(err)
 	}

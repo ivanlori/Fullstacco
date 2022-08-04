@@ -1,11 +1,13 @@
 import { ReactElement, useEffect, useState } from 'react'
 
-import { FormattedMessage } from 'react-intl'
-import { RootStateOrAny, useSelector } from 'react-redux'
+import { FormattedMessage, useIntl } from 'react-intl'
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { Dispatch } from 'redux'
 
 import { Button, Loader } from 'components'
 import { Pen } from 'components/Icon/svg/icons'
+import { displayToast } from 'components/Toast/store/Toast.action'
 import { editUser, fullPathNewUser } from 'routes'
 import { isAdmin } from 'utils/utils'
 
@@ -15,6 +17,8 @@ import styles from './UserList.module.css'
 
 const UserList = (): ReactElement => {
 	const userState = useSelector((state: RootStateOrAny) => state.user)
+	const dispatch = useDispatch<Dispatch>()
+	const { formatMessage } = useIntl()
 	const [loading, setLoading] = useState(true)
 
 	const navigate = useNavigate()
@@ -34,9 +38,19 @@ const UserList = (): ReactElement => {
 
 	useEffect(() => {
 		(async () => {
-			const response = await getUsers()
-			setUsers(response)
-			setLoading(false)
+			const {
+				data,
+				status
+			} = await getUsers()
+
+			if (status === 200) {
+				setUsers(data)
+				setLoading(false)
+			} else {
+				dispatch(displayToast(
+					formatMessage({ id: "feedback.general.error" }), 'error')
+				)
+			}
 		})()
 	}, [])
 

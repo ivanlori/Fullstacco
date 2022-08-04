@@ -87,39 +87,45 @@ const UserForm = ({ user }: Props): ReactElement => {
 
 	const onSubmit: SubmitHandler<IFormInput> = async () => {
 
-		const data = {
+		const data: IUserState = {
 			email,
 			lastname,
 			name,
 			username,
 			role: roleSelected.value,
 			isActive: true,
-			emailConfirmed: user ? user.emailConfirmed : false
+			emailConfirmed: user ? user.emailConfirmed : false,
 		}
 
 		if (user) {
-			const updateResult = await updateUser(user.id, {
+			const payload = {
 				...data,
+				id: user.id,
 				updatedAt: new Date().toISOString(),
-			})
+			}
+			const { status } = await updateUser(payload)
 
-			handleResult(updateResult?.status, "feedback.user.updated")
+			handleResult(status, "feedback.user.updated")
 		} else {
-			const createResult = await createUser({
+			const {
+				status
+			} = await createUser({
 				...data,
 				password
 			})
 
-			handleResult(createResult?.status, "feedback.user.created")
+			handleResult(status, "feedback.user.created")
 		}
 	}
 
 	const onDeleteUser = async () => {
 		setLoading(true)
-		const result = await deleteUser(user?.id)
+		const {
+			status
+		} = await deleteUser(user?.id)
 		setLoading(false)
 
-		handleResult(result?.status, "feedback.user.deleted")
+		handleResult(status, "feedback.user.deleted")
 	}
 
 	useEffect(() => {

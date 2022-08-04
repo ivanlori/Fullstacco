@@ -14,7 +14,6 @@ import styles from './ResetPassword.module.css'
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
 
-
 interface IFormInput {
 	email?: string
 	password?: string
@@ -36,14 +35,16 @@ const ResetPassword = (): ReactElement => {
 		mode: 'onChange'
 	})
 
-	const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+	const onSubmit: SubmitHandler<IFormInput> = async (payload: IFormInput) => {
 		if (token) {
-			const result = await resetPassword({
-				password: data.password,
+			const {
+				status
+			} = await resetPassword({
+				password: payload.password,
 				token
 			})
 
-			if (result?.status === 201) {
+			if (status === 201) {
 				dispatch(displayToast(
 					formatMessage({
 						id: "feedback.reset.password.new.set"
@@ -56,9 +57,11 @@ const ResetPassword = (): ReactElement => {
 				)
 			}
 		} else {
-			const result = await recoverPassword(data.email)
+			const {
+				status
+			} = await recoverPassword(payload.email)
 
-			if (result?.status === 201) {
+			if (status === 201) {
 				setRecoverySuccess(true)
 			} else {
 				dispatch(displayToast(

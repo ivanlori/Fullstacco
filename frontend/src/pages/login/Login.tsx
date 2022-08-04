@@ -23,16 +23,19 @@ const Login = (): ReactElement => {
 		mode: 'onChange'
 	})
 
-	const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-		const result = await login(data)
+	const onSubmit: SubmitHandler<IFormInput> = async (payload: IFormInput) => {
+		const {
+			data,
+			status
+		} = await login(payload)
 
-		if (result?.status === 200) {
-			localStorage.setItem('tk', result.data.token)
-			localStorage.setItem('userId', result.data.userId)
-			dispatch(setIdUser(result.data.userId))
+		if (status === 200) {
+			localStorage.setItem('tk', data.token)
+			localStorage.setItem('userId', data.userId)
+			dispatch(setIdUser(data.userId))
 			window.location.href = '/'
-		} else if (result?.status === 401) {
-			if (result.data.message === 'wrong_password') {
+		} else if (status === 401) {
+			if (data.message === 'wrong_password') {
 				dispatch(
 					displayToast(formatMessage({
 						id: "feedback.user.wrong.password"

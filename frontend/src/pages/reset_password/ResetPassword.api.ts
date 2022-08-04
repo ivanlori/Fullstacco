@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
 import { handleError } from 'utils/utils'
@@ -8,22 +8,54 @@ type IResetPassword = {
 	token: string | undefined
 }
 
-export const recoverPassword = async (email: string | undefined) => {
+export const recoverPassword = async (
+	email: string | undefined
+): Promise<AxiosResponse> => {
 	try {
-		return await axios.post(`${BASE_API}/auth/recovery-password`, {
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.post(`${BASE_API}/auth/recovery-password`, {
 			email
 		})
+
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
 	} catch (err) {
 		return handleError(err)
 	}
 }
 
-export const resetPassword = async ({ password, token }: IResetPassword) => {
+export const resetPassword = async ({
+	password, token
+}: IResetPassword): Promise<AxiosResponse> => {
 	try {
 		const url = `${BASE_API}/auth/reset-password/${token}`
-		return await axios.post(url, {
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.post(url, {
 			password
 		})
+
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
 	} catch (err) {
 		return handleError(err)
 	}

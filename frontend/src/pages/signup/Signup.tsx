@@ -9,16 +9,8 @@ import { Dispatch } from 'redux'
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 
-import { signup } from './Signup.api'
+import { signup, IFormInput } from './Signup.api'
 import styles from './Signup.module.css'
-
-interface IFormInput {
-	name: string
-	lastname: string
-	username: string
-	email: string
-	password: string
-}
 
 const Signup = (): ReactElement => {
 	const navigate = useNavigate()
@@ -32,14 +24,17 @@ const Signup = (): ReactElement => {
 		mode: 'onChange'
 	})
 
-	const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+	const onSubmit: SubmitHandler<IFormInput> = async (payload: IFormInput) => {
 
-		const result = await signup(data)
+		const {
+			data,
+			status
+		} = await signup(payload)
 
-		if (result?.status === 201) {
+		if (status === 201) {
 			navigate('/')
-		} else if (result?.status === 400) {
-			if (result.data.errors.length > 0) {
+		} else if (status === 400) {
+			if (data.errors.length > 0) {
 				dispatch(displayToast(
 					formatMessage({ id: 'form.validation.generic' }),
 					'error'

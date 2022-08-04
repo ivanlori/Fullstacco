@@ -1,11 +1,33 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
 import { handleError } from 'utils/utils'
 
-export const signup = async (data: unknown) => {
+export interface IFormInput {
+	name: string
+	lastname: string
+	username: string
+	email: string
+	password: string
+}
+
+export const signup = async (payload: IFormInput): Promise<AxiosResponse> => {
 	try {
-		return await axios.post(`${BASE_API}/auth/signup`, data)
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.post(`${BASE_API}/auth/signup`, payload)
+
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
 	} catch (err) {
 		return handleError(err)
 	}

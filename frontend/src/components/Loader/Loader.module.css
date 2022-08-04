@@ -12,13 +12,6 @@
 	@apply min-w-fit;
 }
 
-.Loader,
-.Loader.Small {
-	-webkit-animation: spinner 1.5s linear infinite;
-  animation: spinner 1.5s linear infinite;
-	border-top-color: #3498db;
-}
-
 .Loader {
 	@apply ease-linear;
 	@apply rounded-full;
@@ -27,6 +20,13 @@
 	@apply h-20;
 	@apply w-20;
 	@apply border-8;
+}
+
+.Loader,
+.Loader.Small {
+	-webkit-animation: spinner 1.5s linear infinite;
+  animation: spinner 1.5s linear infinite;
+	@apply border-t-gray_800;
 }
 
 .Loader.Small {

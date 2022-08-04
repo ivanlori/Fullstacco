@@ -3,8 +3,6 @@ import { ReactElement, useEffect, useState, useRef } from 'react'
 import { RootStateOrAny, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { isAuthenticated } from 'utils/utils'
-
 import styles from './Header.module.css'
 
 const Header = (): ReactElement => {
@@ -37,54 +35,48 @@ const Header = (): ReactElement => {
 						Fullstacco
 					</Link>
 				</div>
-				{
-					isAuthenticated() && (
-						<>
-							<div
-								ref={menu}
-								id="menu"
-								className="flex items-center"
-								onClick={() => setOpen(!open)}
-							>
-								<span className="mr-3 cursor-pointer">
-									{username}
-								</span>
-								<div className={styles.Badge}></div>
-							</div>
-							{open && (
-								<div
-									data-testid="user-dropdown"
-									className={styles.Dropdown}
-									ref={menu}
+				<div
+					ref={menu}
+					id="menu"
+					className="flex items-center"
+					onClick={() => setOpen(!open)}
+				>
+					<span className="mr-3 cursor-pointer">
+						{username}
+					</span>
+					<div className={styles.Badge}></div>
+				</div>
+				{open && (
+					<div
+						data-testid="user-dropdown"
+						className={styles.Dropdown}
+						ref={menu}
+					>
+						<ul className="p-5">
+							<li className={styles.MenuItem}>
+								<Link
+									to="/profile"
+									className="w-full"
 								>
-									<ul className="p-5">
-										<li className={styles.MenuItem}>
-											<Link
-												to="/profile"
-												className="w-full"
-											>
-												View Profile
-											</Link>
-										</li>
-										<li
-											className={styles.MenuItem}
-											onClick={logout}
-										>
-											<div
-												data-testid="logout_icon"
-												role="button"
-												title="Logout"
-												className="flex items-center"
-											>
-												<span>Logout</span>
-											</div>
-										</li>
-									</ul>
+									View Profile
+								</Link>
+							</li>
+							<li
+								className={styles.MenuItem}
+								onClick={logout}
+							>
+								<div
+									data-testid="logout_icon"
+									role="button"
+									title="Logout"
+									className="flex items-center"
+								>
+									<span>Logout</span>
 								</div>
-							)}
-						</>
-					)
-				}
+							</li>
+						</ul>
+					</div>
+				)}
 			</div>
 		</nav>
 	)

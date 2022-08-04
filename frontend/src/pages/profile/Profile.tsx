@@ -1,23 +1,58 @@
 import { ReactElement } from 'react'
 
+import classNames from 'classnames'
+import { useIntl } from 'react-intl'
 import { RootStateOrAny, useSelector } from 'react-redux'
+
+import styles from './Profile.module.css'
 
 const Profile = (): ReactElement => {
 	const user = useSelector((state: RootStateOrAny) => state.user)
+	const { formatMessage } = useIntl()
+
+	const activeStyle = classNames('rounded-full w-4 h-4 mr-2', {
+		"bg-green_primary": user.isActive,
+		"bg-magenta_dark": !user.isActive
+	})
 
 	return (
 		<div className="lg:pl-24">
 			<div className="xl:mx-auto flex" >
 				<div className="flex flex-col w-full">
 					<div className="bg-white text-gray_900 rounded-xl p-5 m-10">
-						<ul>
-							<li>Name: {user.name}</li>
-							<li>Username: {user.username}</li>
-							<li>Lastname: {user.lastname}</li>
-							<li>active: {user.isActive ? 'Yes' : 'No'}</li>
-							<li>Email: {user.email}</li>
-							<li>Role: {user.role === 0 ? 'Admin' : 'Account'}</li>
-						</ul>
+						<div className="flex">
+							<div className={styles.Img}></div>
+							<div className="ml-4 flex flex-col">
+								<span className="flex items-center text-xl">
+									<span className={activeStyle}>
+										{user.isActive}
+									</span>
+									<span>{user.username}</span>
+								</span>
+								<span>
+									<span className="text-gray_500">
+										{formatMessage({ id: "fullname" })}:
+									</span>
+									{' '}
+									<span>{user.name} {user.lastname}</span>
+								</span>
+								<span>
+									<span className="text-gray_500">
+										{formatMessage({ id: "email" })}:
+									</span>
+									{' '}
+									<span>{user.email}</span>
+								</span>
+								<span>
+									<span className="text-gray_500">
+										{formatMessage({ id: 'role' })}: {' '}
+									</span>
+									<span>
+										{user.role === 0 ? 'Admin' : 'Account'}
+									</span>
+								</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

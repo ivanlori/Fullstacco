@@ -1,0 +1,6 @@
+.Img {
+	@apply rounded-full;
+	@apply w-20;
+	@apply h-20;
+	@apply bg-gray_500;
+}

@@ -3,6 +3,7 @@ import { screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
+import { MemoryRouter } from 'react-router-dom'
 
 import { createTestStore } from 'mocks/state'
 import { renderWithIntlProvider } from 'utils/testing-library-utils'
@@ -20,7 +21,9 @@ describe('Login', () => {
 	test('should login and go to dasboard page', () => {
 		renderWithIntlProvider(
 			<Provider store={store}>
-				<Login />
+				<MemoryRouter>
+					<Login />
+				</MemoryRouter>
 			</Provider>
 		)
 

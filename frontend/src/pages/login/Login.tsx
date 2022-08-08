@@ -3,6 +3,7 @@ import { ReactElement } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
 import { Button, Input } from 'components'
@@ -14,6 +15,7 @@ import styles from './Login.module.css'
 
 const Login = (): ReactElement => {
 	const dispatch = useDispatch<Dispatch>()
+	const navigate = useNavigate()
 	const { formatMessage } = useIntl()
 	const {
 		register,
@@ -33,7 +35,7 @@ const Login = (): ReactElement => {
 			localStorage.setItem('tk', data.token)
 			localStorage.setItem('userId', data.userId)
 			dispatch(setIdUser(data.userId))
-			window.location.href = '/'
+			navigate('/')
 		} else if (status === 401) {
 			if (data.message === 'wrong_password') {
 				dispatch(

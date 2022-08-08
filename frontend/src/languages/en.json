@@ -47,5 +47,10 @@
 	"form.validation.empty.email": "Email required",
 	"form.validation.notvalid.email": "Email not valid",
 	"form.validation.empty.password": "Password required",
-	"form.validation.generic": "Invalid input detected, check your data"
+	"form.validation.generic": "Invalid input detected, check your data",
+	"role": "Role",
+	"fullname": "Fullname",
+	"email": "Email",
+	"logout": "Logout",
+	"view.profile": "View Profile"
 }

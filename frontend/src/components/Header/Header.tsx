@@ -1,34 +1,50 @@
 import { ReactElement, useEffect, useState, useRef } from 'react'
 
+import { useIntl } from 'react-intl'
 import { RootStateOrAny, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { login, profile } from 'routes'
 
 import styles from './Header.module.css'
 
 const Header = (): ReactElement => {
-	const [open, setOpen] = useState(false)
-	const menu = useRef<HTMLDivElement>(null)
+	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const { formatMessage } = useIntl()
+	const navigate = useNavigate()
+	const ref = useRef<HTMLDivElement>(null)
+	const refItem = useRef<HTMLAnchorElement>(null)
 	const username = useSelector((state: RootStateOrAny) => state.user.username)
 
-	const logout = () => {
-		localStorage.clear()
-		window.location.href = '/login'
-	}
-
 	useEffect(() => {
-		const handleClickOutside = (e: MouseEvent) => {
-			if (!menu.current?.contains(e.target as HTMLElement)) {
-				setOpen(false)
+		const checkIfClickedOutside = (e: MouseEvent) => {
+			if (
+				isMenuOpen &&
+				ref.current &&
+				!ref.current.contains(e.target as HTMLElement)
+			) {
+				setIsMenuOpen(false)
+			}
+
+			if (
+				isMenuOpen &&
+				refItem.current &&
+				refItem.current.contains(e.target as HTMLElement)
+			) {
+				navigate(profile)
+				setIsMenuOpen(false)
 			}
 		}
-		document.addEventListener('mousedown', handleClickOutside, true)
+
+		document.addEventListener('mousedown', checkIfClickedOutside)
+
 		return () => {
-			document.removeEventListener('mousedown', handleClickOutside, true)
+			document.removeEventListener('mousedown', checkIfClickedOutside)
 		}
-	}, [menu])
+	}, [isMenuOpen])
 
 	return (
-		<nav className={styles.Nav}>
+		<nav className={styles.Nav} ref={ref}>
 			<div className={styles.Container}>
 				<div className="flex items-center">
 					<Link to="/" className="text-blue_dark">
@@ -36,43 +52,39 @@ const Header = (): ReactElement => {
 					</Link>
 				</div>
 				<div
-					ref={menu}
 					id="menu"
 					className="flex items-center"
-					onClick={() => setOpen(!open)}
+					onClick={() => setIsMenuOpen(!isMenuOpen)}
 				>
 					<span className="mr-3 cursor-pointer">
 						{username}
 					</span>
 					<div className={styles.Badge}></div>
 				</div>
-				{open && (
+				{isMenuOpen && (
 					<div
 						data-testid="user-dropdown"
 						className={styles.Dropdown}
-						ref={menu}
 					>
 						<ul className="p-5">
 							<li className={styles.MenuItem}>
 								<Link
-									to="/profile"
+									to={profile}
 									className="w-full"
+									ref={refItem}
 								>
-									View Profile
+									{formatMessage({ id: 'view.profile' })}
 								</Link>
 							</li>
-							<li
-								className={styles.MenuItem}
-								onClick={logout}
-							>
-								<div
+							<li className={styles.MenuItem}>
+								<Link
+									to={login}
 									data-testid="logout_icon"
-									role="button"
-									title="Logout"
 									className="flex items-center"
+									onClick={() => localStorage.clear()}
 								>
-									<span>Logout</span>
-								</div>
+									{formatMessage({ id: 'logout' })}
+								</Link>
 							</li>
 						</ul>
 					</div>

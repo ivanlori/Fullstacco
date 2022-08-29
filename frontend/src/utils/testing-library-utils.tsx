@@ -1,14 +1,21 @@
 import { render, RenderResult } from "@testing-library/react"
-import { IntlProvider } from "react-intl"
+import { createIntl, RawIntlProvider } from "react-intl"
+
+import enMsg from '../languages/en.json'
+
+const intl = createIntl({
+	locale: 'en',
+	messages: enMsg
+})
 
 export const renderWithIntlProvider = (
 	component: React.ReactElement,
 	{ ...options } = {},
 ): RenderResult => {
 	const wrapper = () => (
-		<IntlProvider onError={() => null} locale="en">
+		<RawIntlProvider value={intl}>
 			{component}
-		</IntlProvider>
+		</RawIntlProvider>
 	)
 	return render(component, { wrapper, ...options })
 }

@@ -40,7 +40,6 @@
 		"ecmaVersion": "latest"
 	},
 	"plugins": [
-		"react",
 		"@typescript-eslint",
 		"react-hooks",
 		"react",

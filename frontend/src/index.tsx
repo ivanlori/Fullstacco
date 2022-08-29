@@ -2,7 +2,7 @@ import React from 'react'
 
 import { configureStore } from '@reduxjs/toolkit'
 import ReactDOM from 'react-dom'
-import { IntlProvider } from 'react-intl'
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 
@@ -16,13 +16,25 @@ const store = configureStore({
 	reducer: rootReducer,
 })
 
+/*
+* From the documentation:
+* This is optional but highly recommended
+* since it prevents memory leak
+*/
+const cache = createIntlCache()
+
+const intl = createIntl({
+	locale: 'en',
+	messages: enMsg,
+}, cache)
+
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<BrowserRouter>
-				<IntlProvider messages={enMsg} locale="en" defaultLocale="en">
+				<RawIntlProvider value={intl}>
 					<App />
-				</IntlProvider>
+				</RawIntlProvider>
 			</BrowserRouter>
 		</Provider>
 	</React.StrictMode>,

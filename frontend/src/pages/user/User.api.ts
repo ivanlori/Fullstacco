@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
+import { IUserState } from 'types/user'
 import { getToken, handleError } from 'utils/utils'
 
-import { IUserState } from './store/User.models'
 
 export const createUser = async (
 	payload: IUserState

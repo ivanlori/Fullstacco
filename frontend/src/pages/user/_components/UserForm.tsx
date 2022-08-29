@@ -9,9 +9,9 @@ import { Dispatch } from 'redux'
 
 import { Button, Loader, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
+import { IRoleSelection, IUserState } from 'types/user'
 import { getUserId, isAdmin } from 'utils/utils'
 
-import { IRoleSelection, IUserState } from '../store/User.models'
 import { createUser, deleteUser, updateUser } from '../User.api'
 import styles from './UserForm.module.css'
 

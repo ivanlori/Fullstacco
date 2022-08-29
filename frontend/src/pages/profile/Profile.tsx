@@ -2,12 +2,14 @@ import { ReactElement } from 'react'
 
 import classNames from 'classnames'
 import { useIntl } from 'react-intl'
-import { RootStateOrAny, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+
+import { IState } from 'types/state'
 
 import styles from './Profile.module.css'
 
 const Profile = (): ReactElement => {
-	const user = useSelector((state: RootStateOrAny) => state.user)
+	const user = useSelector((state: IState) => state.user)
 	const { formatMessage } = useIntl()
 
 	const activeStyle = classNames('rounded-full w-4 h-4 mr-2', {

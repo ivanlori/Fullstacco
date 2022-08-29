@@ -1,10 +1,11 @@
 import { ReactElement, useEffect, useState, useRef } from 'react'
 
 import { useIntl } from 'react-intl'
-import { RootStateOrAny, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { login, profile } from 'routes'
+import { IState } from 'types/state'
 
 import styles from './Header.module.css'
 
@@ -14,7 +15,7 @@ const Header = (): ReactElement => {
 	const navigate = useNavigate()
 	const ref = useRef<HTMLDivElement>(null)
 	const refItem = useRef<HTMLAnchorElement>(null)
-	const username = useSelector((state: RootStateOrAny) => state.user.username)
+	const username = useSelector((state: IState) => state.user.username)
 
 	useEffect(() => {
 		const checkIfClickedOutside = (e: MouseEvent) => {

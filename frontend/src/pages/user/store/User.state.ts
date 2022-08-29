@@ -1,4 +1,4 @@
-import { IUserState } from './User.models'
+import { IUserState } from 'types/user'
 
 const initialState: IUserState = {
 	email: '',

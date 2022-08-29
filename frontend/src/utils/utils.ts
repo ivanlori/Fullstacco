@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios"
 
-import { IUserState } from "pages/user/store/User.models"
+import { IUserState } from "types/user"
 
 export const getUserId = () => localStorage.getItem('userId')
 

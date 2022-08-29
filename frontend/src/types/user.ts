@@ -1,4 +1,4 @@
-import * as types from './User.types'
+import * as types from '../pages/user/store/User.types'
 
 export interface IUserState {
 	email: string

@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react'
 
 import { FormattedMessage, useIntl } from 'react-intl'
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
@@ -9,14 +9,15 @@ import { Button, Loader } from 'components'
 import { Pen } from 'components/Icon/svg/icons'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { editUser, fullPathNewUser } from 'routes'
+import { IState } from 'types/state'
+import { IUserState } from 'types/user'
 import { isAdmin } from 'utils/utils'
 
-import { IUserState } from '../store/User.models'
 import { getUsers } from '../User.api'
 import styles from './UserList.module.css'
 
 const UserList = (): ReactElement => {
-	const userState = useSelector((state: RootStateOrAny) => state.user)
+	const userState = useSelector((state: IState) => state.user)
 	const dispatch = useDispatch<Dispatch>()
 	const { formatMessage } = useIntl()
 	const [loading, setLoading] = useState(true)

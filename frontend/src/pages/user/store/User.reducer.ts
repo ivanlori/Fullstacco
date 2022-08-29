@@ -1,4 +1,5 @@
-import { ActionType } from './User.models'
+import { ActionType } from 'types/user'
+
 import userState from './User.state'
 import * as type from './User.types'
 

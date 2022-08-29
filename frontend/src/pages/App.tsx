@@ -1,4 +1,4 @@
-import { RootStateOrAny, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 
 import './App.module.css'
@@ -13,6 +13,7 @@ import {
 	recoveryPassword,
 	signup
 } from 'routes'
+import { IState } from 'types/state'
 
 import Dashboard from './dashboard/Dashboard'
 import Login from './login/Login'
@@ -26,7 +27,7 @@ const App = () => {
 	const {
 		text,
 		style,
-	} = useSelector((state: RootStateOrAny) => state.toast)
+	} = useSelector((state: IState) => state.toast)
 
 	return (
 		<main>

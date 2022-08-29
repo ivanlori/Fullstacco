@@ -1,4 +1,5 @@
-import { idUserModelAction, IUserState } from './User.models'
+import { idUserModelAction, IUserState } from 'types/user'
+
 import { SET_USER, SET_ID_USER } from './User.types'
 
 export const setUser = (payload: IUserState) => ({

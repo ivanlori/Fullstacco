@@ -1,4 +1,4 @@
-import { IUserState } from "pages/user/store/User.models"
+import { IUserState } from "types/user"
 
 export const mockedUser: IUserState = {
 	email: 'user@email.com',

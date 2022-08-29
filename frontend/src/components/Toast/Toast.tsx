@@ -14,7 +14,7 @@ const SUCCESS = 'success'
 const ERROR = 'error'
 
 interface Props {
-	type: typeof SUCCESS | typeof ERROR
+	type: typeof SUCCESS | typeof ERROR | null
 	text: string
 }
 

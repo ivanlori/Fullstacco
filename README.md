@@ -30,6 +30,7 @@ This project started by practising with backend tools like express and node.js; 
 - Typescript
 - Redux.js
 - React testing library
+- TailwindCSS
 
 ## Requirements
 

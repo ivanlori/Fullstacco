@@ -11,7 +11,7 @@
 
 ## Why another MERN stuff?
 
-This project started by practising with backend tools like express and node.js; I desired to create something useful also for other people. I searched for MERN boilerplates but the resources are not updated or incomplete and, in the worst case, not maintained anymore. I will try to make constant updates when needed. I hope it can improve your developing project with the MERN stack.
+This project started by practising with backend tools like express and node.js; I desired to create something useful also for other people. I searched for MERN boilerplates, but the resources are not updated or incomplete and, in the worst case, are not maintained anymore. I will try to make constant updates when needed. I hope it can improve your developing project with the MERN stack.
 
 ## Features
 

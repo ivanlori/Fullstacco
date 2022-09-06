@@ -1,6 +1,8 @@
 <h1 align="center">
- 	Fullstacco /fullstakkɒ/ - the MERN boilerplate for your next project
+ 	Fullstacco
 </h1>
+
+<h4 align="center">the MERN boilerplate for your next project</h4>
 
 <p align="center">
 <a href="https://github.com/ivanlori/Fullstacco/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/ivanlori/Fullstacco"></a>
@@ -9,28 +11,28 @@
 <a href="https://github.com/ivanlori/Fullstacco/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/ivanlori/Fullstacco"></a>
 </p>
 
-## Why another MERN stuff?
+<br />
 
-This project started by practising with backend tools like express and node.js; I desired to create something useful also for other people. I searched for MERN boilerplates, but the resources are not updated or incomplete and, in the worst case, are not maintained anymore. I will try to make constant updates when needed. I hope it can improve your developing project with the MERN stack.
+Fullstacco (IPA: /fullstakkɒ/) is a boilerplate written in NodeJs/ExpressJs for the backend part, with ReactJs for the Frontend and MongoDB as Database. It has basic functionalities (reported below) to speed your development up if you start from scratch.
 
 ## Features
 
-- Classic Login
-- Classic Signup
-- Reset password
-- List of users
-- Delete, update and creation of user
-- Roles per user (Admin|Account)
+* Classic Login
+* Classic Signup
+* Reset password
+* List of users
+* Delete, update and creation of user
+* Roles per user (Admin|Account)
 
 ## Tech Stack used
 
-- Express.js/Node.js
-- MongoDB
-- React.js
-- Typescript
-- Redux.js
-- React testing library
-- TailwindCSS
+* Express.js/Node.js
+* MongoDB
+* React.js
+* Typescript
+* Redux.js
+* React testing library
+* TailwindCSS
 
 ## Requirements
 

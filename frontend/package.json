@@ -34,7 +34,7 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test --watchAll=false",
 		"test:watch": "react-scripts test",
-		"coverage": "yarn test -- --coverage --coverageDirectory='coverage'",
+		"coverage": "react-scripts test --coverage --watchAll",
 		"lint": "eslint --cache src/**/*.{ts,tsx}",
 		"lint:fix": "eslint --cache --fix src/**/*.{ts,tsx}",
 		"setup-env": "node wizard_fe.js"
@@ -73,7 +73,6 @@
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-jest": "^26.8.4",
 		"eslint-plugin-jsx-a11y": "^6.6.1",
-		"eslint-plugin-react": "^7.30.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"lint-staged": "^13.0.3",
 		"postcss": "^8.4.16",
@@ -84,19 +83,12 @@
 	],
 	"jest": {
 		"collectCoverageFrom": [
-			"src/**/",
-			"!**/node_modules/**"
-		],
-		"coverageReporters": [
-			"html",
-			"json"
+			"src/**/*.tsx",
+			"!<rootDir>/node_modules/"
 		],
 		"coverageThreshold": {
 			"global": {
-				"branches": 80,
-				"functions": 80,
-				"lines": 80,
-				"statements": -10
+				"lines": 80
 			}
 		},
 		"coveragePathIgnorePatterns": []

@@ -1,42 +1,38 @@
-import { AnyAction, Store } from '@reduxjs/toolkit'
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
-import { createTestStore } from 'mocks/state'
-import { renderWithIntlProvider } from 'utils/testing-library-utils'
+import { DataTestKeys } from 'data-test-keys'
+import {
+	renderWithProviders
+} from 'utils/testing-library-utils'
 
 import Signup from '../Signup'
 
-let store: Store<unknown, AnyAction>
-
 describe('Signup', () => {
-	beforeEach(() => {
-		store = createTestStore()
-	})
 
 	test('should signup and go to dashboard page', () => {
-		renderWithIntlProvider(
-			<Provider store={store}>
-				<MemoryRouter>
-					<Signup />
-				</MemoryRouter>
-			</Provider>
+		renderWithProviders(
+			<MemoryRouter>
+				<Signup />
+			</MemoryRouter>,
+			{
+				withIntl: true
+			}
 		)
 
-		const name = screen.getByTestId('name')
-		const lastname = screen.getByTestId('lastname')
-		const username = screen.getByTestId('username')
-		const email = screen.getByTestId('email')
-		const password = screen.getByTestId('password')
+		const name = screen.getByTestId(DataTestKeys.signupName)
+		const lastname = screen.getByTestId(DataTestKeys.signupLastname)
+		const username = screen.getByTestId(DataTestKeys.signupUsername)
+		const email = screen.getByTestId(DataTestKeys.signupEmail)
+		const password = screen.getByTestId(DataTestKeys.signupPassword)
 
 		userEvent.type(name, 'name')
 		userEvent.type(lastname, 'lastname')
 		userEvent.type(username, 'username')
 		userEvent.type(email, 'user@example.com')
 		userEvent.type(password, 'somepassword')
-		userEvent.click(screen.getByTestId('signupBtn'))
+		userEvent.click(screen.getByTestId(DataTestKeys.signupBtn))
 
 		waitFor(() => {
 			expect(screen.getByText(/dashboard/i)).toBeInTheDocument()

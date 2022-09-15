@@ -8,6 +8,7 @@ import { Dispatch } from 'redux'
 
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
+import { DataTestKeys } from 'data-test-keys'
 
 import { recoverPassword, resetPassword } from './ResetPassword.api'
 import styles from './ResetPassword.module.css'
@@ -92,7 +93,7 @@ const ResetPassword = (): ReactElement => {
 				type="email"
 				error={errors.email}
 				placeholder="user@email.com"
-				dataTestId="email"
+				dataTestId={DataTestKeys.resetPasswordEmail}
 			/>
 		</div>
 	)
@@ -169,7 +170,7 @@ const ResetPassword = (): ReactElement => {
 			<Button
 				type="submit"
 				style="primary"
-				dataTestId="submitBtn"
+				dataTestId={DataTestKeys.resetPasswordSubmit}
 			>
 				<FormattedMessage id="recovery.password.reset" />
 			</Button>
@@ -179,7 +180,7 @@ const ResetPassword = (): ReactElement => {
 	const renderRecoverySuccessView = () => (
 		<div
 			className="text-center text-3xl"
-			data-testid="recoverySuccess"
+			data-testid={DataTestKeys.recoverySuccess}
 		>
 			{formatMessage({
 				id: "feedback.reset.password.email.sent"

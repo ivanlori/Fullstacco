@@ -1,38 +1,33 @@
-import { AnyAction, Store } from '@reduxjs/toolkit'
 import { screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
-import { createTestStore } from 'mocks/state'
-import { renderWithIntlProvider } from 'utils/testing-library-utils'
+import { DataTestKeys } from 'data-test-keys'
+import {
+	renderWithProviders
+} from 'utils/testing-library-utils'
 
 import Login from '../Login'
 
-let store: Store<unknown, AnyAction>
-
 describe('Login', () => {
 
-	beforeEach(() => {
-		store = createTestStore()
-	})
-
 	test('should login and go to dasboard page', () => {
-		renderWithIntlProvider(
-			<Provider store={store}>
-				<MemoryRouter>
-					<Login />
-				</MemoryRouter>
-			</Provider>
+		renderWithProviders(
+			<MemoryRouter>
+				<Login />
+			</MemoryRouter>,
+			{
+				withIntl: true
+			}
 		)
 
-		const email = screen.getByTestId('email')
-		const password = screen.getByTestId('password')
+		const email = screen.getByTestId(DataTestKeys.loginEmail)
+		const password = screen.getByTestId(DataTestKeys.loginPassword)
 
 		userEvent.type(email, 'user@email.com')
 		userEvent.type(password, 'somepassword')
-		userEvent.click(screen.getByTestId('submitBtn'))
+		userEvent.click(screen.getByTestId(DataTestKeys.loginSubmit))
 
 		waitFor(() => {
 			expect(screen.getByText(/dashboard/i)).toBeInTheDocument()

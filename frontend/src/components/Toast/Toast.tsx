@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { Dispatch } from 'redux'
 
 import { Icon } from 'components'
+import { DataTestKeys } from 'data-test-keys'
 
 import { toastHiddenAction } from './store/Toast.action'
 import styles from './Toast.module.css'
@@ -42,7 +43,11 @@ const Toast = ({ type, text }: Props): ReactElement => {
 	}, [])
 
 	return (
-		<div className={container} data-testid="toast">
+		<div
+			className={container}
+			data-testid={
+				type === SUCCESS ? DataTestKeys.feedbackSuccess : DataTestKeys.feedbackError
+			}>
 			<div className="p-2 text-center text-white">
 				<Icon icon={type === SUCCESS ? faCheck : faExclamation} />
 			</div>

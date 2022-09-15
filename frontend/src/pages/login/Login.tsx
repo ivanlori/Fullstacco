@@ -8,6 +8,7 @@ import { Dispatch } from 'redux'
 
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
+import { DataTestKeys } from 'data-test-keys'
 import { setIdUser } from 'pages/user/store/User.actions'
 
 import { login, IFormInput } from './Login.api'
@@ -80,7 +81,7 @@ const Login = (): ReactElement => {
 							name="email"
 							placeholder="user@email.com"
 							error={errors.email}
-							dataTestId="email"
+							dataTestId={DataTestKeys.loginEmail}
 						/>
 					</div>
 					<div className="mb-6">
@@ -97,7 +98,7 @@ const Login = (): ReactElement => {
 							name="password"
 							placeholder="**********"
 							error={errors.password}
-							dataTestId="password"
+							dataTestId={DataTestKeys.loginPassword}
 						/>
 					</div>
 					<div className="flex justify-between items-center">
@@ -110,7 +111,7 @@ const Login = (): ReactElement => {
 						<Button
 							style="primary"
 							type="submit"
-							dataTestId="submitBtn"
+							dataTestId={DataTestKeys.loginSubmit}
 						>
 							<FormattedMessage id="login" />
 						</Button>

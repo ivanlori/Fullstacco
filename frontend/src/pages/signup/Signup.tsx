@@ -8,6 +8,7 @@ import { Dispatch } from 'redux'
 
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
+import { DataTestKeys } from 'data-test-keys'
 
 import { signup, IFormInput } from './Signup.api'
 import styles from './Signup.module.css'
@@ -71,7 +72,7 @@ const Signup = (): ReactElement => {
 							type="text"
 							placeholder="Name"
 							error={errors.name}
-							dataTestId="name"
+							dataTestId={DataTestKeys.signupName}
 						/>
 					</div>
 					<div className="mb-6">
@@ -87,7 +88,7 @@ const Signup = (): ReactElement => {
 							type="text"
 							placeholder="Lastname"
 							error={errors.lastname}
-							dataTestId="lastname"
+							dataTestId={DataTestKeys.signupLastname}
 						/>
 					</div>
 					<div className="mb-6">
@@ -103,7 +104,7 @@ const Signup = (): ReactElement => {
 							type="text"
 							placeholder="Username"
 							error={errors.username}
-							dataTestId="username"
+							dataTestId={DataTestKeys.signupUsername}
 						/>
 					</div>
 					<div className="mb-6">
@@ -125,7 +126,7 @@ const Signup = (): ReactElement => {
 							type="text"
 							placeholder="Email address"
 							error={errors.email}
-							dataTestId="email"
+							dataTestId={DataTestKeys.signupEmail}
 						/>
 					</div>
 					<div className="mb-6">
@@ -141,7 +142,7 @@ const Signup = (): ReactElement => {
 							type="password"
 							placeholder="Password"
 							error={errors.password}
-							dataTestId="password"
+							dataTestId={DataTestKeys.signupPassword}
 						/>
 					</div>
 					<div className="flex justify-between items-center">
@@ -158,7 +159,7 @@ const Signup = (): ReactElement => {
 						<Button
 							type="submit"
 							style="primary"
-							dataTestId="signupBtn"
+							dataTestId={DataTestKeys.signupBtn}
 						>
 							<FormattedMessage id="signup" />
 						</Button>

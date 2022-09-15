@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { DataTestKeys } from 'data-test-keys'
 import { login, profile } from 'routes'
 import { IState } from 'types/state'
 
@@ -56,15 +57,19 @@ const Header = (): ReactElement => {
 					id="menu"
 					className="flex items-center"
 					onClick={() => setIsMenuOpen(!isMenuOpen)}
+					data-testid={DataTestKeys.dropdownMenu}
 				>
-					<span className="mr-3 cursor-pointer">
+					<span
+						className="mr-3 cursor-pointer"
+						data-testid={DataTestKeys.headerUsername}
+					>
 						{username}
 					</span>
 					<div className={styles.Badge}></div>
 				</div>
 				{isMenuOpen && (
 					<div
-						data-testid="user-dropdown"
+						data-testid={DataTestKeys.userDropdown}
 						className={styles.Dropdown}
 					>
 						<ul className="p-5">
@@ -73,6 +78,7 @@ const Header = (): ReactElement => {
 									to={profile}
 									className="w-full"
 									ref={refItem}
+									data-testid={DataTestKeys.profileDropdown}
 								>
 									{formatMessage({ id: 'view.profile' })}
 								</Link>
@@ -80,9 +86,9 @@ const Header = (): ReactElement => {
 							<li className={styles.MenuItem}>
 								<Link
 									to={login}
-									data-testid="logout_icon"
 									className="flex items-center"
 									onClick={() => localStorage.clear()}
+									data-testid={DataTestKeys.logoutDropdown}
 								>
 									{formatMessage({ id: 'logout' })}
 								</Link>

@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { useIntl } from 'react-intl'
 import { useSelector } from 'react-redux'
 
+import { DataTestKeys } from 'data-test-keys'
 import { IState } from 'types/state'
 
 import styles from './Profile.module.css'
@@ -26,30 +27,47 @@ const Profile = (): ReactElement => {
 							<div className={styles.Img}></div>
 							<div className="ml-4 flex flex-col">
 								<span className="flex items-center text-xl">
-									<span className={activeStyle}>
+									<span
+										className={activeStyle}
+										data-testid={DataTestKeys.profileStatus}
+									>
 										{user.isActive}
 									</span>
-									<span>{user.username}</span>
+									<span
+										data-testid={DataTestKeys.profileUsername}
+									>
+										{user.username}
+									</span>
 								</span>
 								<span>
 									<span className="text-gray_500">
 										{formatMessage({ id: "fullname" })}:
 									</span>
 									{' '}
-									<span>{user.name} {user.lastname}</span>
+									<span
+										data-testid={DataTestKeys.profileNameLastname}
+									>
+										{user.name} {user.lastname}
+									</span>
 								</span>
 								<span>
 									<span className="text-gray_500">
 										{formatMessage({ id: "email" })}:
 									</span>
 									{' '}
-									<span>{user.email}</span>
+									<span
+										data-testid={DataTestKeys.profileEmail}
+									>
+										{user.email}
+									</span>
 								</span>
 								<span>
 									<span className="text-gray_500">
 										{formatMessage({ id: 'role' })}: {' '}
 									</span>
-									<span>
+									<span
+										data-testid={DataTestKeys.profileRole}
+									>
 										{user.role === 0 ? 'Admin' : 'Account'}
 									</span>
 								</span>

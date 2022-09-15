@@ -1,72 +1,77 @@
-import { AnyAction, Store } from '@reduxjs/toolkit'
 import { screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
-import { createTestStore } from 'mocks/state'
-import { mockedUser } from 'mocks/user'
-import { renderWithIntlProvider } from 'utils/testing-library-utils'
+import { DataTestKeys } from 'data-test-keys'
+import { mockedAdminUser } from 'mocks/user'
+import {
+	renderWithProviders
+} from 'utils/testing-library-utils'
 
 import UserForm from '../_components/UserForm'
 
-let store: Store<unknown, AnyAction>
-
 describe('UserForm', () => {
 
-	beforeEach(() => {
-		store = createTestStore()
-	})
-
-	test('should display user edit page', () => {
-		renderWithIntlProvider(
-			<Provider store={store}>
-				<MemoryRouter>
-					<UserForm user={mockedUser} />
-				</MemoryRouter>
-			</Provider>
+	test('should display common fields', () => {
+		renderWithProviders(
+			<MemoryRouter>
+				<UserForm user={mockedAdminUser} />
+			</MemoryRouter>,
+			{
+				withIntl: true
+			}
 		)
 
-		const name = screen.getByTestId('name')
-		const lastname = screen.getByTestId('lastname')
-		const username = screen.getByTestId('username')
-		const email = screen.getByTestId('email')
-		const password = screen.queryByTestId('password')
-		const saveBtn = screen.getByTestId('saveBtn')
-		const deleteBtn = screen.getByTestId('deleteBtn')
+		const name = screen.getByTestId(DataTestKeys.userFormName)
+		const lastname = screen.getByTestId(DataTestKeys.userFormLastname)
+		const username = screen.getByTestId(DataTestKeys.userFormUsername)
+		const email = screen.getByTestId(DataTestKeys.userFormEmail)
 
 		expect(name).toBeInTheDocument()
 		expect(lastname).toBeInTheDocument()
 		expect(username).toBeInTheDocument()
 		expect(email).toBeInTheDocument()
+	})
+
+	test('should display user edit fields', () => {
+		renderWithProviders(
+			<MemoryRouter>
+				<UserForm user={mockedAdminUser} />
+			</MemoryRouter>,
+			{
+				withIntl: true
+			}
+		)
+
+		const password = screen.queryByTestId(DataTestKeys.userFormPassword)
+		const updateBtn = screen.getByTestId(DataTestKeys.userFormUpdate)
+		const saveBtn = screen.queryByTestId(DataTestKeys.userFormSave)
+		const deleteBtn = screen.getByTestId(DataTestKeys.userFormDelete)
+
 		expect(password).toBeNull()
-		expect(saveBtn).toBeInTheDocument()
+		expect(saveBtn).toBeNull()
+		expect(updateBtn).toBeInTheDocument()
 		expect(deleteBtn).toBeInTheDocument()
 	})
 
 	test('should display user create page', () => {
-		renderWithIntlProvider(
-			<Provider store={store}>
-				<MemoryRouter>
-					<UserForm user={null} />
-				</MemoryRouter>
-			</Provider>
+		renderWithProviders(
+			<MemoryRouter>
+				<UserForm user={null} />
+			</MemoryRouter>,
+			{
+				withIntl: true
+			}
 		)
 
-		const name = screen.getByTestId('name')
-		const lastname = screen.getByTestId('lastname')
-		const username = screen.getByTestId('username')
-		const email = screen.getByTestId('email')
-		const password = screen.getByTestId('password')
-		const saveBtn = screen.getByTestId('saveBtn')
-		const deleteBtn = screen.queryByTestId('deleteBtn')
+		const updateBtn = screen.queryByTestId(DataTestKeys.userFormUpdate)
+		const password = screen.getByTestId(DataTestKeys.userFormPassword)
+		const saveBtn = screen.getByTestId(DataTestKeys.userFormSave)
+		const deleteBtn = screen.queryByTestId(DataTestKeys.userFormDelete)
 
-		expect(name).toBeInTheDocument()
-		expect(lastname).toBeInTheDocument()
-		expect(username).toBeInTheDocument()
-		expect(email).toBeInTheDocument()
 		expect(password).toBeInTheDocument()
 		expect(saveBtn).toBeInTheDocument()
 		expect(deleteBtn).toBeNull()
+		expect(updateBtn).toBeNull()
 	})
 })

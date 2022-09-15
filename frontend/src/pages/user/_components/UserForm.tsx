@@ -9,6 +9,7 @@ import { Dispatch } from 'redux'
 
 import { Button, Loader, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
+import { DataTestKeys } from 'data-test-keys'
 import { IRoleSelection, IUserState } from 'types/user'
 import { getUserId, isAdmin } from 'utils/utils'
 
@@ -202,7 +203,7 @@ const UserForm = ({ user }: Props): ReactElement => {
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 						error={errors.name}
-						dataTestId="name"
+						dataTestId={DataTestKeys.userFormName}
 					/>
 				</div>
 				<div className="mb-4">
@@ -222,7 +223,7 @@ const UserForm = ({ user }: Props): ReactElement => {
 						value={lastname}
 						onChange={(e) => setLastname(e.target.value)}
 						error={errors.lastname}
-						dataTestId="lastname"
+						dataTestId={DataTestKeys.userFormLastname}
 					/>
 				</div>
 				<div className="mb-4">
@@ -242,7 +243,7 @@ const UserForm = ({ user }: Props): ReactElement => {
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 						error={errors.username}
-						dataTestId="username"
+						dataTestId={DataTestKeys.userFormUsername}
 					/>
 				</div>
 				<div className="mb-4">
@@ -269,7 +270,7 @@ const UserForm = ({ user }: Props): ReactElement => {
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						error={errors.email}
-						dataTestId="email"
+						dataTestId={DataTestKeys.userFormEmail}
 					/>
 				</div>
 				<div className="mb-4">
@@ -287,7 +288,7 @@ const UserForm = ({ user }: Props): ReactElement => {
 							value: e?.value,
 							label: e?.label
 						})}
-						data-testid="role"
+						data-testid={DataTestKeys.userFormRole}
 					/>
 				</div>
 				{!user && (
@@ -311,7 +312,7 @@ const UserForm = ({ user }: Props): ReactElement => {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							error={errors.password}
-							dataTestId="password"
+							dataTestId={DataTestKeys.userFormPassword}
 						/>
 					</div>
 				)}
@@ -322,7 +323,7 @@ const UserForm = ({ user }: Props): ReactElement => {
 							loading ? <Loader /> : <Button
 								onClick={onDeleteUser}
 								style="danger_outline"
-								dataTestId="deleteBtn"
+								dataTestId={DataTestKeys.userFormDelete}
 							>
 								<FormattedMessage
 									id="user.create.update.delete"
@@ -333,7 +334,9 @@ const UserForm = ({ user }: Props): ReactElement => {
 						style="primary"
 						type="submit"
 						loading={false}
-						dataTestId="saveBtn"
+						dataTestId={
+							user ? DataTestKeys.userFormUpdate : DataTestKeys.userFormSave
+						}
 					>
 						{user ? (
 							<FormattedMessage id="user.create.update.update" />

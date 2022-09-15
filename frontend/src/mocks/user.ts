@@ -1,6 +1,6 @@
 import { IUserState } from "types/user"
 
-export const mockedUser: IUserState = {
+export const mockedAdminUser: IUserState = {
 	email: 'user@email.com',
 	name: 'Adam',
 	lastname: 'Smith',
@@ -11,5 +11,10 @@ export const mockedUser: IUserState = {
 	id: '123',
 	role: 0,
 	isActive: false,
-	emailConfirmed: false
+	emailConfirmed: false,
+}
+
+export const mockedAccountUser: IUserState = {
+	...mockedAdminUser,
+	role: 1,
 }

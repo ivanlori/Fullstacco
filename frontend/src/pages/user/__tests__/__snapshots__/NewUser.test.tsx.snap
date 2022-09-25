@@ -15,7 +15,7 @@ exports[`NewUser should match snapshot 1`] = `
           class="bg-white text-gray_900 rounded-xl p-5 m-10"
         >
           <div
-            class="p-10"
+            class="px-8"
           >
             <div
               class="flex justify-between mb-5"

@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Profile /> should match snapshot 1`] = `
+<div>
+  <div
+    class="lg:pl-24"
+  >
+    <div
+      class="xl:mx-auto flex"
+    >
+      <div
+        class="flex flex-col w-full"
+      >
+        <div
+          class="bg-white text-gray_900 rounded-xl p-5 m-10"
+        >
+          <div
+            class="flex"
+          >
+            <div
+              class="w-1/5"
+            >
+              <label
+                for="photo"
+              >
+                <div
+                  class="PhotoWrapper"
+                >
+                  <img
+                    alt="Your photo profile"
+                    src="some_url"
+                  />
+                  <button
+                    class="Btn BtnDangerOutline"
+                    data-testid="remove-photo-btn"
+                    type="button"
+                  >
+                    Remove photo
+                  </button>
+                </div>
+                <input
+                  class="Upload"
+                  id="photo"
+                  name="photo"
+                  type="file"
+                />
+              </label>
+            </div>
+            <div
+              class="w-4/5"
+            >
+              <h2>
+                My Profile
+              </h2>
+              <ul>
+                <li>
+                  Name
+                  : 
+                  Adam
+                </li>
+                <li>
+                  Lastname
+                  : 
+                  Smith
+                </li>
+                <li>
+                  Email
+                  : 
+                  user@email.com
+                </li>
+                <li>
+                  Username
+                  : 
+                  Adam123
+                </li>
+                <li>
+                  Role
+                  : 
+                  Admin
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,7 +1,5 @@
-import React from 'react'
-
 import { configureStore } from '@reduxjs/toolkit'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
@@ -28,17 +26,18 @@ const intl = createIntl({
 	messages: enMsg,
 }, cache)
 
-ReactDOM.render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<BrowserRouter>
-				<RawIntlProvider value={intl}>
-					<App />
-				</RawIntlProvider>
-			</BrowserRouter>
-		</Provider>
-	</React.StrictMode>,
-	document.getElementById('root'),
+const container = document.getElementById('root')
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!)
+
+root.render(
+	<Provider store={store}>
+		<BrowserRouter>
+			<RawIntlProvider value={intl}>
+				<App />
+			</RawIntlProvider>
+		</BrowserRouter>
+	</Provider>
 )
 
 // If you want to start measuring performance in your app, pass a function

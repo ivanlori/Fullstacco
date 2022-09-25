@@ -10,6 +10,12 @@
 		"plugin:@typescript-eslint/recommended"
 	],
 	"settings": {
+		"import/parsers": {
+			"@typescript-eslint/parser": [
+				".ts",
+				".tsx"
+			]
+		},
 		"import/resolver": {
 			"node": {
 				"extensions": [
@@ -22,7 +28,8 @@
 				]
 			},
 			"typescript": {
-				"alwaysTryTypes": true
+				"alwaysTryTypes": true,
+				"paths": "./tsconfig.json"
 			}
 		},
 		"react": {
@@ -40,7 +47,8 @@
 	"plugins": [
 		"@typescript-eslint",
 		"jest",
-		"import"
+		"import",
+		"react-hooks"
 	],
 	"overrides": [
 		{
@@ -101,7 +109,9 @@
 					"caseInsensitive": true
 				}
 			}
-		]
+		],
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "error"
 	},
 	"ignorePatterns": [
 		"node_modules",

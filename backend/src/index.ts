@@ -13,12 +13,15 @@ import usersRouter from './routes/users'
 
 const app = express()
 
+const frontendPath = process.env.ROOT_FRONTEND_FOLDER_ABSOLUTE_PATH
+
 const corsOptions = {
 	origin: process.env.CLIENT_DOMAIN,
 }
 
 app.use(cors(corsOptions))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static(`${frontendPath}/public`))
 
 // support parsing of application/json type post data
 app.use(bodyParser.json())

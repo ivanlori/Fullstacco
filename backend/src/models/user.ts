@@ -14,6 +14,7 @@ export interface IUser {
 	role: number,
 	createdAt: Date,
 	updatedAt: Date,
+	photoUrl: string
 	resetToken: string | null,
 	resetTokenExpiration: Date | undefined,
 	save: () => void
@@ -49,7 +50,14 @@ const userSchema = new Schema({
 		default: true
 	},
 	role: Number,
-	createdAt: Date,
+	createdAt: {
+		type: Date,
+		default: Date.now()
+	},
+	photoUrl: {
+		type: String,
+		required: false
+	},
 	updatedAt: Date,
 	resetToken: String,
 	resetTokenExpiration: Date,

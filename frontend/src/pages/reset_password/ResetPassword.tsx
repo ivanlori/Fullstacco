@@ -91,7 +91,7 @@ const ResetPassword = (): ReactElement => {
 				})}
 				name="email"
 				type="email"
-				error={errors.email}
+				error={errors.email?.message}
 				placeholder="user@email.com"
 				dataTestId={DataTestKeys.resetPasswordEmail}
 			/>
@@ -114,7 +114,7 @@ const ResetPassword = (): ReactElement => {
 							id: 'recovery.password.your.new.password'
 						})
 					}
-					error={errors.password}
+					error={errors.password?.message}
 				/>
 			</div>
 			<div className="mb-6">
@@ -139,7 +139,7 @@ const ResetPassword = (): ReactElement => {
 							id: 'recovery.password.repeat.password'
 						})
 					}
-					error={errors.repeatPassword}
+					error={errors.repeatPassword?.message}
 				/>
 			</div>
 		</>

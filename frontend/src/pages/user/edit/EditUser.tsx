@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
+import { Loader } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 
 import UserForm from '../_components/UserForm'
@@ -13,6 +14,7 @@ import { getUser } from '../User.api'
 const EditUser = (): ReactElement => {
 	const { id } = useParams()
 	const { formatMessage } = useIntl()
+	const [loading, setLoading] = useState(true)
 	const dispatch = useDispatch<Dispatch>()
 	const [user, setUser] = useState(null)
 
@@ -30,6 +32,7 @@ const EditUser = (): ReactElement => {
 					formatMessage({ id: "feedback.general.error" }), 'error')
 				)
 			}
+			setLoading(false)
 		})()
 	}, [dispatch, formatMessage, id])
 
@@ -38,12 +41,15 @@ const EditUser = (): ReactElement => {
 			<div className="xl:mx-auto flex">
 				<div className="flex flex-col w-full">
 					<div className="bg-white text-gray_900 rounded-xl p-5 m-10">
-						<UserForm
-							user={user}
-							title={formatMessage({
-								id: 'user.create.update.title.update'
-							})}
-						/>
+						{loading ? <Loader />
+							: (
+								<UserForm
+									user={user}
+									title={formatMessage({
+										id: 'user.create.update.title.update'
+									})}
+								/>
+							)}
 					</div>
 				</div>
 			</div>

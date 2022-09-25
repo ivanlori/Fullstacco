@@ -80,7 +80,7 @@ const Login = (): ReactElement => {
 							type="email"
 							name="email"
 							placeholder="user@email.com"
-							error={errors.email}
+							error={errors.email?.message}
 							dataTestId={DataTestKeys.loginEmail}
 						/>
 					</div>
@@ -97,7 +97,7 @@ const Login = (): ReactElement => {
 							type="password"
 							name="password"
 							placeholder="**********"
-							error={errors.password}
+							error={errors.password?.message}
 							dataTestId={DataTestKeys.loginPassword}
 						/>
 					</div>

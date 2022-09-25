@@ -1,19 +1,16 @@
 import { ChangeEvent, forwardRef, LegacyRef, ReactElement } from 'react'
 
 import cn from 'classnames'
-import { FieldError } from 'react-hook-form'
 
 import styles from './Input.module.css'
 
 interface Props {
 	type?: 'text' | 'password' | 'email'
-	required?: boolean
 	disabled?: boolean
 	name?: string
-	editOnClick?: () => void
 	value?: string | number
 	placeholder?: string
-	error: FieldError | undefined
+	error: string | undefined,
 	dataTestId?: string
 	onChange?: (arg0: ChangeEvent<HTMLInputElement>) => void
 }
@@ -26,10 +23,8 @@ const Input = forwardRef(({
 	onChange,
 	name,
 	error,
-	dataTestId
-}: Props,
-	ref: LegacyRef<HTMLInputElement> | undefined
-): ReactElement => {
+	dataTestId,
+}: Props, ref: LegacyRef<HTMLInputElement> | undefined): ReactElement => {
 
 	const inputStyle = cn(styles.Input, {
 		[styles.WithError]: error
@@ -48,11 +43,9 @@ const Input = forwardRef(({
 				className={inputStyle}
 				data-testid={dataTestId}
 			/>
-			{error && <span className={styles.Error}>{error.message}</span>}
+			{error && <span className={styles.Error}>{error}</span>}
 		</div>
 	)
 })
-
-Input.displayName = 'Input'
 
 export default Input

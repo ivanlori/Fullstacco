@@ -71,7 +71,7 @@ const Signup = (): ReactElement => {
 							})}
 							type="text"
 							placeholder="Name"
-							error={errors.name}
+							error={errors.name?.message}
 							dataTestId={DataTestKeys.signupName}
 						/>
 					</div>
@@ -87,7 +87,7 @@ const Signup = (): ReactElement => {
 							})}
 							type="text"
 							placeholder="Lastname"
-							error={errors.lastname}
+							error={errors.lastname?.message}
 							dataTestId={DataTestKeys.signupLastname}
 						/>
 					</div>
@@ -103,7 +103,7 @@ const Signup = (): ReactElement => {
 							})}
 							type="text"
 							placeholder="Username"
-							error={errors.username}
+							error={errors.username?.message}
 							dataTestId={DataTestKeys.signupUsername}
 						/>
 					</div>
@@ -125,7 +125,7 @@ const Signup = (): ReactElement => {
 							})}
 							type="text"
 							placeholder="Email address"
-							error={errors.email}
+							error={errors.email?.message}
 							dataTestId={DataTestKeys.signupEmail}
 						/>
 					</div>
@@ -141,7 +141,7 @@ const Signup = (): ReactElement => {
 							})}
 							type="password"
 							placeholder="Password"
-							error={errors.password}
+							error={errors.password?.message}
 							dataTestId={DataTestKeys.signupPassword}
 						/>
 					</div>

@@ -11,6 +11,7 @@ import { Button, Loader, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
 import { IProfileState, IRoleSelection, IUserState } from 'types/profile'
+import { isEmail } from 'utils/utils'
 
 import { createUser, deleteUser, updateUser } from '../User.api'
 
@@ -156,12 +157,12 @@ const UserForm = ({
 								message: formatMessage({
 									id: "form.validation.empty.name"
 								})
-							}
+							},
+							onChange: (e) => setName(e.target.value),
 						})}
 						name={NAME}
 						value={name}
-						onChange={(e) => setName(e.target.value)}
-						error={errors.name}
+						error={errors.name?.message}
 						dataTestId={DataTestKeys.userFormName}
 					/>
 				</div>
@@ -176,12 +177,12 @@ const UserForm = ({
 									id: "form.validation.empty.lastname"
 								}),
 								value: !lastname
-							}
+							},
+							onChange: (e) => setLastname(e.target.value),
 						})}
 						name={LASTNAME}
 						value={lastname}
-						onChange={(e) => setLastname(e.target.value)}
-						error={errors.lastname}
+						error={errors.lastname?.message}
 						dataTestId={DataTestKeys.userFormLastname}
 					/>
 				</div>
@@ -196,12 +197,12 @@ const UserForm = ({
 									id: "form.validation.empty.username"
 								}),
 								value: !username
-							}
+							},
+							onChange: (e) => setUsername(e.target.value),
 						})}
 						name={USERNAME}
 						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						error={errors.username}
+						error={errors.username?.message}
 						dataTestId={DataTestKeys.userFormUsername}
 					/>
 				</div>
@@ -217,18 +218,16 @@ const UserForm = ({
 								}),
 								value: !email,
 							},
-							pattern: {
-								message: formatMessage({
-									id: "form.validation.notvalid.email"
-								}),
-								value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-							}
+							onChange: (e) => setEmail(e.target.value),
+							validate: value => isEmail(value),
 						})}
-						type="email"
+						type="text"
 						name={EMAIL}
 						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						error={errors.email}
+						error={
+							errors.email?.type === 'validate' ? formatMessage({
+								id: "form.validation.notvalid.email"
+							}) : errors.email?.message}
 						dataTestId={DataTestKeys.userFormEmail}
 					/>
 				</div>
@@ -264,13 +263,13 @@ const UserForm = ({
 										id: "form.validation.empty.password"
 									}),
 									value: !password
-								}
+								},
+								onChange: (e) => setPassword(e.target.value),
 							})}
 							type="password"
 							name={PASSWORD}
 							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							error={errors.password}
+							error={errors.password?.message}
 							dataTestId={DataTestKeys.userFormPassword}
 						/>
 					</div>
@@ -295,11 +294,9 @@ const UserForm = ({
 							user ? DataTestKeys.userFormUpdate : DataTestKeys.userFormSave
 						}
 					>
-						{user ? (
-							<FormattedMessage id="user.create.update.update" />
-						) : (
-							<FormattedMessage id="user.create.update.save" />
-						)}
+						<FormattedMessage
+							id={`user.create.update.${user ? 'update' : 'save'}`}
+						/>
 					</Button>
 				</div>
 			</form>

@@ -4,7 +4,7 @@
 	@apply items-center;
 	@apply justify-center;
 	@apply space-x-2;
-	@apply h-screen;
+	@apply h-80;
 }
 
 .Container.Small {

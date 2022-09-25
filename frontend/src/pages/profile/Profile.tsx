@@ -1,76 +1,55 @@
 import { ReactElement } from 'react'
 
-import classNames from 'classnames'
-import { useIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import { useSelector } from 'react-redux'
 
-import { DataTestKeys } from 'data-test-keys'
 import { IState } from 'types/state'
+import { getRoleLabelId } from 'utils/utils'
 
-import styles from './Profile.module.css'
+import Photo from './_components/photo/Photo'
 
 const Profile = (): ReactElement => {
-	const user = useSelector((state: IState) => state.user)
-	const { formatMessage } = useIntl()
-
-	const activeStyle = classNames('rounded-full w-4 h-4 mr-2', {
-		"bg-green_primary": user.isActive,
-		"bg-magenta_dark": !user.isActive
-	})
+	const {
+		email,
+		lastname,
+		name,
+		photoUrl,
+		username,
+		role,
+		id
+	} = useSelector((state: IState) => state.profile)
 
 	return (
 		<div className="lg:pl-24">
-			<div className="xl:mx-auto flex" >
+			<div className="xl:mx-auto flex">
 				<div className="flex flex-col w-full">
 					<div className="bg-white text-gray_900 rounded-xl p-5 m-10">
 						<div className="flex">
-							<div className={styles.Img}></div>
-							<div className="ml-4 flex flex-col">
-								<span className="flex items-center text-xl">
-									<span
-										className={activeStyle}
-										data-testid={DataTestKeys.profileStatus}
-									>
-										{user.isActive}
-									</span>
-									<span
-										data-testid={DataTestKeys.profileUsername}
-									>
-										{user.username}
-									</span>
-								</span>
-								<span>
-									<span className="text-gray_500">
-										{formatMessage({ id: "fullname" })}:
-									</span>
-									{' '}
-									<span
-										data-testid={DataTestKeys.profileNameLastname}
-									>
-										{user.name} {user.lastname}
-									</span>
-								</span>
-								<span>
-									<span className="text-gray_500">
-										{formatMessage({ id: "email" })}:
-									</span>
-									{' '}
-									<span
-										data-testid={DataTestKeys.profileEmail}
-									>
-										{user.email}
-									</span>
-								</span>
-								<span>
-									<span className="text-gray_500">
-										{formatMessage({ id: 'role' })}: {' '}
-									</span>
-									<span
-										data-testid={DataTestKeys.profileRole}
-									>
-										{user.role === 0 ? 'Admin' : 'Account'}
-									</span>
-								</span>
+							<div className="w-1/5">
+								<Photo
+									id={id as string}
+									photoUrl={photoUrl}
+								/>
+							</div>
+							<div className="w-4/5">
+								<h2><FormattedMessage id="profile.title" /></h2>
+								<ul>
+									<li>
+										<FormattedMessage id="name" />: {name}
+									</li>
+									<li>
+										<FormattedMessage id="lastname" />: {lastname}
+									</li>
+									<li>
+										<FormattedMessage id="email" />: {email}
+									</li>
+									<li>
+										<FormattedMessage id="username" />: {username}
+									</li>
+									<li>
+										<FormattedMessage id="role" />: <FormattedMessage id={getRoleLabelId(Number(role))} />
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>

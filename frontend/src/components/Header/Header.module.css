@@ -52,7 +52,7 @@
 	@apply top-14;
 }
 
-.Badge {
+.PhotoPlaceholder {
 	background: grey 0% 0% no-repeat padding-box;
 	width: 2.5rem;
 	height: 2.5rem;
@@ -61,4 +61,14 @@
 	@apply justify-center;
 	@apply rounded-full;
 	@apply cursor-pointer;
+}
+
+.Photo {
+	background-image: url('/public/images/photo-profile.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	width: 2.5rem;
+	height: 2.5rem;
+	@apply rounded-full;
 }

@@ -3,4 +3,30 @@
 	@apply w-20;
 	@apply h-20;
 	@apply bg-gray_500;
+	@apply flex;
+	@apply justify-center;
+	@apply items-center;
+	@apply cursor-pointer;
+	@apply flex-col;
+	@apply text-center;
+}
+
+.Img span {
+	@apply text-white;
+	@apply text-xs;
+	@apply mt-2;
+}
+
+.Img span:hover {
+	@apply underline;
+}
+
+.PhotoWrapper {
+	@apply rounded-full;
+	@apply w-20;
+	@apply h-20;
+}
+
+.Upload {
+	@apply hidden;
 }

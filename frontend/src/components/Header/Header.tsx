@@ -16,7 +16,10 @@ const Header = (): ReactElement => {
 	const navigate = useNavigate()
 	const ref = useRef<HTMLDivElement>(null)
 	const refItem = useRef<HTMLAnchorElement>(null)
-	const username = useSelector((state: IState) => state.user.username)
+	const {
+		username,
+		photoUrl
+	} = useSelector((state: IState) => state.profile)
 
 	useEffect(() => {
 		const checkIfClickedOutside = (e: MouseEvent) => {
@@ -43,7 +46,7 @@ const Header = (): ReactElement => {
 		return () => {
 			document.removeEventListener('mousedown', checkIfClickedOutside)
 		}
-	}, [isMenuOpen])
+	}, [isMenuOpen, navigate])
 
 	return (
 		<nav className={styles.Nav} ref={ref}>
@@ -55,24 +58,28 @@ const Header = (): ReactElement => {
 				</div>
 				<div
 					id="menu"
-					className="flex items-center"
+					className="flex items-center cursor-pointer"
 					onClick={() => setIsMenuOpen(!isMenuOpen)}
 					data-testid={DataTestKeys.dropdownMenu}
 				>
 					<span
-						className="mr-3 cursor-pointer"
+						className="mr-3"
 						data-testid={DataTestKeys.headerUsername}
 					>
 						{username}
 					</span>
-					<div className={styles.Badge}></div>
+					{photoUrl ?
+						<div className={styles.Photo}></div>
+						:
+						<div className={styles.PhotoPlaceholder}></div>
+					}
 				</div>
 				{isMenuOpen && (
 					<div
 						data-testid={DataTestKeys.userDropdown}
 						className={styles.Dropdown}
 					>
-						<ul className="p-5">
+						<ul className="p-3">
 							<li className={styles.MenuItem}>
 								<Link
 									to={profile}

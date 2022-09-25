@@ -41,5 +41,7 @@ export const DataTestKeys = {
 	userFormDelete: 'user-form-delete',
 	userFormSave: 'user-form-save',
 	userFormRole: 'user-form-role',
-	userFormUpdate: 'user-form-update'
+	userFormUpdate: 'user-form-update',
+	removePhotoBtn: 'remove-photo-btn',
+	uploadPhoto: 'upload-photo'
 }

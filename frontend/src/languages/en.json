@@ -32,7 +32,6 @@
 	"user.create.update.username": "Username",
 	"user.create.update.email": "Email",
 	"user.create.update.password": "Password",
-	"user.create.update.current.user": "Current user",
 	"feedback.user.created": "User created",
 	"feedback.user.updated": "User updated",
 	"feedback.user.deleted": "User deleted",
@@ -52,5 +51,15 @@
 	"fullname": "Fullname",
 	"email": "Email",
 	"logout": "Logout",
-	"view.profile": "View Profile"
+	"lastname": "Lastname",
+	"name": "Name",
+	"username": "Username",
+	"view.profile": "View Profile",
+	"remove.photo.profile": "Remove photo",
+	"upload.photo": "Upload photo",
+	"photo.profile.alt": "Your photo profile",
+	"profile.title": "My Profile",
+	"role.admin": "Admin",
+	"role.superAdmin": "Super Admin",
+	"role.account": "Account"
 }

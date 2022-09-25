@@ -1,0 +1,38 @@
+.Placeholder {
+	@apply rounded-full;
+	@apply w-36;
+	@apply h-36;
+	@apply bg-gray_500;
+	@apply cursor-pointer;
+	@apply flex;
+	@apply flex-col;
+	@apply items-center;
+	@apply justify-center;
+	@apply m-auto;
+}
+
+.Placeholder span {
+	@apply text-white;
+	@apply text-xs;
+	@apply mt-2;
+}
+
+.Placeholder span:hover {
+	@apply underline;
+}
+
+.PhotoWrapper {
+	@apply flex;
+	@apply flex-col;
+	@apply items-center;
+	@apply justify-center;
+}
+
+.PhotoWrapper img {
+	@apply w-36;
+	@apply h-36;
+}
+
+.Upload {
+	@apply hidden;
+}

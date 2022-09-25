@@ -10,11 +10,9 @@ import { Dispatch } from 'redux'
 import { Button, Loader, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
-import { IRoleSelection, IUserState } from 'types/user'
-import { getUserId, isAdmin } from 'utils/utils'
+import { IProfileState, IRoleSelection, IUserState } from 'types/profile'
 
 import { createUser, deleteUser, updateUser } from '../User.api'
-import styles from './UserForm.module.css'
 
 interface IFormInput {
 	name: string
@@ -26,7 +24,8 @@ interface IFormInput {
 }
 
 interface Props {
-	user?: IUserState | null
+	user: IProfileState | null
+	title: string
 }
 
 const options = [
@@ -41,7 +40,10 @@ const EMAIL = 'email'
 const USERNAME = 'username'
 const ROLE = 'role'
 
-const UserForm = ({ user }: Props): ReactElement => {
+const UserForm = ({
+	user,
+	title
+}: Props): ReactElement => {
 	const {
 		formatMessage
 	} = useIntl()
@@ -49,26 +51,16 @@ const UserForm = ({ user }: Props): ReactElement => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch<Dispatch>()
 	const [loading, setLoading] = useState(false)
-	const [name, setName] = useState('')
-	const [lastname, setLastname] = useState('')
-	const [email, setEmail] = useState('')
-	const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+	const [name, setName] = useState(user?.name)
+	const [lastname, setLastname] = useState(user?.lastname)
+	const [email, setEmail] = useState(user?.email)
+	const [username, setUsername] = useState(user?.username)
+	const [password, setPassword] = useState(user?.password)
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<IFormInput>({
-		mode: 'onChange',
-		defaultValues: {
-			email: user?.email || '',
-			lastname: user?.lastname || '',
-			name: user?.name || '',
-			username: user?.username || '',
-		}
-	})
-
-	const isOwner = user?.id === getUserId()
+	} = useForm<IFormInput>()
 
 	const handleResult = (status: number | undefined, successLabel: string) => {
 		if (status === 201) {
@@ -88,32 +80,36 @@ const UserForm = ({ user }: Props): ReactElement => {
 
 	const onSubmit: SubmitHandler<IFormInput> = async () => {
 
-		const data: IUserState = {
-			email,
-			lastname,
-			name,
-			username,
+		const data: IProfileState = {
+			email: email as string,
+			lastname: lastname as string,
+			name: name as string,
+			username: username as string,
 			role: roleSelected.value,
-			isActive: true,
+			photoUrl: '',
 			emailConfirmed: user ? user.emailConfirmed : false,
 		}
 
 		if (user) {
-			const payload = {
+			const payload: IProfileState = {
 				...data,
 				id: user.id,
 				updatedAt: new Date().toISOString(),
 			}
+
 			const { status } = await updateUser(payload)
 
 			handleResult(status, "feedback.user.updated")
 		} else {
+			const payload: IUserState = {
+				...data,
+				isActive: true,
+				password
+			}
+
 			const {
 				status
-			} = await createUser({
-				...data,
-				password
-			})
+			} = await createUser(payload)
 
 			handleResult(status, "feedback.user.created")
 		}
@@ -130,30 +126,6 @@ const UserForm = ({ user }: Props): ReactElement => {
 	}
 
 	useEffect(() => {
-		if (user?.name) {
-			setName(user.name)
-		}
-	}, [user?.name])
-
-	useEffect(() => {
-		if (user?.username) {
-			setUsername(user.username)
-		}
-	}, [user?.username])
-
-	useEffect(() => {
-		if (user?.email) {
-			setEmail(user.email)
-		}
-	}, [user?.email])
-
-	useEffect(() => {
-		if (user?.lastname) {
-			setLastname(user.lastname)
-		}
-	}, [user?.lastname])
-
-	useEffect(() => {
 		if (user?.role) {
 			setRoleSelected({
 				value: user.role,
@@ -163,24 +135,11 @@ const UserForm = ({ user }: Props): ReactElement => {
 	}, [user?.role])
 
 	return (
-		<div className="p-10">
+		<div className="px-8">
 			<div className="flex justify-between mb-5">
 				<h1 className="text-2xl font-medium">
-					{user ? (
-						<FormattedMessage id="user.create.update.title.update" />
-					) : (
-						<FormattedMessage id="user.create.update.title.create" />
-					)}
+					{title}
 				</h1>
-				{
-					isOwner && (
-						<div className={styles.CurrentUser}>
-							<span>
-								{formatMessage({ id: 'user.create.update.current.user' })}
-							</span>
-						</div>
-					)
-				}
 			</div>
 			<form
 				className="text-gray_900"
@@ -317,19 +276,17 @@ const UserForm = ({ user }: Props): ReactElement => {
 					</div>
 				)}
 				<div className="flex justify-end">
-					{user &&
-						isAdmin(user) &&
-						!isOwner && (
-							loading ? <Loader /> : <Button
-								onClick={onDeleteUser}
-								style="danger_outline"
-								dataTestId={DataTestKeys.userFormDelete}
-							>
-								<FormattedMessage
-									id="user.create.update.delete"
-								/>
-							</Button>
-						)}
+					{user && (
+						loading ? <Loader /> : <Button
+							onClick={onDeleteUser}
+							style="danger_outline"
+							dataTestId={DataTestKeys.userFormDelete}
+						>
+							<FormattedMessage
+								id="user.create.update.delete"
+							/>
+						</Button>
+					)}
 					<Button
 						style="primary"
 						type="submit"

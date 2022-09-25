@@ -40,7 +40,7 @@ const Toast = ({ type, text }: Props): ReactElement => {
 		setTimeout(() => {
 			dispatch(toastHiddenAction())
 		}, 4000)
-	}, [])
+	}, [dispatch])
 
 	return (
 		<div

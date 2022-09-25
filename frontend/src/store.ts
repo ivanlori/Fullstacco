@@ -2,11 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import type { PreloadedState } from '@reduxjs/toolkit'
 
 import toast from 'components/Toast/store/Toast.reducer'
-import user from 'pages/user/store/User.reducer'
+import profile from 'pages/profile/store/Profile.reducer'
 
 const rootReducer = combineReducers({
-	user,
-	toast
+	toast,
+	profile
 })
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {

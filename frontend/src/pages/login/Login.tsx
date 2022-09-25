@@ -9,7 +9,7 @@ import { Dispatch } from 'redux'
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
-import { setIdUser } from 'pages/user/store/User.actions'
+import { setIdProfile } from 'pages/profile/store/Profile.actions'
 
 import { login, IFormInput } from './Login.api'
 import styles from './Login.module.css'
@@ -35,7 +35,7 @@ const Login = (): ReactElement => {
 		if (status === 200) {
 			localStorage.setItem('tk', data.token)
 			localStorage.setItem('userId', data.userId)
-			dispatch(setIdUser(data.userId))
+			dispatch(setIdProfile(data.userId))
 			navigate('/')
 		} else if (status === 401) {
 			if (data.message === 'wrong_password') {

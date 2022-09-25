@@ -14,7 +14,7 @@ const EditUser = (): ReactElement => {
 	const { id } = useParams()
 	const { formatMessage } = useIntl()
 	const dispatch = useDispatch<Dispatch>()
-	const [user, setUser] = useState()
+	const [user, setUser] = useState(null)
 
 	useEffect(() => {
 		(async () => {
@@ -31,14 +31,19 @@ const EditUser = (): ReactElement => {
 				)
 			}
 		})()
-	}, [])
+	}, [dispatch, formatMessage, id])
 
 	return (
 		<div className="lg:pl-24">
 			<div className="xl:mx-auto flex">
 				<div className="flex flex-col w-full">
 					<div className="bg-white text-gray_900 rounded-xl p-5 m-10">
-						<UserForm user={user} />
+						<UserForm
+							user={user}
+							title={formatMessage({
+								id: 'user.create.update.title.update'
+							})}
+						/>
 					</div>
 				</div>
 			</div>

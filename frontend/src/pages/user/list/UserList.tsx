@@ -1,5 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react'
 
+import classNames from 'classnames'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -8,54 +9,51 @@ import { Dispatch } from 'redux'
 import { Button, Loader } from 'components'
 import { Pen } from 'components/Icon/svg/icons'
 import { displayToast } from 'components/Toast/store/Toast.action'
+import { DataTestKeys } from 'data-test-keys'
 import { editUser, fullPathNewUser } from 'routes'
+import { IUserState } from 'types/profile'
 import { IState } from 'types/state'
-import { IUserState } from 'types/user'
 import { isAdmin } from 'utils/utils'
 
 import { getUsers } from '../User.api'
 import styles from './UserList.module.css'
 
 const UserList = (): ReactElement => {
-	const userState = useSelector((state: IState) => state.user)
+	const profileState = useSelector((state: IState) => state.profile)
 	const dispatch = useDispatch<Dispatch>()
 	const { formatMessage } = useIntl()
 	const [loading, setLoading] = useState(true)
-
 	const navigate = useNavigate()
-	const [users, setUsers] = useState<IUserState[]>([{
-		updatedAt: new Date().toISOString(),
-		createdAt: new Date().toISOString(),
-		email: '',
-		id: '',
-		lastname: '',
-		name: '',
-		username: '',
-		password: '',
-		role: 0,
-		isActive: false,
-		emailConfirmed: false
-	}])
+	const [users, setUsers] = useState<IUserState[]>([])
 
 	useEffect(() => {
-		(async () => {
-			const {
-				data,
-				status
-			} = await getUsers()
+		if (users.length === 0) {
+			(async () => {
+				const {
+					data,
+					status
+				} = await getUsers()
 
-			if (status === 200) {
-				setUsers(data)
+				if (status === 200) {
+					setUsers(data)
+				} else {
+					dispatch(displayToast(
+						formatMessage({ id: "feedback.general.error" }), 'error')
+					)
+				}
 				setLoading(false)
-			} else {
-				dispatch(displayToast(
-					formatMessage({ id: "feedback.general.error" }), 'error')
-				)
-			}
-		})()
-	}, [])
+			})()
+		}
+	}, [dispatch, formatMessage, users])
 
 	const createUserPage = () => navigate(fullPathNewUser)
+
+	const statusStyle = (user: IUserState) => {
+		return classNames({
+			['bg-green_light']: user.isActive,
+			['bg-ochre_dark']: !user.isActive
+		})
+	}
 
 	const renderTable = () => (
 		<table className="min-w-full">
@@ -79,40 +77,58 @@ const UserList = (): ReactElement => {
 				</tr>
 			</thead>
 			<tbody>
-				{users.map((user: IUserState) => (
-					<tr
-						className="border-b"
-						key={user.id}
-					>
-						<td className={styles.CellBody}>
-							{user.name}
-						</td>
-						<td className={styles.CellBody}>
-							{user.lastname}
-						</td>
-						<td className={styles.CellBody}>
-							{user.email}
-						</td>
-						<td className={`${styles.CellBody} ${styles.Status}`}>
-							<span
-								className={user.isActive ? 'bg-green_light' : 'bg-ochre_dark'}
-							></span>
-						</td>
-						<td className={styles.CellBody}>
-							<span>{user.createdAt}</span>
-						</td>
-						<td className={`${styles.CellBody} ${styles.Edit}`}>
-							<Pen
-								width={15}
-								height={15}
-								onClick={() => {
-									navigate(`/users/${user.id}/${editUser}`)
-								}}
-								data-testid="editIcon"
-							/>
-						</td>
-					</tr>
-				))}
+				{users
+					.filter((user) => user.id !== profileState.id)
+					.map((user: IUserState) => (
+						<tr
+							className="border-b"
+							key={user.id}
+							data-testid={DataTestKeys.rowUser}
+						>
+							<td
+								className={styles.CellBody}
+								data-testid={DataTestKeys.rowUserName}
+							>
+								{user.name}
+							</td>
+							<td
+								className={styles.CellBody}
+								data-testid={DataTestKeys.rowUserLastname}
+							>
+								{user.lastname}
+							</td>
+							<td
+								className={styles.CellBody}
+								data-testid={DataTestKeys.rowUserEmail}
+							>
+								{user.email}
+							</td>
+							<td
+								className={`${styles.CellBody} ${styles.Status}`}
+								data-testid={DataTestKeys.rowUserStatus}
+							>
+								<span
+									className={statusStyle(user)}
+								></span>
+							</td>
+							<td
+								className={styles.CellBody}
+								data-testid={DataTestKeys.rowUserCreatedAt}
+							>
+								<span>{user.createdAt}</span>
+							</td>
+							<td className={`${styles.CellBody} ${styles.Edit}`}>
+								<Pen
+									width={15}
+									height={15}
+									onClick={() => {
+										navigate(`/users/${user.id}/${editUser}`)
+									}}
+									data-testid={DataTestKeys.editIcon}
+								/>
+							</td>
+						</tr>
+					))}
 			</tbody>
 		</table>
 	)
@@ -126,11 +142,11 @@ const UserList = (): ReactElement => {
 							<h5 className="text-2xl">
 								<FormattedMessage id="userlist.title" />
 							</h5>
-							{isAdmin(userState) && (
+							{isAdmin(profileState) && (
 								<Button
 									style="primary"
 									onClick={createUserPage}
-									dataTestId="newUserBtn"
+									dataTestId={DataTestKeys.newUserBtn}
 								>
 									<FormattedMessage id="userlist.new.user" />
 								</Button>

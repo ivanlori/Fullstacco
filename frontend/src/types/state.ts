@@ -1,10 +1,9 @@
 
 import { IToastState } from 'components/Toast/store/Toast.model'
-import {
-	IUserState
-} from 'types/user'
+
+import { IProfileState } from './profile'
 
 export interface IState {
-	user: IUserState,
 	toast: IToastState
+	profile: IProfileState
 }

@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import './App.module.css'
 import { Toast } from 'components'
 import EditUser from 'pages/user/edit/EditUser'
-import User from 'pages/user/list/UserList'
+import UserList from 'pages/user/list/UserList'
 import {
 	fullPathEditUser,
 	fullPathNewUser,
@@ -18,7 +18,7 @@ import { IState } from 'types/state'
 import Dashboard from './dashboard/Dashboard'
 import Login from './login/Login'
 import Profile from './profile/Profile'
-import { ProtectedRoute } from './ProtectedRoute'
+import ProtectedRoute from './ProtectedRoute'
 import ResetPassword from './reset_password/ResetPassword'
 import Signup from './signup/Signup'
 import NewUser from './user/new/NewUser'
@@ -85,7 +85,7 @@ const App = () => {
 					path="users"
 					element={
 						<ProtectedRoute>
-							<User />
+							<UserList />
 						</ProtectedRoute>
 					}
 				/>

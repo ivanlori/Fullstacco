@@ -1,9 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
-import { IUserState } from 'types/user'
+import { IProfileState, IUserState } from 'types/profile'
 import { getToken, handleError } from 'utils/utils'
-
 
 export const createUser = async (
 	payload: IUserState
@@ -60,7 +59,7 @@ export const getUsers = async (): Promise<AxiosResponse> => {
 }
 
 export const updateUser = async (
-	payload: IUserState
+	payload: IProfileState
 ): Promise<AxiosResponse> => {
 	const url = `${BASE_API}/users/${(payload.id)}`
 	try {

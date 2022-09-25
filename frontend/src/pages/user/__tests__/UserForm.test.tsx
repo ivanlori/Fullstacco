@@ -12,10 +12,10 @@ import UserForm from '../_components/UserForm'
 
 describe('UserForm', () => {
 
-	test('should display common fields', () => {
+	test('should display values if update', () => {
 		renderWithProviders(
 			<MemoryRouter>
-				<UserForm user={mockedAdminUser} />
+				<UserForm user={mockedAdminUser} title="Update user" />
 			</MemoryRouter>,
 			{
 				withIntl: true
@@ -28,15 +28,44 @@ describe('UserForm', () => {
 		const email = screen.getByTestId(DataTestKeys.userFormEmail)
 
 		expect(name).toBeInTheDocument()
+		expect(name).toHaveValue(mockedAdminUser.name)
 		expect(lastname).toBeInTheDocument()
+		expect(lastname).toHaveValue(mockedAdminUser.lastname)
 		expect(username).toBeInTheDocument()
+		expect(username).toHaveValue(mockedAdminUser.username)
 		expect(email).toBeInTheDocument()
+		expect(email).toHaveValue(mockedAdminUser.email)
+	})
+
+	test('should not display values if create', () => {
+		renderWithProviders(
+			<MemoryRouter>
+				<UserForm user={null} title="Create user" />
+			</MemoryRouter>,
+			{
+				withIntl: true
+			}
+		)
+
+		const name = screen.getByTestId(DataTestKeys.userFormName)
+		const lastname = screen.getByTestId(DataTestKeys.userFormLastname)
+		const username = screen.getByTestId(DataTestKeys.userFormUsername)
+		const email = screen.getByTestId(DataTestKeys.userFormEmail)
+
+		expect(name).toBeInTheDocument()
+		expect(name).toHaveValue('')
+		expect(lastname).toBeInTheDocument()
+		expect(lastname).toHaveValue('')
+		expect(username).toBeInTheDocument()
+		expect(username).toHaveValue('')
+		expect(email).toBeInTheDocument()
+		expect(email).toHaveValue('')
 	})
 
 	test('should display user edit fields', () => {
 		renderWithProviders(
 			<MemoryRouter>
-				<UserForm user={mockedAdminUser} />
+				<UserForm user={mockedAdminUser} title="Update User" />
 			</MemoryRouter>,
 			{
 				withIntl: true
@@ -57,7 +86,7 @@ describe('UserForm', () => {
 	test('should display user create page', () => {
 		renderWithProviders(
 			<MemoryRouter>
-				<UserForm user={null} />
+				<UserForm user={null} title="Create User" />
 			</MemoryRouter>,
 			{
 				withIntl: true

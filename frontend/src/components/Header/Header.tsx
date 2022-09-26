@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { User } from 'components/Icon/svg/icons'
 import { DataTestKeys } from 'data-test-keys'
 import { login, profile } from 'routes'
 import { IState } from 'types/state'
@@ -51,16 +52,19 @@ const Header = (): ReactElement => {
 	return (
 		<nav className={styles.Nav} ref={ref}>
 			<div className={styles.Container}>
-				<div className="flex items-center">
+				<div className="flex items-center p-5">
 					<Link to="/" className="text-blue_dark">
 						Fullstacco
 					</Link>
 				</div>
 				<div
 					id="menu"
-					className="flex items-center cursor-pointer"
+					className={styles.DropdownMenu}
 					onClick={() => setIsMenuOpen(!isMenuOpen)}
+					onKeyDown={() => setIsMenuOpen(!isMenuOpen)}
 					data-testid={DataTestKeys.dropdownMenu}
+					role="button"
+					tabIndex={0}
 				>
 					<span
 						className="mr-3"
@@ -71,7 +75,7 @@ const Header = (): ReactElement => {
 					{photoUrl ?
 						<div className={styles.Photo}></div>
 						:
-						<div className={styles.PhotoPlaceholder}></div>
+						<User width={23} height={23} />
 					}
 				</div>
 				{isMenuOpen && (

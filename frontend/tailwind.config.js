@@ -10,7 +10,7 @@ module.exports = {
 			magenta_dark: '#5d0156',
 			ochre_light: '#f1d740',
 			ochre_primary: '#f4883b',
-			ochre_dark: '#db4220',
+			ochre_dark: '#a62a0f',
 			green_light: '#00ffa8',
 			green_primary: '#2ad89d',
 			green_dark: '#067a55',

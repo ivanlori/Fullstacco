@@ -14,6 +14,9 @@ import { setIdProfile } from 'pages/profile/store/Profile.actions'
 import { login, IFormInput } from './Login.api'
 import styles from './Login.module.css'
 
+const EMAIL = 'email'
+const PASSWORD = 'password'
+
 const Login = (): ReactElement => {
 	const dispatch = useDispatch<Dispatch>()
 	const navigate = useNavigate()
@@ -68,6 +71,9 @@ const Login = (): ReactElement => {
 				</div>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="mb-6">
+						<label htmlFor={EMAIL}>
+							<FormattedMessage id="email" />
+						</label>
 						<Input
 							{...register('email', {
 								required: {
@@ -77,14 +83,18 @@ const Login = (): ReactElement => {
 									value: true
 								}
 							})}
+							id={EMAIL}
 							type="email"
-							name="email"
+							name={EMAIL}
 							placeholder="user@email.com"
 							error={errors.email?.message}
 							dataTestId={DataTestKeys.loginEmail}
 						/>
 					</div>
 					<div className="mb-6">
+						<label htmlFor={PASSWORD}>
+							<FormattedMessage id='password' />
+						</label>
 						<Input
 							{...register('password', {
 								required: {
@@ -94,8 +104,9 @@ const Login = (): ReactElement => {
 									value: true
 								}
 							})}
+							id={PASSWORD}
 							type="password"
-							name="password"
+							name={PASSWORD}
 							placeholder="**********"
 							error={errors.password?.message}
 							dataTestId={DataTestKeys.loginPassword}

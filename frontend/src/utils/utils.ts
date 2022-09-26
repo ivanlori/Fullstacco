@@ -12,8 +12,10 @@ export const isAdmin = (user: IProfileState) => user.role === 0
 
 export const isAccount = (user: IProfileState) => user.role === 1
 
+export const emailReg = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+
 export const isEmail = (email: string) => {
-	return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+	return emailReg.test(email)
 }
 
 export const handleError = (err: unknown): AxiosResponse<unknown, unknown> => {

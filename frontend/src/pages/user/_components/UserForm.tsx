@@ -147,7 +147,7 @@ const UserForm = ({
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<div className="mb-4">
-					<label>
+					<label htmlFor={NAME}>
 						{formatMessage({ id: 'user.create.update.name' })}
 					</label>
 					<Input
@@ -160,6 +160,7 @@ const UserForm = ({
 							},
 							onChange: (e) => setName(e.target.value),
 						})}
+						id={NAME}
 						name={NAME}
 						value={name}
 						error={errors.name?.message}
@@ -167,7 +168,7 @@ const UserForm = ({
 					/>
 				</div>
 				<div className="mb-4">
-					<label>
+					<label htmlFor={LASTNAME}>
 						{formatMessage({ id: 'user.create.update.lastname' })}
 					</label>
 					<Input
@@ -180,6 +181,7 @@ const UserForm = ({
 							},
 							onChange: (e) => setLastname(e.target.value),
 						})}
+						id={LASTNAME}
 						name={LASTNAME}
 						value={lastname}
 						error={errors.lastname?.message}
@@ -187,7 +189,7 @@ const UserForm = ({
 					/>
 				</div>
 				<div className="mb-4">
-					<label>
+					<label htmlFor={USERNAME}>
 						{formatMessage({ id: 'user.create.update.username' })}
 					</label>
 					<Input
@@ -200,6 +202,7 @@ const UserForm = ({
 							},
 							onChange: (e) => setUsername(e.target.value),
 						})}
+						id={USERNAME}
 						name={USERNAME}
 						value={username}
 						error={errors.username?.message}
@@ -207,7 +210,7 @@ const UserForm = ({
 					/>
 				</div>
 				<div className="mb-4">
-					<label>
+					<label htmlFor={EMAIL}>
 						{formatMessage({ id: 'user.create.update.email' })}
 					</label>
 					<Input
@@ -221,6 +224,7 @@ const UserForm = ({
 							onChange: (e) => setEmail(e.target.value),
 							validate: value => isEmail(value),
 						})}
+						id={EMAIL}
 						type="text"
 						name={EMAIL}
 						value={email}
@@ -232,10 +236,11 @@ const UserForm = ({
 					/>
 				</div>
 				<div className="mb-4">
-					<label>
+					<label htmlFor={ROLE}>
 						<FormattedMessage id="user.create.update.roles" />
 					</label>
 					<Select
+						id={ROLE}
 						name={ROLE}
 						options={options}
 						value={{
@@ -251,7 +256,7 @@ const UserForm = ({
 				</div>
 				{!user && (
 					<div className="mb-4">
-						<label>
+						<label htmlFor={PASSWORD}>
 							{formatMessage({
 								id: 'user.create.update.password'
 							})}
@@ -266,6 +271,7 @@ const UserForm = ({
 								},
 								onChange: (e) => setPassword(e.target.value),
 							})}
+							id={PASSWORD}
 							type="password"
 							name={PASSWORD}
 							value={password}

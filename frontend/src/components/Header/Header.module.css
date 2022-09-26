@@ -3,13 +3,11 @@
 	@apply sticky;
 	@apply top-0;
 	@apply z-10;
-	@apply h-16;
 	@apply flex;
 	@apply items-center;
 }
 
 .Container {
-	@apply px-5;
 	@apply flex;
 	@apply justify-between;
 	@apply items-center;
@@ -17,19 +15,15 @@
 	@apply relative;
 }
 
-.ProfileNavigationWrapper {
+.DropdownMenu {
 	@apply flex;
-	@apply w-auto;
-	@apply text-gray_800;
-	@apply justify-evenly;
 	@apply items-center;
-	@apply mr-10;
-	@apply bg-gray_200;
-	@apply rounded-2xl;
+	@apply cursor-pointer;
+	@apply p-5;
 }
 
-.ProfileNavigationWrapper a {
-	@apply p-3;
+.DropdownMenu:hover {
+	@apply bg-gray_200;
 }
 
 .MenuItem {
@@ -47,20 +41,9 @@
 	@apply rounded-xl;
 	@apply absolute;
 	@apply bg-white;
-	@apply right-5;
+	@apply right-3;
 	@apply w-60;
-	@apply top-14;
-}
-
-.PhotoPlaceholder {
-	background: grey 0% 0% no-repeat padding-box;
-	width: 2.5rem;
-	height: 2.5rem;
-	@apply flex;
-	@apply items-center;
-	@apply justify-center;
-	@apply rounded-full;
-	@apply cursor-pointer;
+	@apply top-20;
 }
 
 .Photo {

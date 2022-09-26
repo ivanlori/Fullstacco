@@ -9,11 +9,14 @@ import { Dispatch } from 'redux'
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
+import { emailReg } from 'utils/utils'
 
 import { recoverPassword, resetPassword } from './ResetPassword.api'
 import styles from './ResetPassword.module.css'
 
-const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
+const EMAIL = 'email'
+const PASSWORD = 'password'
+const REPEAT_PASSWORD = 'repeatPassword'
 
 interface IFormInput {
 	email?: string
@@ -74,8 +77,11 @@ const ResetPassword = (): ReactElement => {
 
 	const renderRecoveryView = () => (
 		<div className="mb-6">
+			<label htmlFor={EMAIL}>
+				<FormattedMessage id="email" />
+			</label>
 			<Input
-				{...register('email', {
+				{...register(EMAIL, {
 					required: {
 						message: formatMessage({
 							id: 'form.validation.empty.email'
@@ -83,13 +89,14 @@ const ResetPassword = (): ReactElement => {
 						value: true
 					},
 					pattern: {
-						value: emailRegex,
+						value: emailReg,
 						message: formatMessage({
 							id: 'form.validation.notvalid.email'
 						})
 					}
 				})}
-				name="email"
+				id={EMAIL}
+				name={EMAIL}
 				type="email"
 				error={errors.email?.message}
 				placeholder="user@email.com"
@@ -101,13 +108,18 @@ const ResetPassword = (): ReactElement => {
 	const renderResetView = () => (
 		<>
 			<div className="mb-6">
+				<label htmlFor={PASSWORD}>
+					<FormattedMessage id="password" />
+				</label>
 				<Input
-					{...register('password', {
+					{...register(PASSWORD, {
 						required: {
 							message: '',
 							value: true
 						}
 					})}
+					name={PASSWORD}
+					id={PASSWORD}
 					type="password"
 					placeholder={
 						formatMessage({
@@ -118,8 +130,11 @@ const ResetPassword = (): ReactElement => {
 				/>
 			</div>
 			<div className="mb-6">
+				<label htmlFor={REPEAT_PASSWORD}>
+					<FormattedMessage id="recovery.password.repeat.password" />
+				</label>
 				<Input
-					{...register('repeatPassword', {
+					{...register(REPEAT_PASSWORD, {
 						required: {
 							message: '',
 							value: true
@@ -133,6 +148,8 @@ const ResetPassword = (): ReactElement => {
 							}
 						}
 					})}
+					id={REPEAT_PASSWORD}
+					name={REPEAT_PASSWORD}
 					type="password"
 					placeholder={
 						formatMessage({

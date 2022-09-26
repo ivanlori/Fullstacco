@@ -53,6 +53,7 @@
 	"logout": "Logout",
 	"lastname": "Lastname",
 	"name": "Name",
+	"password": "Password",
 	"username": "Username",
 	"view.profile": "View Profile",
 	"remove.photo.profile": "Remove photo",

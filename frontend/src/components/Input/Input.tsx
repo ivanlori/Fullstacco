@@ -12,7 +12,8 @@ interface Props {
 	placeholder?: string
 	error: string | undefined,
 	dataTestId?: string
-	onChange?: (arg0: ChangeEvent<HTMLInputElement>) => void
+	onChange?: (arg0: ChangeEvent<HTMLInputElement>) => void,
+	id?: string
 }
 
 const Input = forwardRef(({
@@ -24,6 +25,7 @@ const Input = forwardRef(({
 	name,
 	error,
 	dataTestId,
+	id,
 }: Props, ref: LegacyRef<HTMLInputElement> | undefined): ReactElement => {
 
 	const inputStyle = cn(styles.Input, {
@@ -33,6 +35,7 @@ const Input = forwardRef(({
 	return (
 		<div className="relative">
 			<input
+				id={id}
 				ref={ref}
 				type={type}
 				name={name}
@@ -43,7 +46,7 @@ const Input = forwardRef(({
 				className={inputStyle}
 				data-testid={dataTestId}
 			/>
-			{error && <span className={styles.Error}>{error}</span>}
+			{error && <strong className={styles.Error}>{error}</strong>}
 		</div>
 	)
 })

@@ -15,8 +15,8 @@
 
 .Error {
 	@apply absolute;
-	@apply right-1;
-	@apply top-5;
+	@apply right-2;
+	@apply top-4;
 	@apply text-xs;
 	@apply text-ochre_dark;
 }

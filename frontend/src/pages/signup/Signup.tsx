@@ -9,9 +9,16 @@ import { Dispatch } from 'redux'
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
+import { emailReg } from 'utils/utils'
 
 import { signup, IFormInput } from './Signup.api'
 import styles from './Signup.module.css'
+
+const EMAIL = 'email'
+const USERNAME = 'username'
+const NAME = 'name'
+const PASSWORD = 'password'
+const LASTNAME = 'lastname'
 
 const Signup = (): ReactElement => {
 	const navigate = useNavigate()
@@ -57,43 +64,58 @@ const Signup = (): ReactElement => {
 				</div>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
-					className="w-96"
+					className="w-auto"
 				>
-					<div className="mb-6">
-						<Input
-							{...register('name', {
-								required: {
-									message: formatMessage({
-										id: 'form.validation.empty.name'
-									}),
-									value: true
-								}
-							})}
-							type="text"
-							placeholder="Name"
-							error={errors.name?.message}
-							dataTestId={DataTestKeys.signupName}
-						/>
+					<div className="flex gap-2 mb-4">
+						<div className="flex-1">
+							<label htmlFor={NAME}>
+								<FormattedMessage id="name" />
+							</label>
+							<Input
+								{...register(NAME, {
+									required: {
+										message: formatMessage({
+											id: 'form.validation.empty.name'
+										}),
+										value: true
+									}
+								})}
+								id={NAME}
+								name={NAME}
+								type="text"
+								placeholder="Name"
+								error={errors.name?.message}
+								dataTestId={DataTestKeys.signupName}
+							/>
+						</div>
+						<div className="flex-1">
+							<label htmlFor={LASTNAME}>
+								<FormattedMessage id="lastname" />
+							</label>
+							<Input
+								{...register(LASTNAME, {
+									required: {
+										message: formatMessage({
+											id: 'form.validation.empty.lastname'
+										}),
+										value: true
+									}
+								})}
+								name={LASTNAME}
+								id={LASTNAME}
+								type="text"
+								placeholder="Lastname"
+								error={errors.lastname?.message}
+								dataTestId={DataTestKeys.signupLastname}
+							/>
+						</div>
 					</div>
 					<div className="mb-6">
+						<label htmlFor={USERNAME}>
+							<FormattedMessage id="username" />
+						</label>
 						<Input
-							{...register('lastname', {
-								required: {
-									message: formatMessage({
-										id: 'form.validation.empty.lastname'
-									}),
-									value: true
-								}
-							})}
-							type="text"
-							placeholder="Lastname"
-							error={errors.lastname?.message}
-							dataTestId={DataTestKeys.signupLastname}
-						/>
-					</div>
-					<div className="mb-6">
-						<Input
-							{...register('username', {
+							{...register(USERNAME, {
 								required: {
 									message: formatMessage({
 										id: 'form.validation.empty.username'
@@ -101,6 +123,8 @@ const Signup = (): ReactElement => {
 									value: true
 								}
 							})}
+							id={USERNAME}
+							name={USERNAME}
 							type="text"
 							placeholder="Username"
 							error={errors.username?.message}
@@ -108,8 +132,11 @@ const Signup = (): ReactElement => {
 						/>
 					</div>
 					<div className="mb-6">
+						<label htmlFor={EMAIL}>
+							<FormattedMessage id="email" />
+						</label>
 						<Input
-							{...register('email', {
+							{...register(EMAIL, {
 								required: {
 									message: formatMessage({
 										id: 'form.validation.empty.email',
@@ -117,21 +144,26 @@ const Signup = (): ReactElement => {
 									value: true
 								},
 								pattern: {
-									value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+									value: emailReg,
 									message: formatMessage({
 										id: 'form.validation.notvalid.email'
 									})
 								}
 							})}
+							id={EMAIL}
+							name={EMAIL}
 							type="text"
-							placeholder="Email address"
+							placeholder="user@email.com"
 							error={errors.email?.message}
 							dataTestId={DataTestKeys.signupEmail}
 						/>
 					</div>
 					<div className="mb-6">
+						<label htmlFor={PASSWORD}>
+							<FormattedMessage id="password" />
+						</label>
 						<Input
-							{...register('password', {
+							{...register(PASSWORD, {
 								required: {
 									message: formatMessage({
 										id: 'form.validation.empty.password'
@@ -139,6 +171,8 @@ const Signup = (): ReactElement => {
 									value: true
 								}
 							})}
+							id={PASSWORD}
+							name={PASSWORD}
 							type="password"
 							placeholder="Password"
 							error={errors.password?.message}

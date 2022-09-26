@@ -2,7 +2,7 @@
 	@apply rounded-full;
 	@apply w-36;
 	@apply h-36;
-	@apply bg-gray_500;
+	@apply bg-gray_300;
 	@apply cursor-pointer;
 	@apply flex;
 	@apply flex-col;
@@ -12,7 +12,7 @@
 }
 
 .Placeholder span {
-	@apply text-white;
+	@apply text-gray_800;
 	@apply text-xs;
 	@apply mt-2;
 }

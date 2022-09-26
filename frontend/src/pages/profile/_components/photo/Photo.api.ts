@@ -14,7 +14,7 @@ export const uploadPhoto = async (
 			statusText,
 			headers,
 			config
-		} = await axios.put(`${BASE_API}/users/${id}/photo`, payload,
+		} = await axios.patch(`${BASE_API}/users/${id}/photo`, payload,
 			{
 				headers: {
 					'Authorization': `Bearer ${getToken()}`,

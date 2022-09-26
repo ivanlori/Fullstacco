@@ -18,7 +18,7 @@ router.post('/create', isAuthenticated, createUser)
 router.get('/:id', isAuthenticated, getUser)
 router.delete('/:id', isAuthenticated, deleteUser)
 router.patch('/:id', isAuthenticated, updateUser)
-router.put('/:id/photo', isAuthenticated, uploadPhotoUser)
+router.patch('/:id/photo', isAuthenticated, uploadPhotoUser)
 router.delete('/:id/photo', isAuthenticated, removePhotoUser)
 
 export default router

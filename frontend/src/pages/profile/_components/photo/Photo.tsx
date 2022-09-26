@@ -6,7 +6,7 @@ import { Button } from 'components'
 import { Upload } from 'components/Icon/svg/icons'
 import { DataTestKeys } from 'data-test-keys'
 
-import { uploadPhoto, removePhoto } from '../../Profile.api'
+import { uploadPhoto, removePhoto } from './Photo.api'
 import styles from './Photo.module.css'
 
 interface Props {

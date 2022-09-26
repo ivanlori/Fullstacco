@@ -1,8 +1,7 @@
 .Input {
 	@apply block;
 	@apply w-full;
-	@apply h-9;
-	@apply px-3;
+	@apply p-2;
 	@apply border;
 	@apply border-gray_300;
 	@apply rounded;
@@ -16,7 +15,7 @@
 .Error {
 	@apply absolute;
 	@apply right-2;
-	@apply top-4;
+	@apply top-5;
 	@apply text-xs;
 	@apply text-ochre_dark;
 }

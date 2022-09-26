@@ -1,13 +1,12 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useState } from 'react'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Select from 'react-select'
 import { Dispatch } from 'redux'
 
-import { Button, Loader, Input } from 'components'
+import { Button, Loader, Input, Select } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
 import { IProfileState, IRoleSelection, IUserState } from 'types/profile'
@@ -30,8 +29,8 @@ interface Props {
 }
 
 const options = [
-	{ value: 0, label: 'Admin' },
-	{ value: 1, label: 'Account' },
+	{ id: 0, value: 'Admin' },
+	{ id: 1, value: 'Account' },
 ]
 
 const NAME = 'name'
@@ -48,7 +47,9 @@ const UserForm = ({
 	const {
 		formatMessage
 	} = useIntl()
-	const [roleSelected, setRoleSelected] = useState<IRoleSelection>(options[0])
+	const [roleSelected, setRoleSelected] = useState<IRoleSelection>(
+		user ? options[user.role as number] : options[0]
+	)
 	const navigate = useNavigate()
 	const dispatch = useDispatch<Dispatch>()
 	const [loading, setLoading] = useState(false)
@@ -86,7 +87,7 @@ const UserForm = ({
 			lastname: lastname as string,
 			name: name as string,
 			username: username as string,
-			role: roleSelected.value,
+			role: roleSelected.id,
 			photoUrl: '',
 			emailConfirmed: user ? user.emailConfirmed : false,
 		}
@@ -125,15 +126,6 @@ const UserForm = ({
 
 		handleResult(status, "feedback.user.deleted")
 	}
-
-	useEffect(() => {
-		if (user?.role) {
-			setRoleSelected({
-				value: user.role,
-				label: options[user.role].label
-			})
-		}
-	}, [user?.role])
 
 	return (
 		<div className="px-8">
@@ -242,16 +234,16 @@ const UserForm = ({
 					<Select
 						id={ROLE}
 						name={ROLE}
-						options={options}
+						items={options}
 						value={{
-							value: roleSelected.value,
-							label: roleSelected.label
+							id: roleSelected.id,
+							value: roleSelected.value
 						}}
 						onChange={(e) => setRoleSelected({
-							value: e?.value,
-							label: e?.label
+							id: e.id,
+							value: e.value
 						})}
-						data-testid={DataTestKeys.userFormRole}
+						dataTestId={DataTestKeys.userFormRole}
 					/>
 				</div>
 				{!user && (

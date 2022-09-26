@@ -28,8 +28,8 @@ export type IProfileAction = {
 }
 
 export type IRoleSelection = {
-	value: number | undefined,
-	label: string | undefined
+	id: number,
+	value: string
 }
 
 export interface idProfileModelAction {

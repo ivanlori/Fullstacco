@@ -30,20 +30,18 @@ exports[`<Profile /> should match snapshot 1`] = `
                     alt="Your photo profile"
                     src="some_url"
                   />
-                  <button
-                    class="Btn BtnDangerOutline"
-                    data-testid="remove-photo-btn"
-                    type="button"
+                  <div
+                    class="w-40 mt-2"
                   >
-                    Remove photo
-                  </button>
+                    <button
+                      class="Btn BtnDangerOutline"
+                      data-testid="remove-photo-btn"
+                      type="button"
+                    >
+                      Remove photo
+                    </button>
+                  </div>
                 </div>
-                <input
-                  class="Upload"
-                  id="photo"
-                  name="photo"
-                  type="file"
-                />
               </label>
             </div>
             <div

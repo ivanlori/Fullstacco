@@ -51,33 +51,37 @@ const Photo = ({
 					<img src={photoUrl} alt={formatMessage({
 						id: 'photo.profile.alt'
 					})} />
-					<Button
-						type="button"
-						style="danger_outline"
-						onClick={removePhotoProfile}
-						dataTestId={DataTestKeys.removePhotoBtn}
-					>
-						<FormattedMessage id="remove.photo.profile" />
-					</Button>
+					<div className="w-40 mt-2">
+						<Button
+							type="button"
+							style="danger_outline"
+							onClick={removePhotoProfile}
+							dataTestId={DataTestKeys.removePhotoBtn}
+						>
+							<FormattedMessage id="remove.photo.profile" />
+						</Button>
+					</div>
 				</div>
 			) : (
-				<div
-					className={styles.Placeholder}
-					data-testid={DataTestKeys.uploadPhoto}
-				>
-					<Upload />
-					<span>
-						<FormattedMessage id="upload.photo" />
-					</span>
-				</div>
+				<>
+					<div
+						className={styles.Placeholder}
+						data-testid={DataTestKeys.uploadPhoto}
+					>
+						<Upload />
+						<span>
+							<FormattedMessage id="upload.photo" />
+						</span>
+					</div>
+					<input
+						className={styles.Upload}
+						type="file"
+						name="photo"
+						onChange={handleUpload}
+						id="photo"
+					/>
+				</>
 			)}
-			<input
-				className={styles.Upload}
-				type="file"
-				name="photo"
-				onChange={handleUpload}
-				id="photo"
-			/>
 		</label>
 	)
 }

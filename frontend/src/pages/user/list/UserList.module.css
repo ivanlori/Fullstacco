@@ -70,11 +70,24 @@
 	@apply justify-center;
 }
 
-.Status span {
-	@apply w-5;
-	@apply h-5;
-	@apply rounded-full;
+.BackgroundStatus {
 	@apply block;
+	@apply w-14;
+	@apply h-8;
+	@apply rounded-full;
+}
+
+.DotStatus {
+	@apply absolute;
+	@apply top-1;
+	@apply bg-white;
+	@apply w-6;
+	@apply h-6;
+	@apply rounded-full;
+	@apply transition;
+	@apply flex;
+	@apply items-center;
+	@apply justify-center;
 }
 
 .CellHead {
@@ -84,4 +97,12 @@
   @apply px-6;
   @apply py-4;
   @apply text-left;
+}
+
+.StatusLabel {
+	@apply justify-center;
+	@apply flex;
+	@apply items-center;
+	@apply cursor-pointer;
+	@apply select-none;
 }

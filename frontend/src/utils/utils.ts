@@ -2,11 +2,14 @@ import { AxiosError, AxiosResponse } from "axios"
 
 import { IProfileState } from "types/profile"
 
-export const getUserId = () => localStorage.getItem('userId')
+export const USER_ID_STORAGE = 'userId'
+export const TOKEN_STORAGE = 'tk'
+
+export const getUserId = () => localStorage.getItem(USER_ID_STORAGE)
 
 export const isAuthenticated = () => getToken() && getUserId()
 
-export const getToken = () => localStorage.getItem('tk')
+export const getToken = () => localStorage.getItem(TOKEN_STORAGE)
 
 export const isAdmin = (user: IProfileState) => user.role === 0
 
@@ -32,7 +35,7 @@ export const getRoleLabelId = (role: number) => {
 	} else if (role === 1) {
 		idLabel = 'role.account'
 	} else {
-		idLabel = 'role.superadmin'
+		idLabel = 'role.superAdmin'
 	}
 
 	return idLabel

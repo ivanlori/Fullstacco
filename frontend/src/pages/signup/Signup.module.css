@@ -1,7 +1,0 @@
-.Container {
-	@apply text-gray_800;
-	@apply flex;
-	@apply justify-center;
-	@apply items-center;
-	@apply h-screen;
-}

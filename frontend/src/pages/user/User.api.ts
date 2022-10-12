@@ -32,7 +32,7 @@ export const createUser = async (
 	}
 }
 
-export const getUsers = async (): Promise<AxiosResponse> => {
+export const fetchUsers = async (): Promise<AxiosResponse> => {
 	try {
 		const {
 			data,
@@ -124,6 +124,37 @@ export const deleteUser = async (
 			headers,
 			config
 		} = await axios.delete(`${BASE_API}/users/${id}`, {
+			headers: {
+				'Authorization': `Bearer ${getToken()}`
+			}
+		})
+
+		return {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		}
+	} catch (err) {
+		return handleError(err)
+	}
+}
+
+export const changeUserStatus = async (
+	id: string,
+	activate: boolean
+): Promise<AxiosResponse> => {
+	try {
+		const {
+			data,
+			status,
+			statusText,
+			headers,
+			config
+		} = await axios.patch(`${BASE_API}/users/${id}/activate`, {
+			activate
+		}, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}

@@ -4,8 +4,7 @@
 	@apply flex;
 	@apply items-center;
 	@apply justify-center;
-	@apply m-1;
-	@apply w-36;
+	@apply w-full;
 }
 
 .BtnPrimary {

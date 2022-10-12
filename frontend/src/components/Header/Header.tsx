@@ -1,25 +1,29 @@
 import { ReactElement, useEffect, useState, useRef } from 'react'
 
 import { useIntl } from 'react-intl'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
+import Button from 'components/Button/Button'
 import { User } from 'components/Icon/svg/icons'
 import { DataTestKeys } from 'data-test-keys'
-import { login, profile } from 'routes'
+import { resetProfile } from 'pages/profile/store/Profile.actions'
+import { dashboardHome, dashboardProfile, login } from 'routes'
 import { IState } from 'types/state'
+import { TOKEN_STORAGE, USER_ID_STORAGE } from 'utils/utils'
 
 import styles from './Header.module.css'
 
 const Header = (): ReactElement => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const dispatch = useDispatch()
 	const { formatMessage } = useIntl()
 	const navigate = useNavigate()
 	const ref = useRef<HTMLDivElement>(null)
 	const refItem = useRef<HTMLAnchorElement>(null)
 	const {
 		username,
-		photoUrl
+		photoUrl,
 	} = useSelector((state: IState) => state.profile)
 
 	useEffect(() => {
@@ -37,7 +41,7 @@ const Header = (): ReactElement => {
 				refItem.current &&
 				refItem.current.contains(e.target as HTMLElement)
 			) {
-				navigate(profile)
+				navigate(dashboardProfile)
 				setIsMenuOpen(false)
 			}
 		}
@@ -49,11 +53,18 @@ const Header = (): ReactElement => {
 		}
 	}, [isMenuOpen, navigate])
 
+	const handleLogout = () => {
+		localStorage.removeItem(TOKEN_STORAGE)
+		localStorage.removeItem(USER_ID_STORAGE)
+		dispatch(resetProfile())
+		navigate(login)
+	}
+
 	return (
 		<nav className={styles.Nav} ref={ref}>
 			<div className={styles.Container}>
 				<div className="flex items-center p-5">
-					<Link to="/" className="text-blue_dark">
+					<Link to={dashboardHome} className="text-blue_dark">
 						Fullstacco
 					</Link>
 				</div>
@@ -86,7 +97,7 @@ const Header = (): ReactElement => {
 						<ul className="p-3">
 							<li className={styles.MenuItem}>
 								<Link
-									to={profile}
+									to={dashboardProfile}
 									className="w-full"
 									ref={refItem}
 									data-testid={DataTestKeys.profileDropdown}
@@ -94,15 +105,14 @@ const Header = (): ReactElement => {
 									{formatMessage({ id: 'view.profile' })}
 								</Link>
 							</li>
-							<li className={styles.MenuItem}>
-								<Link
-									to={login}
-									className="flex items-center"
-									onClick={() => localStorage.clear()}
-									data-testid={DataTestKeys.logoutDropdown}
+							<li className="mt-2 pt-2 border-gray_300 border-t">
+								<Button
+									type="button"
+									onClick={handleLogout}
+									dataTestId={DataTestKeys.logoutDropdown}
 								>
 									{formatMessage({ id: 'logout' })}
-								</Link>
+								</Button>
 							</li>
 						</ul>
 					</div>

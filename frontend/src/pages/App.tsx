@@ -1,26 +1,34 @@
 import { useSelector } from 'react-redux'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import './App.module.css'
 import { Toast } from 'components'
 import EditUser from 'pages/user/edit/EditUser'
 import UserList from 'pages/user/list/UserList'
 import {
-	fullPathEditUser,
-	fullPathNewUser,
+	dashboardEditUser,
+	dashboardHome,
+	dashboardNewUser,
+	dashboardProfile,
+	dashboardUsers,
 	login,
-	profile,
+	noAccess,
 	recoveryPassword,
-	signup
+	resetPassword,
+	signup,
 } from 'routes'
 import { IState } from 'types/state'
 
+import Login from './auth/login/Login'
+import RequireAuth from './auth/RequireAuth'
+import ResetPassword from './auth/reset_password/ResetPassword'
+import Signup from './auth/signup/Signup'
 import Dashboard from './dashboard/Dashboard'
-import Login from './login/Login'
+import NoAccess from './no_access/NoAccess'
+import NotFound from './not_found/NotFound'
 import Profile from './profile/Profile'
-import ProtectedRoute from './ProtectedRoute'
-import ResetPassword from './reset_password/ResetPassword'
-import Signup from './signup/Signup'
+import ProtectedLayout from './ProtectedLayout'
+import PublicLayout from './PublicLayout'
 import NewUser from './user/new/NewUser'
 
 const App = () => {
@@ -28,67 +36,90 @@ const App = () => {
 		text,
 		style,
 	} = useSelector((state: IState) => state.toast)
+	const {
+		isActive
+	} = useSelector((state: IState) => state.profile)
+
+	if (!isActive) {
+		<Navigate to={noAccess} />
+	}
 
 	return (
 		<main>
 			{text && <Toast text={text} type={style} />}
 			<Routes>
-				<Route
-					path={login}
-					element={<Login />}
-				/>
-				<Route
-					path={signup}
-					element={<Signup />}
-				/>
-				<Route
-					path={recoveryPassword}
-					element={<ResetPassword />}
-				/>
-				<Route
-					path="/reset-password/:token"
-					element={<ResetPassword />}
-				/>
-				<Route
-					path="/"
-					element={
-						<ProtectedRoute>
-							<Dashboard />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path={fullPathEditUser}
-					element={
-						<ProtectedRoute>
-							<EditUser />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path={profile}
-					element={
-						<ProtectedRoute>
-							<Profile />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path={fullPathNewUser}
-					element={
-						<ProtectedRoute>
-							<NewUser />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="users"
-					element={
-						<ProtectedRoute>
-							<UserList />
-						</ProtectedRoute>
-					}
-				/>
+				<Route element={<ProtectedLayout />}>
+					<Route
+						path={dashboardHome}
+						element={
+							<RequireAuth>
+								<Dashboard />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path={dashboardEditUser}
+						element={
+							<RequireAuth>
+								<EditUser />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path={dashboardProfile}
+						element={
+							<RequireAuth>
+								<Profile />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path={dashboardNewUser}
+						element={
+							<RequireAuth>
+								<NewUser />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path={dashboardUsers}
+						element={
+							<RequireAuth>
+								<UserList />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path="*"
+						element={<RequireAuth><NotFound /></RequireAuth>}
+					/>
+				</Route>
+				<Route element={<PublicLayout />}>
+					<Route
+						path={login}
+						element={<Login />}
+					/>
+					<Route
+						path={signup}
+						element={<Signup />}
+					/>
+					<Route
+						path={recoveryPassword}
+						element={<ResetPassword />}
+					/>
+					<Route
+						path={`${resetPassword}/:token`}
+						element={<ResetPassword />}
+					/>
+					<Route
+						path={noAccess}
+						element={<NoAccess />}
+					/>
+					<Route
+						path="*"
+						element={<NotFound />}
+					/>
+				</Route>
 			</Routes>
 		</main>
 	)

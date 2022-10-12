@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useState } from 'react'
 
 import classNames from 'classnames'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -10,49 +10,85 @@ import { Button, Loader } from 'components'
 import { Pen } from 'components/Icon/svg/icons'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
-import { editUser, fullPathNewUser } from 'routes'
+import { dashboardNewUser, dashboardUsers } from 'routes'
 import { IUserState } from 'types/profile'
 import { IState } from 'types/state'
 import { isAdmin } from 'utils/utils'
 
-import { getUsers } from '../User.api'
+import { changeUserStatus, fetchUsers } from '../User.api'
 import styles from './UserList.module.css'
 
 const UserList = (): ReactElement => {
 	const profileState = useSelector((state: IState) => state.profile)
 	const dispatch = useDispatch<Dispatch>()
 	const { formatMessage } = useIntl()
+	const [statusLoading, setStatusLoading] = useState(false)
 	const [loading, setLoading] = useState(true)
 	const navigate = useNavigate()
 	const [users, setUsers] = useState<IUserState[]>([])
 
+	const getUsers = useCallback(async () => {
+		const {
+			data,
+			status
+		} = await fetchUsers()
+
+		if (status === 200) {
+			setUsers(data)
+		} else {
+			dispatch(displayToast(
+				formatMessage({
+					id: "feedback.general.error"
+				}), 'error')
+			)
+		}
+		setLoading(false)
+	}, [dispatch, formatMessage])
+
 	useEffect(() => {
 		if (users.length === 0) {
-			(async () => {
-				const {
-					data,
-					status
-				} = await getUsers()
-
-				if (status === 200) {
-					setUsers(data)
-				} else {
-					dispatch(displayToast(
-						formatMessage({ id: "feedback.general.error" }), 'error')
-					)
-				}
-				setLoading(false)
-			})()
+			getUsers()
 		}
-	}, [dispatch, formatMessage, users])
+	}, [dispatch, formatMessage, getUsers, users])
 
-	const createUserPage = () => navigate(fullPathNewUser)
+	const createUserPage = () => navigate(dashboardNewUser)
 
-	const statusStyle = (user: IUserState) => {
-		return classNames({
+	const statusBackgroundStyle = (user: IUserState) => {
+		return classNames(styles.BackgroundStatus, {
 			['bg-green_light']: user.isActive,
 			['bg-ochre_dark']: !user.isActive
 		})
+	}
+
+	const statusDotStyle = (user: IUserState) => {
+		return classNames(styles.DotStatus, {
+			['right-1']: user.isActive,
+			['left-1']: !user.isActive
+		})
+	}
+
+	const onChangeStatus = async (user: IUserState) => {
+		setStatusLoading(true)
+
+		const {
+			status
+		} = await changeUserStatus(user.id as string, !user.isActive)
+
+		if (status === 201) {
+			// refresh list with updated status
+			getUsers()
+			dispatch(displayToast(
+				formatMessage({
+					id: "feedback.general.status.success"
+				}), 'success')
+			)
+		} else {
+			dispatch(displayToast(
+				formatMessage({ id: "feedback.general.error" }), 'error')
+			)
+		}
+
+		setStatusLoading(false)
 	}
 
 	const renderTable = () => (
@@ -104,12 +140,38 @@ const UserList = (): ReactElement => {
 								{user.email}
 							</td>
 							<td
-								className={`${styles.CellBody} ${styles.Status}`}
 								data-testid={DataTestKeys.rowUserStatus}
 							>
-								<span
-									className={statusStyle(user)}
-								></span>
+								{statusLoading ?
+									<Loader small />
+									: (
+										<label
+											htmlFor={user.id}
+											className={styles.StatusLabel}
+										>
+											<div className="relative">
+												<input
+													type="checkbox"
+													id={user.id}
+													className="sr-only"
+												/>
+												<div
+													role="button"
+													tabIndex={-1}
+													className={statusBackgroundStyle(user)}
+													onKeyDown={() => onChangeStatus(user)}
+													onClick={() => onChangeStatus(user)}
+												></div>
+												<div
+													role="button"
+													tabIndex={-1}
+													className={statusDotStyle(user)}
+													onKeyDown={() => onChangeStatus(user)}
+													onClick={() => onChangeStatus(user)}
+												></div>
+											</div>
+										</label>
+									)}
 							</td>
 							<td
 								className={styles.CellBody}
@@ -122,7 +184,7 @@ const UserList = (): ReactElement => {
 									width={15}
 									height={15}
 									onClick={() => {
-										navigate(`/users/${user.id}/${editUser}`)
+										navigate(`${dashboardUsers}/${user.id}/edit`)
 									}}
 									data-testid={DataTestKeys.editIcon}
 								/>
@@ -143,13 +205,15 @@ const UserList = (): ReactElement => {
 								<FormattedMessage id="userlist.title" />
 							</h5>
 							{isAdmin(profileState) && (
-								<Button
-									style="primary"
-									onClick={createUserPage}
-									dataTestId={DataTestKeys.newUserBtn}
-								>
-									<FormattedMessage id="userlist.new.user" />
-								</Button>
+								<div className="w-40">
+									<Button
+										style="primary"
+										onClick={createUserPage}
+										dataTestId={DataTestKeys.newUserBtn}
+									>
+										<FormattedMessage id="userlist.new.user" />
+									</Button>
+								</div>
 							)}
 						</div>
 						{

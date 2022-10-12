@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -9,10 +9,10 @@ import { Dispatch } from 'redux'
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
-import { emailReg } from 'utils/utils'
+import { dashboardHome, login } from 'routes'
+import { emailReg, isAuthenticated } from 'utils/utils'
 
-import { recoverPassword, resetPassword } from './ResetPassword.api'
-import styles from './ResetPassword.module.css'
+import { recoverPassword, resetPassword } from '../Auth.api'
 
 const EMAIL = 'email'
 const PASSWORD = 'password'
@@ -54,7 +54,7 @@ const ResetPassword = (): ReactElement => {
 						id: "feedback.reset.password.new.set"
 					}), 'success'
 				))
-				navigate('/login')
+				navigate(login)
 			} else {
 				dispatch(displayToast(
 					formatMessage({ id: "feedback.general.error" }), 'error')
@@ -74,6 +74,12 @@ const ResetPassword = (): ReactElement => {
 			}
 		}
 	}
+
+	useEffect(() => {
+		if (isAuthenticated()) {
+			navigate(dashboardHome)
+		}
+	}, [navigate])
 
 	const renderRecoveryView = () => (
 		<div className="mb-6">
@@ -184,13 +190,15 @@ const ResetPassword = (): ReactElement => {
 					<FormattedMessage id="recovery.password.go.back" />
 				</a>
 			)}
-			<Button
-				type="submit"
-				style="primary"
-				dataTestId={DataTestKeys.resetPasswordSubmit}
-			>
-				<FormattedMessage id="recovery.password.reset" />
-			</Button>
+			<div className="w-40">
+				<Button
+					type="submit"
+					style="primary"
+					dataTestId={DataTestKeys.resetPasswordSubmit}
+				>
+					<FormattedMessage id="recovery.password.reset" />
+				</Button>
+			</div>
 		</div>
 	)
 
@@ -206,29 +214,27 @@ const ResetPassword = (): ReactElement => {
 	)
 
 	return (
-		<section className={styles.Container}>
-			<div className="px-6">
+		<div className="px-6">
+			{
+				!recoverySuccess && renderTitle()
+			}
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				className="w-96"
+			>
 				{
-					!recoverySuccess && renderTitle()
+					!recoverySuccess ? (
+						token ? renderResetView() : renderRecoveryView()
+					) : (<></>)
 				}
-				<form
-					onSubmit={handleSubmit(onSubmit)}
-					className="w-96"
-				>
-					{
-						!recoverySuccess ? (
-							token ? renderResetView() : renderRecoveryView()
-						) : (<></>)
-					}
-					{
-						!recoverySuccess && renderActionsView()
-					}
-					{
-						recoverySuccess && renderRecoverySuccessView()
-					}
-				</form>
-			</div>
-		</section>
+				{
+					!recoverySuccess && renderActionsView()
+				}
+				{
+					recoverySuccess && renderRecoverySuccessView()
+				}
+			</form>
+		</div>
 	)
 }
 

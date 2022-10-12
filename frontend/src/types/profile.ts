@@ -12,6 +12,7 @@ export interface IProfileState {
 	id?: string
 	role: number | undefined
 	emailConfirmed: boolean
+	isActive: boolean
 }
 
 export interface IUserState extends IProfileState {
@@ -32,9 +33,9 @@ export type IRoleSelection = {
 	value: string
 }
 
-export interface idProfileModelAction {
-	type: typeof types.SET_ID_PROFILE;
+export interface resetProfileModelAction {
+	type: typeof types.RESET_PROFILE;
 	payload: string;
 }
 
-export type ActionType = IProfileAction | idProfileModelAction
+export type ActionType = IProfileAction | resetProfileModelAction

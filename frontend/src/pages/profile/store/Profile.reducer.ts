@@ -7,6 +7,8 @@ const reducer = (state = profileState, action: ActionType) => {
 	switch (action.type) {
 		case types.SET_PROFILE:
 			return action.payload
+		case types.RESET_PROFILE:
+			return state = profileState
 		default:
 			break
 	}

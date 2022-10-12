@@ -1,2 +1,2 @@
 export const SET_PROFILE = 'SET_PROFILE'
-export const SET_ID_PROFILE = 'SET_ID_PROFILE'
+export const RESET_PROFILE = 'RESET_PROFILE'

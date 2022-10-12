@@ -7,7 +7,8 @@ import {
 	deleteUser,
 	updateUser,
 	uploadPhotoUser,
-	removePhotoUser
+	removePhotoUser,
+	handleStatusUser
 } from '../controllers/user'
 import { isAuthenticated } from '../middleware/is_auth'
 
@@ -19,6 +20,7 @@ router.get('/:id', isAuthenticated, getUser)
 router.delete('/:id', isAuthenticated, deleteUser)
 router.patch('/:id', isAuthenticated, updateUser)
 router.patch('/:id/photo', isAuthenticated, uploadPhotoUser)
+router.patch('/:id/activate', isAuthenticated, handleStatusUser)
 router.delete('/:id/photo', isAuthenticated, removePhotoUser)
 
 export default router

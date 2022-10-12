@@ -9,6 +9,7 @@ import { Dispatch } from 'redux'
 import { Button, Loader, Input, Select } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
+import { dashboardUsers } from 'routes'
 import { IProfileState, IRoleSelection, IUserState } from 'types/profile'
 import { isEmail } from 'utils/utils'
 
@@ -71,7 +72,7 @@ const UserForm = ({
 				'success'
 			))
 
-			navigate('/users')
+			navigate(dashboardUsers)
 		} else {
 			dispatch(displayToast(
 				formatMessage({ id: "feedback.general.error" }),
@@ -90,6 +91,7 @@ const UserForm = ({
 			role: roleSelected.id,
 			photoUrl: '',
 			emailConfirmed: user ? user.emailConfirmed : false,
+			isActive: true
 		}
 
 		if (user) {
@@ -274,28 +276,34 @@ const UserForm = ({
 				)}
 				<div className="flex justify-end">
 					{user && (
-						loading ? <Loader /> : <Button
-							onClick={onDeleteUser}
-							style="danger_outline"
-							dataTestId={DataTestKeys.userFormDelete}
+						loading ? <Loader /> : (
+							<div className="w-40">
+								<Button
+									onClick={onDeleteUser}
+									style="danger_outline"
+									dataTestId={DataTestKeys.userFormDelete}
+								>
+									<FormattedMessage
+										id="user.create.update.delete"
+									/>
+								</Button>
+							</div>
+						)
+					)}
+					<div className="w-40 ml-3">
+						<Button
+							style="primary"
+							type="submit"
+							loading={false}
+							dataTestId={
+								user ? DataTestKeys.userFormUpdate : DataTestKeys.userFormSave
+							}
 						>
 							<FormattedMessage
-								id="user.create.update.delete"
+								id={`user.create.update.${user ? 'update' : 'save'}`}
 							/>
 						</Button>
-					)}
-					<Button
-						style="primary"
-						type="submit"
-						loading={false}
-						dataTestId={
-							user ? DataTestKeys.userFormUpdate : DataTestKeys.userFormSave
-						}
-					>
-						<FormattedMessage
-							id={`user.create.update.${user ? 'update' : 'save'}`}
-						/>
-					</Button>
+					</div>
 				</div>
 			</form>
 		</div>

@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 import { DataTestKeys } from 'data-test-keys'
+import { dashboardHome, dashboardUsers } from 'routes'
 
 import styles from './Sidebar.module.css'
 
@@ -11,12 +12,12 @@ const SidebarNav = (): ReactElement => (
 	<aside className={styles.Aside}>
 		<ul className="text-center lg:block">
 			<li className="mb-4">
-				<Link to="/" data-testid={DataTestKeys.linkHome}>
+				<Link to={dashboardHome} data-testid={DataTestKeys.linkHome}>
 					<FormattedMessage id="sidebar.home" />
 				</Link>
 			</li>
 			<li className="mb-4">
-				<Link to="/users" data-testid={DataTestKeys.linkUsers}>
+				<Link to={dashboardUsers} data-testid={DataTestKeys.linkUsers}>
 					<FormattedMessage id="sidebar.users" />
 				</Link>
 			</li>

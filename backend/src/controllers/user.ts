@@ -143,7 +143,7 @@ export const uploadPhotoUser = async (
 		}
 
 		if (req.file) {
-			const imageUrl = `images/photo-profile.${getExtension(req.file.mimetype)}`
+			const imageUrl = `/images/photo-profile.${getExtension(req.file.mimetype)}`
 
 			User.findByIdAndUpdate(req.params.id, {
 				...req.body,
@@ -170,4 +170,17 @@ export const removePhotoUser = async (
 	res.status(201).send({
 		photo_url: ''
 	})
+}
+
+export const handleStatusUser = (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	User.findByIdAndUpdate(req.params.id, {
+		...req.body,
+		isActive: req.body.activate
+	}).then(() => {
+		res.sendStatus(201)
+	}).catch((err) => handleErrorStatus(err, next))
 }

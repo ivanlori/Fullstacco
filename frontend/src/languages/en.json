@@ -38,6 +38,7 @@
 	"feedback.user.not.exists": "User not exists",
 	"feedback.user.wrong.password": "Wrong password inserted",
 	"feedback.general.error": "ops, something went wrong, try later",
+	"feedback.general.status.success": "Status updated with success!",
 	"feedback.reset.password.email.sent": "Email sent to your inbox!",
 	"feedback.reset.password.new.set": "New Password set successfully!",
 	"form.validation.empty.name": "Name required",
@@ -62,5 +63,9 @@
 	"profile.title": "My Profile",
 	"role.admin": "Admin",
 	"role.superAdmin": "Super Admin",
-	"role.account": "Account"
+	"role.account": "Account",
+	"account.disabled.title": "Your account is Disabled",
+	"account.disabled.description": "Your account has been disabled by the administrator",
+	"page.not.found": "Page not found",
+	"page.not.found.go.to.home": "Return to the homepage"
 }

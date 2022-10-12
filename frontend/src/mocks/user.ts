@@ -12,6 +12,7 @@ export const mockedAdminUser: IProfileState = {
 	photoUrl: 'some_url',
 	role: 0,
 	emailConfirmed: false,
+	isActive: true
 }
 
 export const mockedAccountUser: IProfileState = {

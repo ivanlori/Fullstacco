@@ -34,34 +34,50 @@ Fullstacco (IPA: /fullstakkɒ/) is a boilerplate written in NodeJs/ExpressJs for
 * React testing library
 * TailwindCSS
 
+## 🐳 Using it with Docker
+```
+# clone repository
+git clone https://github.com/ivanlori/Fullstacco.git
+
+## backend
+cd fullstacco/backend && docker-compose up -d
+
+## frontend
+cd fullstacco/frontend && docker-compose up -d
+```
+
 ## Requirements
 
 - MongoDb account and a running cluster
 - Node.js v18
 
-## 🚀 Installation
+## 🚀 Classic installation
 
 ```
 # clone repository
 git clone https://github.com/ivanlori/Fullstacco.git
 
-# setup the environment files for backend
-cd backend && yarn setup-env
+## backend:
 
-# setup the environment files for frontend
-cd frontend && yarn setup-env
+# setup the .env file with wizard
+cd fullstacco/backend && yarn setup-env
 
-# install dependencies for the frontend part
-cd frontend && yarn
+# install dependencies
+yarn
 
-# install dependencies for the backend part
-cd backend && yarn
+# start the app, it will run at localhost:5000
+yarn start
 
-# start the client, it will run at localhost:3000
-cd frontend && yarn start
+## frontend:
 
-# start the backend, it will run at localhost:5000
-cd backend && yarn start
+# setup the .env file with wizard
+cd fullstacco/frontend && yarn setup-env
+
+# install dependencies
+yarn
+
+# start the app, it will run at localhost:3000
+yarn start
 ```
 
 ## 🐛 Bugs

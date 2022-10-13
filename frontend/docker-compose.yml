@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: node:18
+    ports:
+      - 3000:3000
+    working_dir: /src
+    command: sh -c "yarn install && yarn start"
+    volumes:
+      - ./:/src
+    networks:
+      - webappnetwork
+networks:
+  webappnetwork:
+    driver: bridge

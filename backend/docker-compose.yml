@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    image: node:18
+    ports:
+      - 5000:5000
+    working_dir: /src
+    command: sh -c "yarn install && yarn start"
+    volumes:
+      - ./:/src
+    depends_on:
+      - mongodb
+    networks:
+      - webappnetwork
+  
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - ./data-node:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --noauth
+    networks:
+      - webappnetwork
+
+networks:
+  webappnetwork:
+    driver: bridge

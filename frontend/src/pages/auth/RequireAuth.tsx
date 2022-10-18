@@ -29,11 +29,10 @@ const RequireAuth = ({ children }: Props) => {
 
 			if (status === 200) {
 				dispatch(setProfile(data))
+				setLoading(false)
 			} else {
 				navigate(login)
 			}
-
-			setLoading(false)
 		})()
 	}, [dispatch, navigate])
 

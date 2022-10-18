@@ -8,7 +8,7 @@ export const mockedAdminUser: IProfileState = {
 	password: '123',
 	createdAt: 'date',
 	updatedAt: 'date',
-	id: '123',
+	_id: '123',
 	photoUrl: 'some_url',
 	role: 0,
 	emailConfirmed: false,

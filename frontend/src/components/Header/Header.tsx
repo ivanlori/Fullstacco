@@ -64,7 +64,10 @@ const Header = (): ReactElement => {
 		<nav className={styles.Nav} ref={ref}>
 			<div className={styles.Container}>
 				<div className="flex items-center p-5">
-					<Link to={dashboardHome} className="text-blue_dark">
+					<Link
+						to={dashboardHome}
+						className="text-blue_dark text-xl"
+					>
 						Fullstacco
 					</Link>
 				</div>

@@ -9,7 +9,7 @@ export interface IProfileState {
 	password?: string
 	updatedAt?: string
 	createdAt?: string
-	id?: string
+	_id?: string
 	role: number | undefined
 	emailConfirmed: boolean
 	isActive: boolean

@@ -9,7 +9,7 @@ const initialState: IProfileState = {
 	password: '',
 	createdAt: '',
 	updatedAt: '',
-	id: '',
+	_id: '',
 	role: 0,
 	emailConfirmed: false,
 	isActive: false

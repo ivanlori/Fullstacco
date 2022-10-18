@@ -32,7 +32,7 @@ export const createUser = async (
 	}
 }
 
-export const fetchUsers = async (): Promise<AxiosResponse> => {
+export const fetchUsers = async (page: number): Promise<AxiosResponse> => {
 	try {
 		const {
 			data,
@@ -40,7 +40,7 @@ export const fetchUsers = async (): Promise<AxiosResponse> => {
 			statusText,
 			headers,
 			config
-		} = await axios.get(`${BASE_API}/users/`, {
+		} = await axios.get(`${BASE_API}/users/?page=${page}`, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
@@ -61,7 +61,7 @@ export const fetchUsers = async (): Promise<AxiosResponse> => {
 export const updateUser = async (
 	payload: IProfileState
 ): Promise<AxiosResponse> => {
-	const url = `${BASE_API}/users/${(payload.id)}`
+	const url = `${BASE_API}/users/${(payload._id)}`
 	try {
 		const {
 			data,

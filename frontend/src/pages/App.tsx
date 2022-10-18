@@ -91,7 +91,11 @@ const App = () => {
 					/>
 					<Route
 						path="*"
-						element={<RequireAuth><NotFound /></RequireAuth>}
+						element={
+							<RequireAuth>
+								<NotFound />
+							</RequireAuth>
+						}
 					/>
 				</Route>
 				<Route element={<PublicLayout />}>

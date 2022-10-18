@@ -97,7 +97,7 @@ const UserForm = ({
 		if (user) {
 			const payload: IProfileState = {
 				...data,
-				id: user.id,
+				_id: user._id,
 				updatedAt: new Date().toISOString(),
 			}
 
@@ -123,7 +123,7 @@ const UserForm = ({
 		setLoading(true)
 		const {
 			status
-		} = await deleteUser(user?.id)
+		} = await deleteUser(user?._id)
 		setLoading(false)
 
 		handleResult(status, "feedback.user.deleted")

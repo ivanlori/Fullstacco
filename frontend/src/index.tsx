@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
+import axios from 'axios'
 import { createRoot } from 'react-dom/client'
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+
+import { login } from 'routes'
+import { TOKEN_STORAGE, USER_ID_STORAGE } from 'utils/utils'
 
 import './index.css'
 import enMsg from './languages/en.json'
@@ -29,6 +33,18 @@ const intl = createIntl({
 const container = document.getElementById('root')
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = createRoot(container!)
+
+axios.interceptors.response.use(function (response) {
+	return response
+}, function (error) {
+	if (error.response.status === 401) {
+		localStorage.removeItem(TOKEN_STORAGE)
+		localStorage.removeItem(USER_ID_STORAGE)
+		window.location.href = login
+	} else {
+		return Promise.reject(error)
+	}
+})
 
 root.render(
 	<Provider store={store}>

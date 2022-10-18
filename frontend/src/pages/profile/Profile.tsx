@@ -16,7 +16,7 @@ const Profile = (): ReactElement => {
 		photoUrl,
 		username,
 		role,
-		id
+		_id
 	} = useSelector((state: IState) => state.profile)
 
 	return (
@@ -24,10 +24,10 @@ const Profile = (): ReactElement => {
 			<div className="xl:mx-auto flex">
 				<div className="flex flex-col w-full">
 					<div className="bg-white text-gray_900 rounded-xl p-5 m-10">
-						<div className="flex">
+						<div className="flex gap-4">
 							<div className="w-1/5">
 								<Photo
-									id={id as string}
+									id={_id as string}
 									photoUrl={photoUrl}
 								/>
 							</div>

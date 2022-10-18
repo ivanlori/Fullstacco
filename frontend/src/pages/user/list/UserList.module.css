@@ -1,9 +1,11 @@
 .Container {
+	height: 48rem;
   @apply bg-white;
   @apply text-gray_900;
   @apply rounded-xl;
   @apply p-5;
   @apply m-10;
+	@apply sm:h-auto;
 }
 
 .HeaderWrapper {
@@ -55,19 +57,18 @@
 }
 
 .CellBody {
-  @apply text-sm;
   @apply text-gray_900;
   @apply font-light;
-  @apply px-6;
+	@apply pr-2;
   @apply py-4;
-  @apply whitespace-nowrap;
 }
 
 .Edit {
 	@apply items-center;
 	@apply cursor-pointer;
 	@apply flex;
-	@apply justify-center;
+	@apply mr-3;
+	@apply justify-end;
 }
 
 .BackgroundStatus {
@@ -91,18 +92,16 @@
 }
 
 .CellHead {
-  @apply text-sm;
   @apply font-medium;
   @apply text-gray_900;
-  @apply px-6;
   @apply py-4;
   @apply text-left;
+	@apply w-14;
+	@apply max-w-2xl;
 }
 
 .StatusLabel {
-	@apply justify-center;
 	@apply flex;
-	@apply items-center;
 	@apply cursor-pointer;
 	@apply select-none;
 }

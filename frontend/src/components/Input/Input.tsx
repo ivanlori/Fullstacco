@@ -10,7 +10,7 @@ interface Props {
 	name?: string
 	value?: string | number
 	placeholder?: string
-	error: string | undefined,
+	error?: string | undefined,
 	dataTestId?: string
 	onChange?: (arg0: ChangeEvent<HTMLInputElement>) => void,
 	id?: string

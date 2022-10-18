@@ -1,4 +1,10 @@
-import { ReactElement, useCallback, useEffect, useState } from 'react'
+import {
+	ChangeEvent,
+	ReactElement,
+	useCallback,
+	useEffect,
+	useState
+} from 'react'
 
 import classNames from 'classnames'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -6,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
-import { Button, Loader } from 'components'
+import { Button, Input, Loader, Pagination } from 'components'
 import { Pen } from 'components/Icon/svg/icons'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
@@ -23,18 +29,22 @@ const UserList = (): ReactElement => {
 	const dispatch = useDispatch<Dispatch>()
 	const { formatMessage } = useIntl()
 	const [statusLoading, setStatusLoading] = useState(false)
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(false)
 	const navigate = useNavigate()
 	const [users, setUsers] = useState<IUserState[]>([])
+	const [searchedValue, setSearchedValue] = useState('')
+	const [totalPages, setTotalPages] = useState(1)
 
-	const getUsers = useCallback(async () => {
+	const getUsers = useCallback(async (page: number) => {
+		setLoading(true)
 		const {
 			data,
 			status
-		} = await fetchUsers()
+		} = await fetchUsers(page)
 
 		if (status === 200) {
-			setUsers(data)
+			setUsers(data.users)
+			setTotalPages(data.totalPages)
 		} else {
 			dispatch(displayToast(
 				formatMessage({
@@ -47,7 +57,7 @@ const UserList = (): ReactElement => {
 
 	useEffect(() => {
 		if (users.length === 0) {
-			getUsers()
+			getUsers(1)
 		}
 	}, [dispatch, formatMessage, getUsers, users])
 
@@ -72,11 +82,11 @@ const UserList = (): ReactElement => {
 
 		const {
 			status
-		} = await changeUserStatus(user.id as string, !user.isActive)
+		} = await changeUserStatus(user._id as string, !user.isActive)
 
 		if (status === 201) {
 			// refresh list with updated status
-			getUsers()
+			getUsers(1)
 			dispatch(displayToast(
 				formatMessage({
 					id: "feedback.general.status.success"
@@ -89,6 +99,14 @@ const UserList = (): ReactElement => {
 		}
 
 		setStatusLoading(false)
+	}
+
+	const formatDateYMD = (date: Date) => {
+		return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+	}
+
+	const filterByName = (user: IUserState) => {
+		return searchedValue ? user.name.startsWith(searchedValue) : user
 	}
 
 	const renderTable = () => (
@@ -110,93 +128,105 @@ const UserList = (): ReactElement => {
 					<th className={styles.CellHead}>
 						<FormattedMessage id="userlist.created.at" />
 					</th>
+					<th className={styles.CellHead}></th>
 				</tr>
 			</thead>
 			<tbody>
 				{users
-					.filter((user) => user.id !== profileState.id)
-					.map((user: IUserState) => (
-						<tr
-							className="border-b"
-							key={user.id}
-							data-testid={DataTestKeys.rowUser}
-						>
-							<td
-								className={styles.CellBody}
-								data-testid={DataTestKeys.rowUserName}
+					.filter((user) => user._id !== profileState._id)
+					.filter((user) => filterByName(user))
+					.map((user: IUserState) => {
+						const creationDate = new Date(user.createdAt as string)
+						const formattedDate = formatDateYMD(creationDate)
+						return (
+							<tr
+								className="border-b"
+								key={user._id}
+								data-testid={DataTestKeys.rowUser}
 							>
-								{user.name}
-							</td>
-							<td
-								className={styles.CellBody}
-								data-testid={DataTestKeys.rowUserLastname}
-							>
-								{user.lastname}
-							</td>
-							<td
-								className={styles.CellBody}
-								data-testid={DataTestKeys.rowUserEmail}
-							>
-								{user.email}
-							</td>
-							<td
-								data-testid={DataTestKeys.rowUserStatus}
-							>
-								{statusLoading ?
-									<Loader small />
-									: (
-										<label
-											htmlFor={user.id}
-											className={styles.StatusLabel}
-										>
-											<div className="relative">
-												<input
-													type="checkbox"
-													id={user.id}
-													className="sr-only"
-												/>
-												<div
-													role="button"
-													tabIndex={-1}
-													className={statusBackgroundStyle(user)}
-													onKeyDown={() => onChangeStatus(user)}
-													onClick={() => onChangeStatus(user)}
-												></div>
-												<div
-													role="button"
-													tabIndex={-1}
-													className={statusDotStyle(user)}
-													onKeyDown={() => onChangeStatus(user)}
-													onClick={() => onChangeStatus(user)}
-												></div>
-											</div>
-										</label>
-									)}
-							</td>
-							<td
-								className={styles.CellBody}
-								data-testid={DataTestKeys.rowUserCreatedAt}
-							>
-								<span>{user.createdAt}</span>
-							</td>
-							<td className={`${styles.CellBody} ${styles.Edit}`}>
-								<Pen
-									width={15}
-									height={15}
-									onClick={() => {
-										navigate(`${dashboardUsers}/${user.id}/edit`)
-									}}
-									data-testid={DataTestKeys.editIcon}
-								/>
-							</td>
-						</tr>
-					))}
+								<td
+									className={styles.CellBody}
+									data-testid={DataTestKeys.rowUserName}
+								>
+									{user.name}
+								</td>
+								<td
+									className={styles.CellBody}
+									data-testid={DataTestKeys.rowUserLastname}
+								>
+									{user.lastname}
+								</td>
+								<td
+									className={styles.CellBody}
+									data-testid={DataTestKeys.rowUserEmail}
+								>
+									{user.email}
+								</td>
+								<td
+									data-testid={DataTestKeys.rowUserStatus}
+								>
+									{statusLoading ?
+										<Loader small />
+										: (
+											<label
+												htmlFor={user._id}
+												className={styles.StatusLabel}
+											>
+												<div className="relative">
+													<input
+														type="checkbox"
+														id={user._id}
+														className="sr-only"
+													/>
+													<div
+														role="button"
+														tabIndex={-1}
+														className={statusBackgroundStyle(user)}
+														onKeyDown={() => onChangeStatus(user)}
+														onClick={() => onChangeStatus(user)}
+													></div>
+													<div
+														role="button"
+														tabIndex={-1}
+														className={statusDotStyle(user)}
+														onKeyDown={() => onChangeStatus(user)}
+														onClick={() => onChangeStatus(user)}
+													></div>
+												</div>
+											</label>
+										)}
+								</td>
+								<td
+									className={styles.CellBody}
+									data-testid={DataTestKeys.rowUserCreatedAt}
+								>
+									<span>
+										{formattedDate}
+									</span>
+								</td>
+								<td className={`${styles.CellBody} ${styles.Edit}`}>
+									<Pen
+										width={20}
+										height={20}
+										onClick={() => {
+											navigate(`${dashboardUsers}/${user._id}/edit`)
+										}}
+										data-testid={DataTestKeys.editIcon}
+									/>
+								</td>
+							</tr>
+						)
+					})}
 			</tbody>
 		</table>
 	)
 
+	const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+		setSearchedValue(e.target.value)
+	}
+
 	return (
-		<div className="lg:pl-24">
+		<div className="lg:pl-24 sm:mb-36">
 			<div className="xl:mx-auto flex">
 				<div className="flex flex-col w-full">
 					<div className={styles.Container}>
@@ -204,22 +234,40 @@ const UserList = (): ReactElement => {
 							<h5 className="text-2xl">
 								<FormattedMessage id="userlist.title" />
 							</h5>
-							{isAdmin(profileState) && (
-								<div className="w-40">
-									<Button
-										style="primary"
-										onClick={createUserPage}
-										dataTestId={DataTestKeys.newUserBtn}
-									>
-										<FormattedMessage id="userlist.new.user" />
-									</Button>
+							<div className="flex items-end">
+								<div className="mx-5">
+									<label htmlFor="search">
+										<FormattedMessage id="search.placeholder" />
+									</label>
+									<Input
+										id="search"
+										onChange={handleSearch}
+										placeholder={
+											formatMessage({ id: 'search.placeholder' })
+										}
+									/>
 								</div>
-							)}
+								{isAdmin(profileState) && (
+									<div className="w-40">
+										<Button
+											style="primary"
+											onClick={createUserPage}
+											dataTestId={DataTestKeys.newUserBtn}
+										>
+											<FormattedMessage id="userlist.new.user" />
+										</Button>
+									</div>
+								)}
+							</div>
 						</div>
 						{
 							loading ? <Loader small /> : renderTable()
 						}
 					</div>
+					<Pagination
+						totalPages={totalPages}
+						getData={getUsers}
+					/>
 				</div>
 			</div>
 		</div>

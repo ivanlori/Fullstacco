@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import jwt, { JwtPayload } from 'jsonwebtoken'
+import jwt, { JwtPayload, TokenExpiredError } from 'jsonwebtoken'
 import 'dotenv/config'
 
 export const isAuthenticated = (
@@ -21,6 +21,15 @@ export const isAuthenticated = (
 	try {
 		decodedToken = jwt.verify(token, String(process.env.SECRET_KEY))
 	} catch (err) {
+		if (
+			err instanceof TokenExpiredError &&
+			err.name === 'TokenExpiredError'
+		) {
+			return res.status(401).json({
+				message: 'token_expired'
+			})
+		}
+
 		return res.status(401).json({
 			message: 'error_verifing_token'
 		})

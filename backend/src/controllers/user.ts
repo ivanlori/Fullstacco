@@ -7,32 +7,41 @@ import User from '../models/user'
 import { handleErrorStatus } from './utils'
 
 const imagePath = process.env.ROOT_FRONTEND_FOLDER_ABSOLUTE_PATH
+const PAGINATION_LIMIT = 10
 
-export const getUsers = (req: Request, res: Response, next: NextFunction) => {
-	User.find().then((users) => {
-		const usersModified = users.map((user) => {
-			return {
-				id: user._id,
-				isActive: user.isActive,
-				lastname: user.lastname,
-				name: user.name,
-				username: user.username,
-				email: user.email,
-				role: user.role,
-				createdAt: user.createdAt,
-				updatedAt: user.updatedAt,
-			}
+export const getUsers = async (
+	req: Request,
+	res: Response,
+	//next: NextFunction
+) => {
+	const {
+		page = 1,
+		limit = PAGINATION_LIMIT
+	} = req.query
+
+	try {
+		const usersTotal = await User.find()
+
+		const users = await User
+			.find()
+			.limit(+limit * 1)
+			.skip((+page - 1) * +limit)
+			.exec()
+
+		res.status(200).json({
+			users,
+			totalPages: Math.ceil(usersTotal.length / +limit),
+			currentPage: +page
 		})
-		res.status(200).json([
-			...usersModified
-		])
-	}).catch((err) => handleErrorStatus(err, next))
+	} catch (error) {
+		console.log(error)
+	}
 }
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
 	User.findById(req.params.id).then((user) => {
 		res.status(200).json({
-			id: user._id,
+			_id: user._id,
 			isActive: user.isActive,
 			lastname: user.lastname,
 			name: user.name,

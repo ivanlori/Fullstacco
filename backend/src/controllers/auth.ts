@@ -25,7 +25,33 @@ const transporter = nodemailer.createTransport({
 	}
 })
 
-export const login = (req: Request, res: Response, next: NextFunction) => {
+const signToken = (
+	email: string,
+	userId: string,
+	callback: (token: string) => void
+) => {
+	jwt.sign({
+		email,
+		userId
+	},
+		String(process.env.SECRET_KEY),
+		{ expiresIn: '24h' },
+		(err, token) => {
+			if (token) {
+				callback(token)
+			}
+
+			if (err) {
+				console.log(err)
+			}
+		})
+}
+
+export const login = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
 	const email = req.body.email
 	const password = req.body.password
 
@@ -47,23 +73,12 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 							message: 'wrong_password'
 						})
 					} else {
-						jwt.sign({
-							email: loadedUser.email,
-							userId: loadedUser._id
-						},
-							String(process.env.SECRET_KEY),
-							{ expiresIn: '24h' },
-							(err, token) => {
-								if (token) {
-									res.status(200).json({
-										token, userId: loadedUser._id
-									})
-								}
-
-								if (err) {
-									console.log(err)
-								}
+						signToken(loadedUser.email, loadedUser._id, (token) => {
+							res.status(200).json({
+								token,
+								userId: loadedUser._id
 							})
+						})
 					}
 				})
 			}
@@ -71,9 +86,14 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 		.catch((err) => handleErrorStatus(err, next))
 }
 
-export const signup = (req: Request, res: Response, next: NextFunction) => {
+export const signup = (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
 	const errors = validationResult(req).array()
-	if (errors) {
+
+	if (errors.length > 0) {
 		return res.status(400).json({ errors })
 	}
 
@@ -99,9 +119,12 @@ export const signup = (req: Request, res: Response, next: NextFunction) => {
 
 		return user.save()
 	}).then((result) => {
-		res.status(201).json({
-			message: 'waiting_confirmation_email',
-			userId: result._id
+		signToken(result.email, result._id, (token) => {
+			res.status(201).json({
+				message: 'waiting_confirmation_email',
+				token,
+				userId: result._id
+			})
 		})
 
 		return transporter.sendMail({

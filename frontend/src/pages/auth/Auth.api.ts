@@ -54,7 +54,8 @@ export const login = async (
 }
 
 export const signup = async (
-	payload: ISignupFormInput
+	payload: ISignupFormInput,
+	callBack: (userId: string, token: string) => void
 ): Promise<AxiosResponse> => {
 	try {
 		const {
@@ -64,6 +65,8 @@ export const signup = async (
 			headers,
 			config
 		} = await axios.post(`${BASE_API}/auth/signup`, payload)
+
+		if (status === 201) callBack(data.userId, data.token)
 
 		return {
 			data,

@@ -10,7 +10,7 @@ import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
 import { dashboardHome } from 'routes'
-import { emailReg, isAuthenticated } from 'utils/utils'
+import { emailReg, isAuthenticated, TOKEN_STORAGE, USER_ID_STORAGE } from 'utils/utils'
 
 import { signup, ISignupFormInput } from '../Auth.api'
 
@@ -39,7 +39,11 @@ const Signup = (): ReactElement => {
 		const {
 			data,
 			status
-		} = await signup(payload)
+		} = await signup(payload, (userId, token) => {
+			localStorage.setItem(TOKEN_STORAGE, token)
+			localStorage.setItem(USER_ID_STORAGE, userId)
+			navigate(dashboardHome)
+		})
 
 		if (status === 201) {
 			navigate(dashboardHome)

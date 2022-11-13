@@ -7,7 +7,7 @@ import User from '../models/user'
 import { handleErrorStatus } from './utils'
 
 const imagePath = process.env.ROOT_FRONTEND_FOLDER_ABSOLUTE_PATH
-const PAGINATION_LIMIT = 10
+export const PAGINATION_LIMIT = 10
 
 export const getUsers = async (
 	req: Request,
@@ -57,13 +57,13 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
 
 export const updateUser = (req: Request, res: Response, next: NextFunction) => {
 	User.findByIdAndUpdate(req.params.id, req.body).then(() => {
-		res.sendStatus(201)
+		res.sendStatus(201).end()
 	}).catch((err) => handleErrorStatus(err, next))
 }
 
 export const deleteUser = (req: Request, res: Response, next: NextFunction) => {
 	User.findByIdAndDelete(req.params.id).then(() => {
-		res.sendStatus(201)
+		res.sendStatus(201).end()
 	}).catch((err) => handleErrorStatus(err, next))
 }
 
@@ -77,6 +77,7 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
 		emailConfirmed,
 		isActive,
 		role,
+		photoUrl,
 	} = req.body
 
 	bcrypt.hash(password, 12).then((hashedPassword) => {
@@ -89,6 +90,7 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
 			emailConfirmed,
 			isActive,
 			role,
+			photoUrl,
 			createdAt: new Date(),
 			updatedAt: null
 		})
@@ -141,7 +143,9 @@ export const upload = multer({
 }).single('photo')
 
 export const uploadPhotoUser = async (
-	req: Request, res: Response, next: NextFunction
+	req: Request,
+	res: Response,
+	next: NextFunction
 ) => {
 	upload(req, res, function (err) {
 
@@ -158,27 +162,28 @@ export const uploadPhotoUser = async (
 				...req.body,
 				photoUrl: imageUrl
 			}).then(() => {
-				res.status(201).send({
+				res.status(201).json({
 					photo_url: imageUrl
 				})
 			}).catch((err) => handleErrorStatus(err, next))
 		}
-		res.end()
 	})
+	res.end()
 }
 
 export const removePhotoUser = async (
-	req: Request, res: Response, next: NextFunction
+	req: Request,
+	res: Response,
+	next: NextFunction
 ) => {
 	User.findByIdAndUpdate(req.params.id, {
 		...req.body,
 		photoUrl: ''
 	}).then(() => {
-		res.sendStatus(201)
+		res.status(201).json({
+			photo_url: ''
+		})
 	}).catch((err) => handleErrorStatus(err, next))
-	res.status(201).send({
-		photo_url: ''
-	})
 }
 
 export const handleStatusUser = (
@@ -190,6 +195,6 @@ export const handleStatusUser = (
 		...req.body,
 		isActive: req.body.activate
 	}).then(() => {
-		res.sendStatus(201)
+		res.sendStatus(201).end()
 	}).catch((err) => handleErrorStatus(err, next))
 }

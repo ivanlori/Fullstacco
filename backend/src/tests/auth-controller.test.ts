@@ -12,17 +12,10 @@ import {
 	WAITING_CONFIRMATION_EMAIL,
 	WRONG_PASSWORD
 } from '../messages'
-import user from '../models/user'
+import { mockedUser } from '../mocks/mocked_user'
 import { EMAIL_INVALID } from '../routes/auth'
 
 describe('Auth Controller', () => {
-	const mockedUser = {
-		email: `test.${Date.now() + 3600000}@email.com`,
-		password: 'password',
-		id: '',
-		reset_token: ''
-	}
-
 	test('[Signup] should execute signup successfully', (done) => {
 		request(app)
 			.post(`${apiV1Base}/auth/signup`)
@@ -80,6 +73,7 @@ describe('Auth Controller', () => {
 				password: mockedUser.password
 			})
 			.end((err, res) => {
+				mockedUser.token = res.body.token
 				expect(res.statusCode).to.equal(200)
 				expect(res.body).deep.equal({
 					userId: res.body.userId,
@@ -182,12 +176,5 @@ describe('Auth Controller', () => {
 				})
 				done()
 			})
-	})
-
-	after((done) => {
-		user.findByIdAndDelete(mockedUser.id).then(() => {
-			console.log('Mocked user deleted!')
-			done()
-		})
 	})
 })

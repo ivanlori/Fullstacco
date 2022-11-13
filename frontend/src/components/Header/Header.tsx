@@ -89,7 +89,7 @@ const Header = (): ReactElement => {
 					{photoUrl ?
 						<div className={styles.Photo}></div>
 						:
-						<User width={23} height={23} />
+						<User width={40} height={40} />
 					}
 				</div>
 				{isMenuOpen && (

@@ -15,7 +15,7 @@ exports[`<Profile /> should match snapshot 1`] = `
           class="bg-white text-gray_900 rounded-xl p-5 m-10"
         >
           <div
-            class="flex"
+            class="flex gap-4"
           >
             <div
               class="w-1/5"

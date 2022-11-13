@@ -1,0 +1,7 @@
+export const USER_NOT_EXISTS = 'user_not_exists'
+export const WRONG_PASSWORD = 'wrong_password'
+export const WAITING_CONFIRMATION_EMAIL = 'waiting_confirmation_email'
+export const EMAIL_NOT_EXISTS = 'email_not_exists'
+export const EMAIL_RECOVERY_SENT = 'email_recovery_password_sent'
+export const TOKEN_NOT_VALID = 'token_not_valid'
+export const RESET_PASSWORD_DONE = 'reset_password_done'

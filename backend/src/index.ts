@@ -43,17 +43,17 @@ app.use((req, res, next) => {
 	next()
 })
 
-const apiV1Base = '/api/v1'
+export const apiV1Base = '/api/v1'
 
 app.use(`${apiV1Base}/users`, usersRouter)
 app.use(`${apiV1Base}/auth`, authRouter)
 
 const port = process.env.PORT || 5000
 
-const dbUser = process.env.MONGO_DB_USER
-const dbPassword = process.env.MONGO_DB_PASSWORD
-const dbCluster = process.env.MONGO_DB_CLUSTER
-const dbTable = process.env.MONGO_DB_TABLE
+export const dbUser = process.env.MONGO_DB_USER
+export const dbPassword = process.env.MONGO_DB_PASSWORD
+export const dbCluster = process.env.MONGO_DB_CLUSTER
+export const dbTable = process.env.MONGO_DB_TABLE
 
 mongoose
 	.connect(`mongodb+srv://${dbUser}:${dbPassword}@${dbCluster}/${dbTable}`)
@@ -62,3 +62,5 @@ mongoose
 	}).catch((err) => {
 		handleErrorStatus(err, null)
 	})
+
+export default app

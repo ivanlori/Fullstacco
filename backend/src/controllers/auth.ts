@@ -8,6 +8,15 @@ import nodemailer from 'nodemailer'
 import crypto from 'crypto'
 
 import 'dotenv/config'
+import {
+	EMAIL_NOT_EXISTS,
+	EMAIL_RECOVERY_SENT,
+	RESET_PASSWORD_DONE,
+	TOKEN_NOT_VALID,
+	USER_NOT_EXISTS,
+	WAITING_CONFIRMATION_EMAIL,
+	WRONG_PASSWORD
+} from '../messages'
 import User, { IUser } from '../models/user'
 import { handleErrorStatus } from './utils'
 
@@ -59,7 +68,7 @@ export const login = async (
 		.then((user: IUser) => {
 			if (!user) {
 				res.status(401).json({
-					message: 'user_not_exists'
+					message: USER_NOT_EXISTS
 				})
 
 				return
@@ -70,7 +79,7 @@ export const login = async (
 
 					if (!isEqual) {
 						return res.status(401).json({
-							message: 'wrong_password'
+							message: WRONG_PASSWORD
 						})
 					} else {
 						signToken(loadedUser.email, loadedUser._id, (token) => {
@@ -121,7 +130,7 @@ export const signup = (
 	}).then((result) => {
 		signToken(result.email, result._id, (token) => {
 			res.status(201).json({
-				message: 'waiting_confirmation_email',
+				message: WAITING_CONFIRMATION_EMAIL,
 				token,
 				userId: result._id
 			})
@@ -156,7 +165,7 @@ export const recoveryPassword = (
 		User.findOne({ email: req.body.email }).then((user) => {
 			if (!user) {
 				res.status(400).json({
-					message: 'email_not_exists'
+					message: EMAIL_NOT_EXISTS
 				})
 			}
 
@@ -165,7 +174,8 @@ export const recoveryPassword = (
 			return user.save()
 		}).then(() => {
 			res.status(201).json({
-				message: 'email_recovery_password_sent'
+				message: EMAIL_RECOVERY_SENT,
+				token
 			})
 			return transporter.sendMail({
 				to: req.body.email,
@@ -200,7 +210,7 @@ export const resetPassword = (
 		.then((user) => {
 			if (!user) {
 				res.status(400).json({
-					message: "token_not_valid"
+					message: TOKEN_NOT_VALID
 				})
 			}
 
@@ -214,7 +224,7 @@ export const resetPassword = (
 			return resettedUser.save()
 		}).then(() => {
 			res.status(201).json({
-				message: 'reset_password_done'
+				message: RESET_PASSWORD_DONE
 			})
 		}).catch((err) => handleErrorStatus(err, next))
 }

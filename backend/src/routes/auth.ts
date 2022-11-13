@@ -14,10 +14,10 @@ const router = express.Router()
 const EMAIL = 'email'
 
 // msg errors
-const EMAIL_EMPTY = 'email_empty'
-const EMAIL_INVALID = 'email_invalid'
-const EMAIL_USED = 'email_already_used'
-const PASSWORD_EMPTY = 'password_empty'
+export const EMAIL_EMPTY = 'email_empty'
+export const EMAIL_INVALID = 'email_invalid'
+export const EMAIL_USED = 'email_already_used'
+export const PASSWORD_EMPTY = 'password_empty'
 
 
 router.post('/login', [

@@ -7,7 +7,7 @@ import User from '../models/user'
 import { handleErrorStatus } from './utils'
 
 const imagePath = process.env.ROOT_FRONTEND_FOLDER_ABSOLUTE_PATH
-export const PAGINATION_LIMIT = 10
+export const PAGINATION_LIMIT = 15
 
 export const getUsers = async (
 	req: Request,
@@ -24,8 +24,7 @@ export const getUsers = async (
 
 		const users = await User
 			.find()
-			.limit(+limit * 1)
-			.skip((+page - 1) * +limit)
+			.skip((+page - 1))
 			.exec()
 
 		res.status(200).json({

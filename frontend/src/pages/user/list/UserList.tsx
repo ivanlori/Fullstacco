@@ -25,7 +25,7 @@ import styles from './UserList.module.css'
 
 export const UserList = (): ReactElement => {
 	const dispatch = useDispatch()
-	const profileState = useSelector((state: IState) => state.profile)
+	const profileState = useSelector((state: IState) => state.profileReducer)
 	const { formatMessage } = useIntl()
 	const navigate = useNavigate()
 	const createUserPage = () => navigate(dashboardNewUser)

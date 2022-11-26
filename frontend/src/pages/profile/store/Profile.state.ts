@@ -1,6 +1,6 @@
 import { IProfileState } from "types/profile"
 
-const initialState: IProfileState = {
+export const initialState: IProfileState = {
 	name: '',
 	lastname: '',
 	username: '',
@@ -14,5 +14,3 @@ const initialState: IProfileState = {
 	emailConfirmed: false,
 	isActive: false
 }
-
-export default initialState

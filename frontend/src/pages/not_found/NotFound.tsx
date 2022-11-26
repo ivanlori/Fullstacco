@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 import { dashboardHome } from "routes"
 
-const NoAccess = () => (
+export const NotFound = () => (
 	<div className="lg:pl-24">
 		<div className="xl:mx-auto flex">
 			<div className="flex flex-col w-full">
@@ -24,5 +24,3 @@ const NoAccess = () => (
 		</div>
 	</div>
 )
-
-export default NoAccess

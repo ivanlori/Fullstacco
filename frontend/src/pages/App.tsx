@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import './App.module.css'
 import { Toast } from 'components'
-import EditUser from 'pages/user/edit/EditUser'
+import { EditUser } from 'pages/user/edit/EditUser'
 import { UserList } from 'pages/user/list/UserList'
 import {
 	dashboardEditUser,
@@ -19,26 +19,26 @@ import {
 } from 'routes'
 import { IState } from 'types/state'
 
-import Login from './auth/login/Login'
-import RequireAuth from './auth/RequireAuth'
-import ResetPassword from './auth/reset_password/ResetPassword'
-import Signup from './auth/signup/Signup'
-import Dashboard from './dashboard/Dashboard'
-import NoAccess from './no_access/NoAccess'
-import NotFound from './not_found/NotFound'
-import Profile from './profile/Profile'
-import ProtectedLayout from './ProtectedLayout'
-import PublicLayout from './PublicLayout'
-import NewUser from './user/new/NewUser'
+import { Login } from './auth/login/Login'
+import { RequireAuth } from './auth/RequireAuth'
+import { ResetPassword } from './auth/reset_password/ResetPassword'
+import { Signup } from './auth/signup/Signup'
+import { Dashboard } from './dashboard/Dashboard'
+import { NoAccess } from './no_access/NoAccess'
+import { NotFound } from './not_found/NotFound'
+import { Profile } from './profile/Profile'
+import { ProtectedLayout } from './ProtectedLayout'
+import { PublicLayout } from './PublicLayout'
+import { NewUser } from './user/new/NewUser'
 
-const App = () => {
+export const App = () => {
 	const {
 		text,
 		style,
-	} = useSelector((state: IState) => state.toast)
+	} = useSelector((state: IState) => state.toastReducer)
 	const {
 		isActive
-	} = useSelector((state: IState) => state.profile)
+	} = useSelector((state: IState) => state.profileReducer)
 
 	if (!isActive) {
 		<Navigate to={noAccess} />
@@ -128,5 +128,3 @@ const App = () => {
 		</main>
 	)
 }
-
-export default App

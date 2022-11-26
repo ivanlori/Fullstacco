@@ -8,7 +8,7 @@ import { dashboardHome, dashboardUsers } from 'routes'
 
 import styles from './Sidebar.module.css'
 
-const SidebarNav = (): ReactElement => (
+export const Sidebar = (): ReactElement => (
 	<aside className={styles.Aside}>
 		<ul className="text-center lg:block">
 			<li className="mb-4">
@@ -24,5 +24,3 @@ const SidebarNav = (): ReactElement => (
 		</ul>
 	</aside>
 )
-
-export default SidebarNav

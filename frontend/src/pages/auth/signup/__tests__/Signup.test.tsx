@@ -7,7 +7,7 @@ import {
 	renderWithProviders
 } from 'utils/testing-library-utils'
 
-import Signup from '../Signup'
+import { Signup } from '../Signup'
 
 describe('Signup', () => {
 

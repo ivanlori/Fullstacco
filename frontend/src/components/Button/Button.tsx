@@ -25,7 +25,7 @@ interface Props {
 	type?: | 'submit' | 'button'
 }
 
-const Button: FC<Props> = ({
+export const Button: FC<Props> = ({
 	children,
 	style = PRIMARY,
 	type = 'button',
@@ -56,5 +56,3 @@ const Button: FC<Props> = ({
 		</button>
 	)
 }
-
-export default Button

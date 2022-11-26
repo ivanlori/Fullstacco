@@ -6,24 +6,21 @@ import {
 	renderWithProviders
 } from 'utils/testing-library-utils'
 
-import Profile from './Profile'
+import { Profile } from './Profile'
 
 describe('<Profile />', () => {
-
 	test('should match snapshot', () => {
-
 		const { container } = renderWithProviders(
 			<MemoryRouter>
 				<Profile />
 			</MemoryRouter>,
 			{
 				preloadedState: {
-					profile: mockedAdminUser
+					profileReducer: mockedAdminUser
 				},
 				withIntl: true
 			}
 		)
-
 		expect(container).toMatchSnapshot()
 	})
 })

@@ -24,7 +24,7 @@ interface IFormInput {
 	repeatPassword?: string
 }
 
-const ResetPassword = (): ReactElement => {
+export const ResetPassword = (): ReactElement => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch<Dispatch>()
 	const { formatMessage } = useIntl()
@@ -237,5 +237,3 @@ const ResetPassword = (): ReactElement => {
 		</div>
 	)
 }
-
-export default ResetPassword

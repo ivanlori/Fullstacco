@@ -9,7 +9,7 @@ import {
 } from '../controllers/auth'
 import User from '../models/user'
 
-const router = express.Router()
+const authRouter = express.Router()
 
 const EMAIL = 'email'
 
@@ -20,13 +20,13 @@ export const EMAIL_USED = 'email_already_used'
 export const PASSWORD_EMPTY = 'password_empty'
 
 
-router.post('/login', [
+authRouter.post('/login', [
 	check(EMAIL).isEmail().withMessage(EMAIL_INVALID),
 	check(EMAIL).not().isEmpty().withMessage(EMAIL_EMPTY),
 	check('password').isEmpty().withMessage(PASSWORD_EMPTY)
 ], login)
 
-router.post('/signup', [
+authRouter.post('/signup', [
 	check(EMAIL).isEmail().withMessage(EMAIL_INVALID),
 	check(EMAIL).not().isEmpty().withMessage(EMAIL_EMPTY),
 	check(EMAIL).custom(value => {
@@ -43,11 +43,13 @@ router.post('/signup', [
 
 ], signup)
 
-router.post('/recovery-password', [
+authRouter.post('/recovery-password', [
 	check(EMAIL).isEmail().withMessage(EMAIL_INVALID),
 	check(EMAIL).isEmpty().withMessage(EMAIL_EMPTY),
 ], recoveryPassword)
 
-router.post('/reset-password/:token', resetPassword)
+authRouter.post('/reset-password/:token', resetPassword)
 
-export default router
+export {
+	authRouter
+}

@@ -12,15 +12,17 @@ import {
 } from '../controllers/user'
 import { isAuthenticated } from '../middleware/is_auth'
 
-const router = express.Router()
+const usersRouter = express.Router()
 
-router.get('/', isAuthenticated, getUsers)
-router.post('/create', isAuthenticated, createUser)
-router.get('/:id', isAuthenticated, getUser)
-router.delete('/:id', isAuthenticated, deleteUser)
-router.patch('/:id', isAuthenticated, updateUser)
-router.patch('/:id/photo', isAuthenticated, uploadPhotoUser)
-router.patch('/:id/activate', isAuthenticated, handleStatusUser)
-router.delete('/:id/photo', isAuthenticated, removePhotoUser)
+usersRouter.get('/', isAuthenticated, getUsers)
+usersRouter.post('/create', isAuthenticated, createUser)
+usersRouter.get('/:id', isAuthenticated, getUser)
+usersRouter.delete('/:id', isAuthenticated, deleteUser)
+usersRouter.patch('/:id', isAuthenticated, updateUser)
+usersRouter.patch('/:id/photo', isAuthenticated, uploadPhotoUser)
+usersRouter.patch('/:id/activate', isAuthenticated, handleStatusUser)
+usersRouter.delete('/:id/photo', isAuthenticated, removePhotoUser)
 
-export default router
+export {
+	usersRouter
+}

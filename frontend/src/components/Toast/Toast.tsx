@@ -19,7 +19,7 @@ interface Props {
 	text: string
 }
 
-const Toast = ({ type, text }: Props): ReactElement => {
+export const Toast = ({ type, text }: Props): ReactElement => {
 	const [
 		effect,
 		setEffect
@@ -57,5 +57,3 @@ const Toast = ({ type, text }: Props): ReactElement => {
 		</div>
 	)
 }
-
-export default Toast

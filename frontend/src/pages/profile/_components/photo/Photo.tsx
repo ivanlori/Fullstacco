@@ -14,7 +14,7 @@ interface Props {
 	photoUrl: string
 }
 
-const Photo = ({
+export const Photo = ({
 	id,
 	photoUrl
 }: Props): ReactElement => {
@@ -85,5 +85,3 @@ const Photo = ({
 		</label>
 	)
 }
-
-export default Photo

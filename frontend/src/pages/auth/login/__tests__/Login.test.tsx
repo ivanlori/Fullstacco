@@ -8,7 +8,7 @@ import {
 	renderWithProviders
 } from 'utils/testing-library-utils'
 
-import Login from '../Login'
+import { Login } from '../Login'
 
 describe('Login', () => {
 

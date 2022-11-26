@@ -16,7 +16,7 @@ interface Props {
 	id?: string
 }
 
-const Input = forwardRef(({
+export const Input = forwardRef(({
 	type = 'text',
 	disabled,
 	value,
@@ -50,5 +50,3 @@ const Input = forwardRef(({
 		</div>
 	)
 })
-
-export default Input

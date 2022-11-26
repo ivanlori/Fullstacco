@@ -41,7 +41,7 @@ const EMAIL = 'email'
 const USERNAME = 'username'
 const ROLE = 'role'
 
-const UserForm = ({
+export const UserForm = ({
 	user,
 	title
 }: Props): ReactElement => {
@@ -309,5 +309,3 @@ const UserForm = ({
 		</div>
 	)
 }
-
-export default UserForm

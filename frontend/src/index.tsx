@@ -10,9 +10,9 @@ import { TOKEN_STORAGE, USER_ID_STORAGE } from 'utils/utils'
 
 import './index.css'
 import enMsg from './languages/en.json'
-import App from './pages/App'
+import { App } from './pages/App'
 import reportWebVitals from './reportWebVitals'
-import rootReducer from './store'
+import { rootReducer } from './store'
 
 const store = configureStore({
 	reducer: rootReducer,

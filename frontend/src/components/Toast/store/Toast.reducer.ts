@@ -1,11 +1,11 @@
 import { ActionType } from './Toast.model'
-import initialState from './Toast.state'
+import { initialState } from './Toast.state'
 import {
 	TOAST_DISPLAYED,
 	TOAST_HIDDEN,
 } from './Toast.types'
 
-const reducer = (state = initialState, action: ActionType) => {
+export const toastReducer = (state = initialState, action: ActionType) => {
 	switch (action.type) {
 		case TOAST_DISPLAYED:
 			return {
@@ -21,5 +21,3 @@ const reducer = (state = initialState, action: ActionType) => {
 			return state
 	}
 }
-
-export default reducer

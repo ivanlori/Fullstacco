@@ -5,10 +5,10 @@ import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
 import { DataTestKeys } from 'data-test-keys'
-import rootReducer from 'store'
+import { rootReducer } from 'store'
 import { renderWithIntlProvider } from 'utils/testing-library-utils'
 
-import Header from './Header'
+import { Header } from './Header'
 
 const store = configureStore({
 	reducer: rootReducer,

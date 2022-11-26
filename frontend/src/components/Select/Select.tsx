@@ -16,7 +16,7 @@ interface Props {
 	value: IItem
 }
 
-const Select = ({
+export const Select = ({
 	items,
 	id,
 	name,
@@ -53,5 +53,3 @@ const Select = ({
 		</select>
 	)
 }
-
-export default Select

@@ -15,7 +15,7 @@ interface Props {
 	children: JSX.Element
 }
 
-const RequireAuth = ({ children }: Props) => {
+export const RequireAuth = ({ children }: Props) => {
 	const dispatch = useDispatch<Dispatch>()
 	const navigate = useNavigate()
 	const [loading, setLoading] = useState(true)
@@ -38,5 +38,3 @@ const RequireAuth = ({ children }: Props) => {
 
 	return loading ? <Loader /> : children
 }
-
-export default RequireAuth

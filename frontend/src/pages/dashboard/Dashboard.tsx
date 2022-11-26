@@ -1,4 +1,4 @@
-const Dashboard = () => (
+export const Dashboard = () => (
 	<div className="lg:pl-24">
 		<div className="xl:mx-auto flex">
 			<div className="flex flex-col w-full">
@@ -9,5 +9,3 @@ const Dashboard = () => (
 		</div>
 	</div>
 )
-
-export default Dashboard

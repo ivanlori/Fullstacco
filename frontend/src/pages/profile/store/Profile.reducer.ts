@@ -1,19 +1,17 @@
 import { ActionType } from 'types/profile'
 
-import profileState from './Profile.state'
+import { initialState } from './Profile.state'
 import * as types from './Profile.types'
 
-const reducer = (state = profileState, action: ActionType) => {
+export const profileReducer = (state = initialState, action: ActionType) => {
 	switch (action.type) {
 		case types.SET_PROFILE:
 			return action.payload
 		case types.RESET_PROFILE:
-			return state = profileState
+			return state = initialState
 		default:
 			break
 	}
 
 	return state
 }
-
-export default reducer

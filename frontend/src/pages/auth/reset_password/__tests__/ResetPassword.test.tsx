@@ -7,7 +7,7 @@ import {
 	renderWithProviders
 } from 'utils/testing-library-utils'
 
-import ResetPassword from '../ResetPassword'
+import { ResetPassword } from '../ResetPassword'
 
 describe('Reset password', () => {
 

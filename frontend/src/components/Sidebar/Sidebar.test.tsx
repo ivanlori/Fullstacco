@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 
 import { renderWithIntlProvider } from 'utils/testing-library-utils'
 
-import Sidebar from './Sidebar'
+import { Sidebar } from './Sidebar'
 
 describe('<SidebarNav />', () => {
 	test('should display links', () => {

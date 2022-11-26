@@ -22,7 +22,7 @@ import { login, ILoginFormInput } from '../Auth.api'
 const EMAIL = 'email'
 const PASSWORD = 'password'
 
-const Login = (): ReactElement => {
+export const Login = (): ReactElement => {
 	const dispatch = useDispatch<Dispatch>()
 	const navigate = useNavigate()
 	const { formatMessage } = useIntl()
@@ -160,5 +160,3 @@ const Login = (): ReactElement => {
 		</div>
 	)
 }
-
-export default Login

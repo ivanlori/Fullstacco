@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
-import Button from 'components/Button/Button'
+import { Button } from 'components/Button/Button'
 import { User } from 'components/Icon/svg/icons'
 import { DataTestKeys } from 'data-test-keys'
 import { resetProfile } from 'pages/profile/store/Profile.actions'
@@ -14,7 +14,7 @@ import { TOKEN_STORAGE, USER_ID_STORAGE } from 'utils/utils'
 
 import styles from './Header.module.css'
 
-const Header = (): ReactElement => {
+export const Header = (): ReactElement => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const dispatch = useDispatch()
 	const { formatMessage } = useIntl()
@@ -24,7 +24,7 @@ const Header = (): ReactElement => {
 	const {
 		username,
 		photoUrl,
-	} = useSelector((state: IState) => state.profile)
+	} = useSelector((state: IState) => state.profileReducer)
 
 	useEffect(() => {
 		const checkIfClickedOutside = (e: MouseEvent) => {
@@ -124,5 +124,3 @@ const Header = (): ReactElement => {
 		</nav>
 	)
 }
-
-export default Header

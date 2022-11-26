@@ -8,8 +8,8 @@ import mongoose from 'mongoose'
 import morgan from 'morgan'
 
 import { handleErrorStatus } from "./controllers/utils"
-import authRouter from './routes/auth'
-import usersRouter from './routes/users'
+import { authRouter } from './routes/auth'
+import { usersRouter } from './routes/users'
 
 const app = express()
 

@@ -8,10 +8,10 @@ import { Dispatch } from 'redux'
 import { Loader } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 
-import UserForm from '../_components/UserForm'
+import { UserForm } from '../_components/UserForm'
 import { getUser } from '../User.api'
 
-const EditUser = (): ReactElement => {
+export const EditUser = (): ReactElement => {
 	const { id } = useParams()
 	const { formatMessage } = useIntl()
 	const [loading, setLoading] = useState(true)
@@ -56,5 +56,3 @@ const EditUser = (): ReactElement => {
 		</div>
 	)
 }
-
-export default EditUser

@@ -20,7 +20,7 @@ const NAME = 'name'
 const PASSWORD = 'password'
 const LASTNAME = 'lastname'
 
-const Signup = (): ReactElement => {
+export const Signup = (): ReactElement => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch<Dispatch>()
 	const { formatMessage } = useIntl()
@@ -215,5 +215,3 @@ const Signup = (): ReactElement => {
 		</div>
 	)
 }
-
-export default Signup

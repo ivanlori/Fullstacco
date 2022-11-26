@@ -8,7 +8,7 @@ import {
 	renderWithProviders
 } from 'utils/testing-library-utils'
 
-import UserForm from '../_components/UserForm'
+import { UserForm } from '../_components/UserForm'
 
 describe('UserForm', () => {
 

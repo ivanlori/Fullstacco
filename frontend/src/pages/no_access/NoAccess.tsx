@@ -6,7 +6,7 @@ import { resetProfile } from "pages/profile/store/Profile.actions"
 import { login } from "routes"
 import { TOKEN_STORAGE, USER_ID_STORAGE } from "utils/utils"
 
-const NoAccess = () => {
+export const NoAccess = () => {
 	const dispatch = useDispatch()
 
 	return (
@@ -40,5 +40,3 @@ const NoAccess = () => {
 		</div>
 	)
 }
-
-export default NoAccess

@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { DataTestKeys } from 'data-test-keys'
 import { renderWithProviders } from 'utils/testing-library-utils'
 
-import Photo from '../Photo'
+import { Photo } from '../Photo'
 
 describe('<Photo />', () => {
 

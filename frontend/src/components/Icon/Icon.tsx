@@ -8,8 +8,6 @@ interface Props {
 	style?: CSSProperties
 }
 
-const Icon = ({ icon, style }: Props): ReactElement => (
+export const Icon = ({ icon, style }: Props): ReactElement => (
 	<FontAwesomeIcon icon={icon as IconProp} style={style} />
 )
-
-export default Icon

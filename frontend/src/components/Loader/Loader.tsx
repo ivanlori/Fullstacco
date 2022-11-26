@@ -6,10 +6,8 @@ interface Props {
 	small?: boolean
 }
 
-const Loader = ({ small = false }: Props): ReactElement => (
+export const Loader = ({ small = false }: Props): ReactElement => (
 	<div className={`${styles.Container} ${small ? styles.Small : ''}`}>
 		<div className={`${styles.Loader} ${small ? styles.Small : ''}`}></div>
 	</div>
 )
-
-export default Loader

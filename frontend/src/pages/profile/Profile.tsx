@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux'
 import { IState } from 'types/state'
 import { getRoleLabelId } from 'utils/utils'
 
-import Photo from './_components/photo/Photo'
+import { Photo } from './_components/photo/Photo'
 
-const Profile = (): ReactElement => {
+export const Profile = (): ReactElement => {
 	const {
 		email,
 		lastname,
@@ -17,7 +17,7 @@ const Profile = (): ReactElement => {
 		username,
 		role,
 		_id
-	} = useSelector((state: IState) => state.profile)
+	} = useSelector((state: IState) => state.profileReducer)
 
 	return (
 		<div className="lg:pl-24">
@@ -58,5 +58,3 @@ const Profile = (): ReactElement => {
 		</div>
 	)
 }
-
-export default Profile

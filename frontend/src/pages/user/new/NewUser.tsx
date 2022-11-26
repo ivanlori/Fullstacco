@@ -2,9 +2,9 @@ import { ReactElement } from 'react'
 
 import { useIntl } from 'react-intl'
 
-import UserForm from '../_components/UserForm'
+import { UserForm } from '../_components/UserForm'
 
-const NewUser = (): ReactElement => {
+export const NewUser = (): ReactElement => {
 	const { formatMessage } = useIntl()
 
 	return (
@@ -23,5 +23,3 @@ const NewUser = (): ReactElement => {
 		</div>
 	)
 }
-
-export default NewUser

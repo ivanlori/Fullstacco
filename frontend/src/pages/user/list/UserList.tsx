@@ -16,7 +16,7 @@ import { Toggle } from 'components/Toggle/Toggle'
 import { BASE_API } from 'config'
 import { DataTestKeys } from 'data-test-keys'
 import { dashboardNewUser, dashboardUsers } from 'routes'
-import { IUserState } from 'types/profile'
+import { IProfileState } from 'types/profile'
 import { IState } from 'types/state'
 import { getToken, isAdmin } from 'utils/utils'
 
@@ -30,7 +30,7 @@ export const UserList = (): ReactElement => {
 	const navigate = useNavigate()
 	const createUserPage = () => navigate(dashboardNewUser)
 
-	const onChangeStatus = async (user: IUserState) => {
+	const onChangeStatus = async (user: IProfileState) => {
 		const {
 			status
 		} = await changeUserStatus(user._id as string, !user.isActive)
@@ -118,32 +118,34 @@ export const UserList = (): ReactElement => {
 									headers: {
 										'Authorization': `Bearer ${getToken()}`
 									},
-									then: data => data.users.map((user: IUserState) => {
-										const formattedDate = moment(user.createdAt).format('lll')
-										return [
-											user.name,
-											user.lastname,
-											user.email,
-											_(
-												<Toggle
-													id={user._id as string}
-													active={user.isActive}
-													onChange={() => onChangeStatus(user)}
-												/>
-											),
-											formattedDate,
-											_(
-												<Pen
-													width={20}
-													height={20}
-													onClick={() => {
-														navigate(`${dashboardUsers}/${user._id}/edit`)
-													}}
-													data-testid={DataTestKeys.editIcon}
-												/>
-											)
-										]
-									}),
+									then: data => data.users
+										.filter((user: IProfileState) => user._id !== profileState._id)
+										.map((user: IProfileState) => {
+											const formattedDate = moment(user.createdAt).format('lll')
+											return [
+												user.name,
+												user.lastname,
+												user.email,
+												_(
+													<Toggle
+														id={user._id as string}
+														active={user.isActive}
+														onChange={() => onChangeStatus(user)}
+													/>
+												),
+												formattedDate,
+												_(
+													<Pen
+														width={20}
+														height={20}
+														onClick={() => {
+															navigate(`${dashboardUsers}/${user._id}/edit`)
+														}}
+														data-testid={DataTestKeys.editIcon}
+													/>
+												)
+											]
+										}),
 									total: data => data.users.length
 								}}
 							/>

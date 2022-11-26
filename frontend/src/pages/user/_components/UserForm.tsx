@@ -10,7 +10,7 @@ import { Button, Loader, Input, Select } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
 import { dashboardUsers } from 'routes'
-import { IProfileState, IRoleSelection, IUserState } from 'types/profile'
+import { IProfilePayload, IProfileState, IRoleSelection } from 'types/profile'
 import { isEmail } from 'utils/utils'
 
 import { createUser, deleteUser, updateUser } from '../User.api'
@@ -105,7 +105,7 @@ export const UserForm = ({
 
 			handleResult(status, "feedback.user.updated")
 		} else {
-			const payload: IUserState = {
+			const payload: IProfilePayload = {
 				...data,
 				isActive: true,
 				password

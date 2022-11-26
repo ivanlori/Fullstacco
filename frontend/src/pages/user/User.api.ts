@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
-import { IProfileState, IUserState } from 'types/profile'
+import { IProfileState, IProfilePayload } from 'types/profile'
 import { getToken, handleError } from 'utils/utils'
 
 export const createUser = async (
-	payload: IUserState
+	payload: IProfilePayload
 ): Promise<AxiosResponse> => {
 	try {
 		const {

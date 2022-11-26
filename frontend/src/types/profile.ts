@@ -15,9 +15,7 @@ export interface IProfileState {
 	isActive: boolean
 }
 
-export interface IUserState extends IProfileState {
-	isActive: boolean
-}
+export type IProfilePayload = IProfileState
 
 export type IPhotoUrlPayload = {
 	url: string

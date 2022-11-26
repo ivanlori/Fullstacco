@@ -3,10 +3,10 @@ import Header from './Header/Header'
 import Icon from './Icon/Icon'
 import Input from './Input/Input'
 import Loader from './Loader/Loader'
-import Pagination from './Pagination/Pagination'
 import Select from './Select/Select'
 import Sidebar from './Sidebar/Sidebar'
 import Toast from './Toast/Toast'
+import { Toggle } from './Toggle/Toggle'
 
 export {
 	Loader,
@@ -17,5 +17,5 @@ export {
 	Input,
 	Toast,
 	Icon,
-	Pagination
+	Toggle
 }

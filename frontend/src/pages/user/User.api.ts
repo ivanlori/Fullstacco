@@ -32,7 +32,10 @@ export const createUser = async (
 	}
 }
 
-export const fetchUsers = async (page: number): Promise<AxiosResponse> => {
+export const fetchUsers = async (
+	page: number,
+	limit: number
+): Promise<AxiosResponse> => {
 	try {
 		const {
 			data,
@@ -40,7 +43,7 @@ export const fetchUsers = async (page: number): Promise<AxiosResponse> => {
 			statusText,
 			headers,
 			config
-		} = await axios.get(`${BASE_API}/users/?page=${page}`, {
+		} = await axios.get(`${BASE_API}/users/?page=${page}&limit=${limit}`, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}

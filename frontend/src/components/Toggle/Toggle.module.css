@@ -1,0 +1,25 @@
+.StatusLabel {
+	@apply flex;
+	@apply cursor-pointer;
+	@apply select-none;
+}
+
+.DotStatus {
+	@apply absolute;
+	@apply top-1;
+	@apply bg-white;
+	@apply w-6;
+	@apply h-6;
+	@apply rounded-full;
+	@apply transition;
+	@apply flex;
+	@apply items-center;
+	@apply justify-center;
+}
+
+.BackgroundStatus {
+	@apply block;
+	@apply w-14;
+	@apply h-8;
+	@apply rounded-full;
+}

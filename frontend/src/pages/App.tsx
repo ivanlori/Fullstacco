@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.module.css'
 import { Toast } from 'components'
 import EditUser from 'pages/user/edit/EditUser'
-import UserList from 'pages/user/list/UserList'
+import { UserList } from 'pages/user/list/UserList'
 import {
 	dashboardEditUser,
 	dashboardHome,

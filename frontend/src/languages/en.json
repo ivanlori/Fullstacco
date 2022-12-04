@@ -68,5 +68,6 @@
 	"account.disabled.description": "Your account has been disabled by the administrator",
 	"page.not.found": "Page not found",
 	"page.not.found.go.to.home": "Return to the homepage",
-	"search.placeholder": "Search user"
+	"search.placeholder": "Search user",
+	"go.back": "Go back"
 }

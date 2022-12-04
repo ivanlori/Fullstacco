@@ -1,0 +1,19 @@
+.Container {
+	@apply py-3;
+	@apply px-5;
+	@apply mb-4;
+	@apply cursor-pointer;
+	@apply flex;
+	@apply items-center;
+	@apply border-2;
+	@apply w-fit;
+	@apply rounded-full;
+}
+
+.Container:hover {
+	@apply bg-gray_300;
+}
+
+.Word {
+	@apply ml-3;
+}

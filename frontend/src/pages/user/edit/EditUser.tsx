@@ -6,12 +6,22 @@ import { useParams } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
 import { Loader } from 'components'
+import { Back } from 'components/Back/Back'
 import { displayToast } from 'components/Toast/store/Toast.action'
+import { IProfileState } from 'types/profile'
 
 import { UserForm } from '../_components/UserForm'
 import { getUser } from '../User.api'
 
-export const EditUser = (): ReactElement => {
+interface Props {
+	onDeleteUser: (user: IProfileState) => void
+	onResult: (status: number, message: string) => void
+}
+
+export const EditUser = ({
+	onDeleteUser,
+	onResult
+}: Props): ReactElement => {
 	const { id } = useParams()
 	const { formatMessage } = useIntl()
 	const [loading, setLoading] = useState(true)
@@ -41,15 +51,20 @@ export const EditUser = (): ReactElement => {
 			<div className="xl:mx-auto flex">
 				<div className="flex flex-col w-full">
 					<div className="bg-white text-gray_900 rounded-xl p-5 m-10">
-						{loading ? <Loader />
-							: (
-								<UserForm
-									user={user}
-									title={formatMessage({
-										id: 'user.create.update.title.update'
-									})}
-								/>
-							)}
+						<>
+							<Back />
+							{loading ? <Loader />
+								: (
+									<UserForm
+										onResult={(status, message) => onResult(status, message)}
+										onDelete={(user: IProfileState) => onDeleteUser(user)}
+										user={user}
+										title={formatMessage({
+											id: 'user.create.update.title.update'
+										})}
+									/>
+								)}
+						</>
 					</div>
 				</div>
 			</div>

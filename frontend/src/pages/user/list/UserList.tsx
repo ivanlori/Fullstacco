@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from 'components'
-import { Pen } from 'components/Icon/svg/icons'
+import { Close, Pen } from 'components/Icon/svg/icons'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { Toggle } from 'components/Toggle/Toggle'
 import { BASE_API } from 'config'
 import { DataTestKeys } from 'data-test-keys'
-import { dashboardNewUser, dashboardUsers } from 'routes'
+import { dashboardUserEdit, dashboardUserNew } from 'routes'
 import { IProfileState } from 'types/profile'
 import { IState } from 'types/state'
 import { getToken, isAdmin } from 'utils/utils'
@@ -23,12 +23,16 @@ import { getToken, isAdmin } from 'utils/utils'
 import { changeUserStatus } from '../User.api'
 import styles from './UserList.module.css'
 
-export const UserList = (): ReactElement => {
+interface Props {
+	onDeleteUser: (user: IProfileState) => void
+}
+
+export const UserList = ({ onDeleteUser }: Props): ReactElement => {
 	const dispatch = useDispatch()
 	const profileState = useSelector((state: IState) => state.profileReducer)
 	const { formatMessage } = useIntl()
 	const navigate = useNavigate()
-	const createUserPage = () => navigate(dashboardNewUser)
+	const createUserPage = () => navigate(dashboardUserNew)
 
 	const onChangeStatus = async (user: IProfileState) => {
 		const {
@@ -135,14 +139,24 @@ export const UserList = (): ReactElement => {
 												),
 												formattedDate,
 												_(
-													<Pen
-														width={20}
-														height={20}
-														onClick={() => {
-															navigate(`${dashboardUsers}/${user._id}/edit`)
-														}}
-														data-testid={DataTestKeys.editIcon}
-													/>
+													<div className="flex justify-between">
+														<Pen
+															className="cursor-pointer"
+															width={20}
+															height={20}
+															onClick={() => {
+																navigate(`${dashboardUserEdit}/${user._id}`)
+															}}
+															data-testid={DataTestKeys.editIcon}
+														/>
+														<Close
+															className="cursor-pointer"
+															width={20}
+															height={20}
+															onClick={() => onDeleteUser(user)}
+															data-testid={DataTestKeys.deleteIcon}
+														/>
+													</div>
 												)
 											]
 										}),

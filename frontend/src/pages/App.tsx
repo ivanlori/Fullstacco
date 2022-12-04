@@ -1,22 +1,23 @@
-import { useSelector } from 'react-redux'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { useIntl } from 'react-intl'
+import { useDispatch, useSelector } from 'react-redux'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 import './App.module.css'
 import { Toast } from 'components'
-import { EditUser } from 'pages/user/edit/EditUser'
-import { UserList } from 'pages/user/list/UserList'
+import { displayToast } from 'components/Toast/store/Toast.action'
 import {
-	dashboardEditUser,
 	dashboardHome,
-	dashboardNewUser,
 	dashboardProfile,
-	dashboardUsers,
 	login,
 	noAccess,
 	recoveryPassword,
 	resetPassword,
 	signup,
+	dashboardUserEdit,
+	dashboardUserNew,
+	dashboardUserList,
 } from 'routes'
+import { IProfileState } from 'types/profile'
 import { IState } from 'types/state'
 
 import { Login } from './auth/login/Login'
@@ -29,9 +30,15 @@ import { NotFound } from './not_found/NotFound'
 import { Profile } from './profile/Profile'
 import { ProtectedLayout } from './ProtectedLayout'
 import { PublicLayout } from './PublicLayout'
+import { EditUser } from './user/edit/EditUser'
+import { UserList } from './user/list/UserList'
 import { NewUser } from './user/new/NewUser'
+import { deleteUser } from './user/User.api'
 
 export const App = () => {
+	const { formatMessage } = useIntl()
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	const {
 		text,
 		style,
@@ -42,6 +49,30 @@ export const App = () => {
 
 	if (!isActive) {
 		<Navigate to={noAccess} />
+	}
+
+	const handleResult = (status: number | undefined, successLabel: string) => {
+		if (status === 201) {
+			dispatch(displayToast(
+				formatMessage({ id: successLabel }),
+				'success'
+			))
+
+			navigate(dashboardUserList)
+		} else {
+			dispatch(displayToast(
+				formatMessage({ id: "feedback.general.error" }),
+				'error'
+			))
+		}
+	}
+
+	const onDelete = async (user: IProfileState) => {
+		const {
+			status
+		} = await deleteUser(user?._id)
+
+		handleResult(status, "feedback.user.deleted")
 	}
 
 	return (
@@ -58,10 +89,28 @@ export const App = () => {
 						}
 					/>
 					<Route
-						path={dashboardEditUser}
+						path={`${dashboardUserEdit}/:id`}
 						element={
 							<RequireAuth>
-								<EditUser />
+								<EditUser
+									onResult={(status, message) => handleResult(status, message)}
+									onDeleteUser={(user: IProfileState) => onDelete(user)} />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path={dashboardUserNew}
+						element={
+							<RequireAuth>
+								<NewUser onResult={(status, message) => handleResult(status, message)} />
+							</RequireAuth>
+						}
+					/>
+					<Route
+						path={dashboardUserList}
+						element={
+							<RequireAuth>
+								<UserList onDeleteUser={(user: IProfileState) => onDelete(user)} />
 							</RequireAuth>
 						}
 					/>
@@ -70,22 +119,6 @@ export const App = () => {
 						element={
 							<RequireAuth>
 								<Profile />
-							</RequireAuth>
-						}
-					/>
-					<Route
-						path={dashboardNewUser}
-						element={
-							<RequireAuth>
-								<NewUser />
-							</RequireAuth>
-						}
-					/>
-					<Route
-						path={dashboardUsers}
-						element={
-							<RequireAuth>
-								<UserList />
 							</RequireAuth>
 						}
 					/>

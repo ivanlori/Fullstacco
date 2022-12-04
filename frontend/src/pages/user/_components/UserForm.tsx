@@ -2,18 +2,13 @@ import { ReactElement, useState } from 'react'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { Dispatch } from 'redux'
 
-import { Button, Loader, Input, Select } from 'components'
-import { displayToast } from 'components/Toast/store/Toast.action'
+import { Button, Input, Select } from 'components'
 import { DataTestKeys } from 'data-test-keys'
-import { dashboardUsers } from 'routes'
 import { IProfilePayload, IProfileState, IRoleSelection } from 'types/profile'
 import { isEmail } from 'utils/utils'
 
-import { createUser, deleteUser, updateUser } from '../User.api'
+import { createUser, updateUser } from '../User.api'
 
 interface IFormInput {
 	name: string
@@ -27,6 +22,8 @@ interface IFormInput {
 interface Props {
 	user: IProfileState | null
 	title: string
+	onDelete: (user: IProfileState) => void | null
+	onResult: (status: number, message: string) => void
 }
 
 const options = [
@@ -43,7 +40,9 @@ const ROLE = 'role'
 
 export const UserForm = ({
 	user,
-	title
+	title,
+	onResult,
+	onDelete,
 }: Props): ReactElement => {
 	const {
 		formatMessage
@@ -51,9 +50,6 @@ export const UserForm = ({
 	const [roleSelected, setRoleSelected] = useState<IRoleSelection>(
 		user ? options[user.role as number] : options[0]
 	)
-	const navigate = useNavigate()
-	const dispatch = useDispatch<Dispatch>()
-	const [loading, setLoading] = useState(false)
 	const [name, setName] = useState(user?.name)
 	const [lastname, setLastname] = useState(user?.lastname)
 	const [email, setEmail] = useState(user?.email)
@@ -64,22 +60,6 @@ export const UserForm = ({
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IFormInput>()
-
-	const handleResult = (status: number | undefined, successLabel: string) => {
-		if (status === 201) {
-			dispatch(displayToast(
-				formatMessage({ id: successLabel }),
-				'success'
-			))
-
-			navigate(dashboardUsers)
-		} else {
-			dispatch(displayToast(
-				formatMessage({ id: "feedback.general.error" }),
-				'error'
-			))
-		}
-	}
 
 	const onSubmit: SubmitHandler<IFormInput> = async () => {
 
@@ -102,35 +82,22 @@ export const UserForm = ({
 			}
 
 			const { status } = await updateUser(payload)
-
-			handleResult(status, "feedback.user.updated")
+			onResult(status, "feedback.user.updated")
 		} else {
 			const payload: IProfilePayload = {
 				...data,
 				isActive: true,
-				password
+				password: password
 			}
-
 			const {
 				status
 			} = await createUser(payload)
-
-			handleResult(status, "feedback.user.created")
+			onResult(status, "feedback.user.created")
 		}
 	}
 
-	const onDeleteUser = async () => {
-		setLoading(true)
-		const {
-			status
-		} = await deleteUser(user?._id)
-		setLoading(false)
-
-		handleResult(status, "feedback.user.deleted")
-	}
-
 	return (
-		<div className="px-8">
+		<div>
 			<div className="flex justify-between mb-5">
 				<h1 className="text-2xl font-medium">
 					{title}
@@ -153,10 +120,10 @@ export const UserForm = ({
 								})
 							},
 							onChange: (e) => setName(e.target.value),
+							value: name
 						})}
 						id={NAME}
 						name={NAME}
-						value={name}
 						error={errors.name?.message}
 						dataTestId={DataTestKeys.userFormName}
 					/>
@@ -168,16 +135,16 @@ export const UserForm = ({
 					<Input
 						{...register(LASTNAME, {
 							required: {
+								value: !lastname,
 								message: formatMessage({
 									id: "form.validation.empty.lastname"
 								}),
-								value: !lastname
 							},
 							onChange: (e) => setLastname(e.target.value),
+							value: lastname
 						})}
 						id={LASTNAME}
 						name={LASTNAME}
-						value={lastname}
 						error={errors.lastname?.message}
 						dataTestId={DataTestKeys.userFormLastname}
 					/>
@@ -189,16 +156,16 @@ export const UserForm = ({
 					<Input
 						{...register(USERNAME, {
 							required: {
+								value: !username,
 								message: formatMessage({
 									id: "form.validation.empty.username"
 								}),
-								value: !username
 							},
 							onChange: (e) => setUsername(e.target.value),
+							value: username
 						})}
 						id={USERNAME}
 						name={USERNAME}
-						value={username}
 						error={errors.username?.message}
 						dataTestId={DataTestKeys.userFormUsername}
 					/>
@@ -210,18 +177,18 @@ export const UserForm = ({
 					<Input
 						{...register(EMAIL, {
 							required: {
+								value: !email,
 								message: formatMessage({
 									id: "form.validation.empty.email"
 								}),
-								value: !email,
 							},
 							onChange: (e) => setEmail(e.target.value),
+							value: email,
 							validate: value => isEmail(value),
 						})}
 						id={EMAIL}
 						type="text"
 						name={EMAIL}
-						value={email}
 						error={
 							errors.email?.type === 'validate' ? formatMessage({
 								id: "form.validation.notvalid.email"
@@ -264,11 +231,11 @@ export const UserForm = ({
 									value: !password
 								},
 								onChange: (e) => setPassword(e.target.value),
+								value: password
 							})}
 							id={PASSWORD}
 							type="password"
 							name={PASSWORD}
-							value={password}
 							error={errors.password?.message}
 							dataTestId={DataTestKeys.userFormPassword}
 						/>
@@ -276,19 +243,17 @@ export const UserForm = ({
 				)}
 				<div className="flex justify-end">
 					{user && (
-						loading ? <Loader /> : (
-							<div className="w-40">
-								<Button
-									onClick={onDeleteUser}
-									style="danger_outline"
-									dataTestId={DataTestKeys.userFormDelete}
-								>
-									<FormattedMessage
-										id="user.create.update.delete"
-									/>
-								</Button>
-							</div>
-						)
+						<div className="w-40">
+							<Button
+								onClick={() => onDelete(user)}
+								style="danger_outline"
+								dataTestId={DataTestKeys.userFormDelete}
+							>
+								<FormattedMessage
+									id="user.create.update.delete"
+								/>
+							</Button>
+						</div>
 					)}
 					<div className="w-40 ml-3">
 						<Button

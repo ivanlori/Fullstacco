@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router-dom'
 
 import { DataTestKeys } from 'data-test-keys'
-import { dashboardHome, dashboardUsers } from 'routes'
+import { dashboardHome, dashboardUserList } from 'routes'
 
 import styles from './Sidebar.module.css'
 
@@ -17,7 +17,7 @@ export const Sidebar = (): ReactElement => (
 				</Link>
 			</li>
 			<li className="mb-4">
-				<Link to={dashboardUsers} data-testid={DataTestKeys.linkUsers}>
+				<Link to={dashboardUserList} data-testid={DataTestKeys.linkUsers}>
 					<FormattedMessage id="sidebar.users" />
 				</Link>
 			</li>

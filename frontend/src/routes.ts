@@ -1,7 +1,8 @@
-const editUser = 'edit'
-const newUser = 'new'
+const userEdit = 'edit'
+const userNew = 'new'
 const profile = 'profile'
-const users = 'users'
+const user = 'user'
+const userList = 'list'
 const home = 'home'
 
 // public paths
@@ -14,7 +15,8 @@ export const resetPassword = '/reset-password'
 // private routes
 export const dashboard = '/dashboard'
 export const dashboardHome = `${dashboard}/${home}`
-export const dashboardUsers = `${dashboard}/${users}`
+export const dashboardUser = `${dashboard}/${user}`
+export const dashboardUserList = `${dashboardUser}/${userList}`
+export const dashboardUserEdit = `${dashboardUser}/${userEdit}`
+export const dashboardUserNew = `${dashboardUser}/${userNew}`
 export const dashboardProfile = `${dashboard}/${profile}`
-export const dashboardEditUser = `${dashboardUsers}/:id/${editUser}`
-export const dashboardNewUser = `${dashboardUsers}/${newUser}`

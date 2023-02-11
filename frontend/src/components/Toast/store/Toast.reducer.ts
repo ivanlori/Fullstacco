@@ -6,11 +6,12 @@ import {
 } from './Toast.types'
 
 export const toastReducer = (state = initialState, action: ActionType) => {
+	const { payload } = action
 	switch (action.type) {
 		case TOAST_DISPLAYED:
 			return {
-				text: action.text,
-				style: action.style,
+				text: payload.text,
+				style: payload.style,
 			}
 		case TOAST_HIDDEN:
 			return {

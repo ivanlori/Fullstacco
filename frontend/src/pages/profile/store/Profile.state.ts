@@ -12,5 +12,6 @@ export const initialState: IProfileState = {
 	_id: '',
 	role: 0,
 	emailConfirmed: false,
-	isActive: false
+	isActive: false,
+	authenticated: false
 }

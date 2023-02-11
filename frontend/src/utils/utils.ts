@@ -1,9 +1,15 @@
-import { AxiosError, AxiosResponse } from "axios"
+import { AxiosError } from "axios"
 
 import { IProfileState } from "types/profile"
 
 export const USER_ID_STORAGE = 'userId'
 export const TOKEN_STORAGE = 'tk'
+
+export type IGenericError = {
+	status: string
+	message: string
+	data: unknown
+}
 
 export const getUserId = () => localStorage.getItem(USER_ID_STORAGE)
 
@@ -21,10 +27,20 @@ export const isEmail = (email: string) => {
 	return emailReg.test(email)
 }
 
-export const handleError = (err: unknown): AxiosResponse<unknown, unknown> => {
-	const error = err as AxiosError
+export const handleAxiosError = (error: AxiosError) => {
+	return {
+		status: error.status as string,
+		message: error.message,
+		data: error.response
+	}
+}
 
-	return error.response as AxiosResponse<unknown, unknown>
+export const handleNativeError = (): IGenericError => {
+	return {
+		status: '400',
+		message: 'generic_error',
+		data: {}
+	}
 }
 
 export const getRoleLabelId = (role: number) => {

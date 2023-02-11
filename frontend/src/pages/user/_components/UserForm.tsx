@@ -23,12 +23,12 @@ interface Props {
 	user: IProfileState | null
 	title: string
 	onDelete: (user: IProfileState) => void | null
-	onResult: (status: number, message: string) => void
+	onResult: (status: string, message: string) => void
 }
 
 const options = [
-	{ id: 0, value: 'Admin' },
-	{ id: 1, value: 'Account' },
+	{ id: 1, value: 'Admin' },
+	{ id: 2, value: 'Account' },
 ]
 
 const NAME = 'name'
@@ -63,36 +63,33 @@ export const UserForm = ({
 
 	const onSubmit: SubmitHandler<IFormInput> = async () => {
 
-		const data: IProfileState = {
+		const data: IProfilePayload = {
 			email: email as string,
 			lastname: lastname as string,
 			name: name as string,
 			username: username as string,
 			role: roleSelected.id,
 			photoUrl: '',
-			emailConfirmed: user ? user.emailConfirmed : false,
-			isActive: true
 		}
 
 		if (user) {
-			const payload: IProfileState = {
+			const payload: IProfilePayload = {
 				...data,
 				_id: user._id,
 				updatedAt: new Date().toISOString(),
 			}
 
 			const { status } = await updateUser(payload)
-			onResult(status, "feedback.user.updated")
+			onResult(status as string, "feedback.user.updated")
 		} else {
 			const payload: IProfilePayload = {
 				...data,
-				isActive: true,
 				password: password
 			}
 			const {
 				status
 			} = await createUser(payload)
-			onResult(status, "feedback.user.created")
+			onResult(status as string, "feedback.user.created")
 		}
 	}
 

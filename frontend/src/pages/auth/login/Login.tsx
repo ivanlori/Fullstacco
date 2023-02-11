@@ -3,7 +3,7 @@ import { ReactElement, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
 import { Button, Input } from 'components'
@@ -38,15 +38,15 @@ export const Login = (): ReactElement => {
 		payload: ILoginFormInput
 	) => {
 		const {
-			data,
-			status
+			status,
+			data
 		} = await login(payload, (userId, token) => {
 			localStorage.setItem(TOKEN_STORAGE, token)
 			localStorage.setItem(USER_ID_STORAGE, userId)
 			navigate(dashboardHome)
 		})
 
-		if (status === 401) {
+		if (status === '401') {
 			if (data.message === 'wrong_password') {
 				dispatch(
 					displayToast(formatMessage({
@@ -130,12 +130,12 @@ export const Login = (): ReactElement => {
 					/>
 				</div>
 				<div className="flex justify-between items-center">
-					<a
-						href="/recovery-password"
+					<Link
+						to="/recovery-password"
 						className="text-gray-800 hover:underline"
 					>
 						<FormattedMessage id="login.forgot.password" />
-					</a>
+					</Link>
 					<div className="w-40">
 						<Button
 							style="primary"
@@ -149,12 +149,12 @@ export const Login = (): ReactElement => {
 				<p className="text-sm font-semibold mt-2 pt-1 mb-0">
 					<FormattedMessage id="login.dont.have.account" />
 					{' '}
-					<a
-						href="/signup"
+					<Link
+						to="/signup"
 						className="hover:underline"
 					>
 						<FormattedMessage id="login.register" />
-					</a>
+					</Link>
 				</p>
 			</form>
 		</div>

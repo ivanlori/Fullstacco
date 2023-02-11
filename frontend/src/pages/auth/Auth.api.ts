@@ -1,16 +1,15 @@
-import axios, { AxiosResponse } from 'axios'
+import request, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
-import { handleError } from 'utils/utils'
+import {
+	handleAxiosError,
+	handleNativeError,
+	IGenericError
+} from 'utils/utils'
 
 export type ILoginFormInput = {
 	email: string
 	password: string
-}
-
-type LoginResponse = {
-	token: string,
-	userId: string
 }
 
 type IResetPassword = {
@@ -29,7 +28,7 @@ export type ISignupFormInput = {
 export const login = async (
 	payload: ILoginFormInput,
 	callBack: (userId: string, token: string) => void
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -37,7 +36,7 @@ export const login = async (
 			statusText,
 			headers,
 			config
-		} = await axios.post<LoginResponse>(`${BASE_API}/auth/login`, payload)
+		} = await request.post(`${BASE_API}/auth/login`, payload)
 
 		if (status === 200) callBack(data.userId, data.token)
 
@@ -46,17 +45,21 @@ export const login = async (
 			status,
 			statusText,
 			headers,
-			config
+			config,
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
 export const signup = async (
 	payload: ISignupFormInput,
 	callBack: (userId: string, token: string) => void
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -64,7 +67,7 @@ export const signup = async (
 			statusText,
 			headers,
 			config
-		} = await axios.post(`${BASE_API}/auth/signup`, payload)
+		} = await request.post(`${BASE_API}/auth/signup`, payload)
 
 		if (status === 201) callBack(data.userId, data.token)
 
@@ -76,13 +79,17 @@ export const signup = async (
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
 export const recoverPassword = async (
 	email: string | undefined
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -90,7 +97,7 @@ export const recoverPassword = async (
 			statusText,
 			headers,
 			config
-		} = await axios.post(`${BASE_API}/auth/recovery-password`, {
+		} = await request.post(`${BASE_API}/auth/recovery-password`, {
 			email
 		})
 
@@ -102,13 +109,17 @@ export const recoverPassword = async (
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
 export const resetPassword = async ({
 	password, token
-}: IResetPassword): Promise<AxiosResponse> => {
+}: IResetPassword): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const url = `${BASE_API}/auth/reset-password/${token}`
 		const {
@@ -117,7 +128,7 @@ export const resetPassword = async ({
 			statusText,
 			headers,
 			config
-		} = await axios.post(url, {
+		} = await request.post(url, {
 			password
 		})
 
@@ -129,7 +140,11 @@ export const resetPassword = async ({
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 

@@ -1,12 +1,17 @@
-import axios, { AxiosResponse } from 'axios'
+import request, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
-import { IProfileState, IProfilePayload } from 'types/profile'
-import { getToken, handleError } from 'utils/utils'
+import { IProfilePayload } from 'types/profile'
+import {
+	getToken,
+	handleAxiosError,
+	handleNativeError,
+	IGenericError
+} from 'utils/utils'
 
 export const createUser = async (
 	payload: IProfilePayload
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -14,7 +19,7 @@ export const createUser = async (
 			statusText,
 			headers,
 			config
-		} = await axios.post(`${BASE_API}/users/create`, payload, {
+		} = await request.post(`${BASE_API}/users/create`, payload, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
@@ -28,14 +33,18 @@ export const createUser = async (
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
 export const fetchUsers = async (
 	page: number,
 	limit: number
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -43,7 +52,7 @@ export const fetchUsers = async (
 			statusText,
 			headers,
 			config
-		} = await axios.get(`${BASE_API}/users/?page=${page}&limit=${limit}`, {
+		} = await request.get(`${BASE_API}/users/?page=${page}&limit=${limit}`, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
@@ -57,13 +66,17 @@ export const fetchUsers = async (
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
 export const updateUser = async (
-	payload: IProfileState
-): Promise<AxiosResponse> => {
+	payload: IProfilePayload
+): Promise<AxiosResponse | IGenericError> => {
 	const url = `${BASE_API}/users/${(payload._id)}`
 	try {
 		const {
@@ -72,7 +85,7 @@ export const updateUser = async (
 			statusText,
 			headers,
 			config
-		} = await axios.patch(url, payload, {
+		} = await request.patch(url, payload, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
@@ -86,11 +99,17 @@ export const updateUser = async (
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
-export const getUser = async (id: string | null): Promise<AxiosResponse> => {
+export const getUser = async (
+	id: string | null
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -98,7 +117,7 @@ export const getUser = async (id: string | null): Promise<AxiosResponse> => {
 			statusText,
 			headers,
 			config
-		} = await axios.get(`${BASE_API}/users/${id}`, {
+		} = await request.get(`${BASE_API}/users/${id}`, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
@@ -112,13 +131,17 @@ export const getUser = async (id: string | null): Promise<AxiosResponse> => {
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
 export const deleteUser = async (
 	id: string | undefined
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -126,7 +149,7 @@ export const deleteUser = async (
 			statusText,
 			headers,
 			config
-		} = await axios.delete(`${BASE_API}/users/${id}`, {
+		} = await request.delete(`${BASE_API}/users/${id}`, {
 			headers: {
 				'Authorization': `Bearer ${getToken()}`
 			}
@@ -140,14 +163,18 @@ export const deleteUser = async (
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
 export const changeUserStatus = async (
 	id: string,
 	activate: boolean
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -155,7 +182,7 @@ export const changeUserStatus = async (
 			statusText,
 			headers,
 			config
-		} = await axios.patch(`${BASE_API}/users/${id}/activate`, {
+		} = await request.patch(`${BASE_API}/users/${id}/activate`, {
 			activate
 		}, {
 			headers: {
@@ -171,6 +198,10 @@ export const changeUserStatus = async (
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }

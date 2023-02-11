@@ -13,9 +13,11 @@ export interface IProfileState {
 	role: number | undefined
 	emailConfirmed: boolean
 	isActive: boolean
+	authenticated: boolean
 }
 
-export type IProfilePayload = IProfileState
+export type IProfilePayload =
+	Omit<IProfileState, 'authenticated' | 'isActive' | 'emailConfirmed'>
 
 export type IPhotoUrlPayload = {
 	url: string

@@ -10,6 +10,8 @@ export const displayToast = (
 	style: 'error' | 'success',
 ): displayToastModel => ({
 	type: TOAST_DISPLAYED,
-	text,
-	style,
+	payload: {
+		text,
+		style,
+	}
 })

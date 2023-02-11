@@ -1,12 +1,17 @@
-import axios, { AxiosResponse } from 'axios'
+import request, { AxiosResponse } from 'axios'
 
 import { BASE_API } from 'config'
-import { getToken, handleError } from 'utils/utils'
+import {
+	getToken,
+	handleAxiosError,
+	handleNativeError,
+	IGenericError
+} from 'utils/utils'
 
 export const uploadPhoto = async (
 	id: string,
 	payload: { photo: FormDataEntryValue | null }
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -14,7 +19,7 @@ export const uploadPhoto = async (
 			statusText,
 			headers,
 			config
-		} = await axios.patch(`${BASE_API}/users/${id}/photo`, payload,
+		} = await request.patch(`${BASE_API}/users/${id}/photo`, payload,
 			{
 				headers: {
 					'Authorization': `Bearer ${getToken()}`,
@@ -31,11 +36,17 @@ export const uploadPhoto = async (
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }
 
-export const removePhoto = async (id: string) => {
+export const removePhoto = async (
+	id: string
+): Promise<AxiosResponse | IGenericError> => {
 	try {
 		const {
 			data,
@@ -43,7 +54,7 @@ export const removePhoto = async (id: string) => {
 			statusText,
 			headers,
 			config
-		} = await axios.delete(`${BASE_API}/users/${id}/photo`,
+		} = await request.delete(`${BASE_API}/users/${id}/photo`,
 			{
 				headers: {
 					'Authorization': `Bearer ${getToken()}`,
@@ -59,6 +70,10 @@ export const removePhoto = async (id: string) => {
 			config
 		}
 	} catch (err) {
-		return handleError(err)
+		if (request.isAxiosError(err)) {
+			return handleAxiosError(err)
+		} else {
+			return handleNativeError()
+		}
 	}
 }

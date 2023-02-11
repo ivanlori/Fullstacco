@@ -8,15 +8,11 @@ export interface IToastState {
 	style: 'error' | 'success' | null,
 }
 
-export interface State {
-	text: string
-	style: 'error' | 'success'
-}
+export type State = IToastState
 
 export interface displayToastModel {
 	type: typeof TOAST_DISPLAYED,
-	text: string
-	style: 'error' | 'success'
+	payload: IToastState
 }
 
 export interface toastHiddenModel {

@@ -3,14 +3,19 @@ import { ReactElement, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
 import { Button, Input } from 'components'
 import { displayToast } from 'components/Toast/store/Toast.action'
 import { DataTestKeys } from 'data-test-keys'
 import { dashboardHome } from 'routes'
-import { emailReg, isAuthenticated, TOKEN_STORAGE, USER_ID_STORAGE } from 'utils/utils'
+import {
+	emailReg,
+	isAuthenticated,
+	TOKEN_STORAGE,
+	USER_ID_STORAGE
+} from 'utils/utils'
 
 import { signup, ISignupFormInput } from '../Auth.api'
 
@@ -194,12 +199,12 @@ export const Signup = (): ReactElement => {
 					<p className="text-sm font-semibold mt-2 pt-1 mb-0">
 						<FormattedMessage id="signup.already.registered" />
 						{' '}
-						<a
-							href="/login"
+						<Link
+							to="/login"
 							className="hover:underline"
 						>
 							<FormattedMessage id="login" />
-						</a>
+						</Link>
 					</p>
 					<div className="w-40">
 						<Button

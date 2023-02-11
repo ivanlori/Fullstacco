@@ -3,7 +3,7 @@ import { ReactElement, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useDispatch } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Dispatch } from 'redux'
 
 import { Button, Input } from 'components'
@@ -183,12 +183,12 @@ export const ResetPassword = (): ReactElement => {
 	const renderActionsView = () => (
 		<div className="flex justify-between items-center">
 			{!token && (
-				<a
-					href="/login"
+				<Link
+					to="/login"
 					className="hover:underline"
 				>
 					<FormattedMessage id="recovery.password.go.back" />
-				</a>
+				</Link>
 			)}
 			<div className="w-40">
 				<Button

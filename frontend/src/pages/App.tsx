@@ -1,6 +1,8 @@
+//import { useEffect } from 'react'
+
 import { useIntl } from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 
 import './App.module.css'
 import { Toast } from 'components'
@@ -43,16 +45,23 @@ export const App = () => {
 		text,
 		style,
 	} = useSelector((state: IState) => state.toastReducer)
-	const {
-		isActive
-	} = useSelector((state: IState) => state.profileReducer)
+	/* const {
+		isActive,
+		authenticated
+	} = useSelector((state: IState) => state.profileReducer) */
 
-	if (!isActive) {
-		<Navigate to={noAccess} />
-	}
+	/* useEffect(() => {
+		if (!isActive) {
+			navigate(noAccess)
+		}
 
-	const handleResult = (status: number | undefined, successLabel: string) => {
-		if (status === 201) {
+		if (!authenticated) {
+			navigate(login)
+		}
+	}, [authenticated, isActive, navigate]) */
+
+	const handleResult = (status: string | undefined, successLabel: string) => {
+		if (status === '201') {
 			dispatch(displayToast(
 				formatMessage({ id: successLabel }),
 				'success'
@@ -72,7 +81,7 @@ export const App = () => {
 			status
 		} = await deleteUser(user?._id)
 
-		handleResult(status, "feedback.user.deleted")
+		handleResult(status as string, "feedback.user.deleted")
 	}
 
 	return (

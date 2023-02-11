@@ -87,7 +87,13 @@ export const Header = (): ReactElement => {
 						{username}
 					</span>
 					{photoUrl ?
-						<div className={styles.Photo}></div>
+						(
+							<img
+								src={photoUrl}
+								className={styles.Photo}
+								alt="profile"
+							/>
+						)
 						:
 						<User width={40} height={40} />
 					}

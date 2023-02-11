@@ -15,7 +15,7 @@ import { getUser } from '../User.api'
 
 interface Props {
 	onDeleteUser: (user: IProfileState) => void
-	onResult: (status: number, message: string) => void
+	onResult: (status: string, message: string) => void
 }
 
 export const EditUser = ({
@@ -56,7 +56,9 @@ export const EditUser = ({
 							{loading ? <Loader />
 								: (
 									<UserForm
-										onResult={(status, message) => onResult(status, message)}
+										onResult={(status, message) => {
+											onResult(status, message)
+										}}
 										onDelete={(user: IProfileState) => onDeleteUser(user)}
 										user={user}
 										title={formatMessage({

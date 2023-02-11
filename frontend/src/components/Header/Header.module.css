@@ -47,7 +47,6 @@
 }
 
 .Photo {
-	background-image: url('/public/images/photo-profile.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
